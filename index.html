@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure — Энциклопедия цвета</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray: #f0f0f0;
+            --mid: #aaaaaa;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            font-size: 15px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 48px;
+            border-bottom: 1px solid var(--black);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--black);
+        }
+
+        .lang-toggle {
+            display: flex;
+            border: 1px solid var(--black);
+        }
+
+        .lang-toggle button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--mid);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-toggle button.active {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* HERO */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 73px);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .hero-left {
+            padding: 80px 48px;
+            border-right: 1px solid var(--black);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(64px, 9vw, 130px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-title span { display: block; }
+
+        .hero-meta {
+            font-size: 12px;
+            color: var(--mid);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hero-right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .hero-block:nth-child(2),
+        .hero-block:nth-child(4) { border-left: 1px solid var(--black); }
+
+        .hero-block:nth-child(3),
+        .hero-block:nth-child(4) { border-top: 1px solid var(--black); }
+
+        .color-block { width: 100%; height: 100%; min-height: 200px; }
+
+        /* SECTION HEADER */
+        .section-head {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .section-label {
+            padding: 32px 48px;
+            border-right: 1px solid var(--black);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--mid);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-desc {
+            padding: 32px 48px;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        /* MATRIX */
+        #matrix-section { border-bottom: 1px solid var(--black); }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .matrix-shades-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            border-bottom: 1px solid var(--black);
+            height: 40px;
+        }
+
+        .matrix-shade-btn {
+            border: none;
+            border-right: 1px solid var(--black);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .matrix-shade-btn:last-child { border-right: none; }
+
+        .matrix-shade-btn:hover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .matrix-shade-btn.active {
+            outline: 2px solid var(--black);
+            outline-offset: -2px;
+            z-index: 2;
+        }
+
+        .matrix-color-btn {
+            aspect-ratio: 1;
+            border: none;
+            border-right: 1px solid var(--black);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-color-btn:last-child { border-right: none; }
+
+        .matrix-color-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0);
+            transition: background 0.15s;
+        }
+
+        .matrix-color-btn:hover::after { background: rgba(255,255,255,0.15); }
+
+        .matrix-color-btn.active {
+            outline: 3px solid var(--black);
+            outline-offset: -3px;
+            z-index: 1;
+        }
+
+        .matrix-profile {
+            display: block;
+            min-height: 200px;
+        }
+
+        .profile-text {
+            padding: 64px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .profile-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+        }
+
+        .profile-sub-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin: 24px 0 8px 0;
+        }
+
+        .profile-desc {
+            font-size: 16px;
+            font-weight: 300;
+            color: #444;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .profile-placeholder {
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+
+        /* EMOTIONS */
+        #emotions-section { border-bottom: 1px solid var(--black); }
+
+        .emotion-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .emotion-tab {
+            flex: 1;
+            padding: 22px 32px;
+            background: none;
+            border: none;
+            border-right: 1px solid var(--black);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-align: left;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .emotion-tab:last-child { border-right: none; }
+        .emotion-tab.active { background: var(--black); color: var(--white); }
+        .emotion-tab:hover:not(.active) { background: var(--gray); color: var(--black); }
+
+        .palette-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .palette-cell { border-right: 1px solid var(--black); }
+        .palette-cell:last-child { border-right: none; }
+
+        .palette-swatch { height: 240px; width: 100%; }
+
+        .palette-info {
+            padding: 28px 32px;
+            border-top: 1px solid var(--black);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .palette-color-name { font-weight: 500; font-size: 14px; }
+
+        .palette-hex {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            color: var(--mid);
+        }
+
+        .emotion-desc-row {
+            padding: 32px 48px;
+            border-top: 1px solid var(--black);
+            font-size: 14px;
+            font-weight: 300;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* RESEARCH */
+        #research-section { border-bottom: 1px solid var(--black); }
+
+        .research-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+
+        .research-cell {
+            padding: 56px 48px;
+            border-right: 1px solid var(--black);
+        }
+
+        .research-cell:last-child { border-right: none; }
+
+        .research-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 80px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+        }
+
+        .research-cell-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: var(--mid);
+        }
+
+        .research-cell-text {
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        /* FOOTER */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 48px;
+            border-top: 1px solid var(--black);
+        }
+
+        .footer-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .footer-copy { font-size: 12px; color: var(--mid); }
+
+        .fade-in { animation: fadeUp 0.35s ease-out both; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 20px 24px; }
+            .nav-links { display: none; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .hero-left { min-height: 60vw; }
+            .hero-title { font-size: clamp(52px, 14vw, 100px); }
+            .section-head { grid-template-columns: 1fr; }
+            .section-label { border-right: none; border-bottom: 1px solid var(--black); }
+            .matrix-grid { grid-template-columns: repeat(3, 1fr); }
+            .matrix-color-btn { border-bottom: 1px solid var(--black); }
+            .matrix-profile { grid-template-columns: 1fr; }
+            .profile-swatch { height: 200px; border-right: none; border-bottom: 1px solid var(--black); }
+            .profile-text { padding: 40px 24px; }
+            .profile-name { font-size: 36px; }
+            .palette-row { grid-template-columns: 1fr; }
+            .palette-cell { border-right: none; border-bottom: 1px solid var(--black); }
+            .research-grid { grid-template-columns: 1fr; }
+            .research-cell { border-right: none; border-bottom: 1px solid var(--black); }
+            .emotion-tabs { flex-wrap: wrap; }
+            .emotion-tab { flex: 1 1 50%; }
+            footer { flex-direction: column; gap: 12px; text-align: center; }
+            .section-label { padding: 24px; }
+            .section-desc { padding: 24px; }
+            .research-cell { padding: 40px 24px; }
+        }
+
+        /* NEW SECTIONS */
+        .anatomy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .anatomy-cell {
+            padding: 48px;
+            border-right: 1px solid var(--black);
+        }
+
+        .anatomy-cell:last-child { border-right: none; }
+
+        .anatomy-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .anatomy-desc {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .rule-grid {
+            display: grid;
+            grid-template-columns: 60fr 30fr 10fr;
+            height: 120px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-part {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--white);
+            border-right: 1px solid var(--black);
+        }
+
+        .rule-part:last-child { border-right: none; }
+
+        .rule-legend {
+            display: grid;
+            grid-template-columns: 60fr 30fr 10fr;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .legend-item {
+            padding: 24px;
+            border-right: 1px solid var(--black);
+        }
+
+        .legend-item:last-child { border-right: none; }
+
+        .legend-val { font-weight: 900; font-size: 18px; margin-bottom: 4px; }
+        .legend-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 8px; }
+        .legend-text { font-size: 13px; font-weight: 300; line-height: 1.4; color: #444; }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">Pure</div>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="#matrix-section" data-i18n="nav_matrix">Матрица</a>
+            <a href="#emotions-section" data-i18n="nav_emotions">Состояния</a>
+            <a href="#anatomy-section" data-i18n="nav_anatomy">Анатомия</a>
+            <a href="#rules-section" data-i18n="nav_rules">Правила</a>
+            <a href="#research-section" data-i18n="nav_research">Исследование</a>
+        </div>
+        <div class="lang-toggle">
+            <button onclick="setLang('ru')" id="btn-ru" class="active">RU</button>
+            <button onclick="setLang('en')" id="btn-en">EN</button>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-title">
+            <span>Chroma</span>
+            <span>Mind</span>
+        </div>
+        <div class="hero-meta" data-i18n="hero_meta">Энциклопедия цветовой психологии — 2026</div>
+    </div>
+    <div class="hero-right">
+        <div class="hero-block"><div class="color-block" style="background:#FF3B30"></div></div>
+        <div class="hero-block"><div class="color-block" style="background:#FFCC00"></div></div>
+        <div class="hero-block"><div class="color-block" style="background:#007AFF"></div></div>
+        <div class="hero-block"><div class="color-block" style="background:#34C759"></div></div>
+    </div>
+</section>
+
+<section id="matrix-section">
+    <div class="section-head">
+        <div class="section-label" data-i18n="matrix_label">01 — Матрица восприятия</div>
+        <div class="section-desc" data-i18n="matrix_desc">Выберите цвет — получите психологический профиль.</div>
+    </div>
+    <div class="matrix-grid" id="colorGrid"></div>
+    <div class="matrix-shades-grid" id="shadesGrid"></div>
+    <div class="matrix-profile">
+        <div class="profile-text" id="profileText">
+            <div class="profile-placeholder" data-i18n="matrix_placeholder">Нажмите на цвет</div>
+        </div>
+    </div>
+</section>
+
+<section id="emotions-section">
+    <div class="section-head">
+        <div class="section-label" data-i18n="emotions_label">02 — Палитры состояний</div>
+        <div class="section-desc" data-i18n="emotions_desc">Цветовые стратегии для конструирования эмоций.</div>
+    </div>
+    <div class="emotion-tabs" id="emotionTabs"></div>
+    <div class="palette-row" id="paletteRow"></div>
+    <div class="emotion-desc-row" id="emotionDescRow"></div>
+</section>
+
+<section id="anatomy-section">
+    <div class="section-head">
+        <div class="section-label" data-i18n="anatomy_label">03 — Анатомия оттенков</div>
+        <div class="section-desc" data-i18n="anatomy_desc">Как изменение светлоты и насыщенности меняет психологический вектор.</div>
+    </div>
+    <div class="anatomy-grid">
+        <div class="anatomy-cell">
+            <div class="legend-label" data-i18n="tints_label">Tints — Разбеленные</div>
+            <div class="anatomy-title" data-i18n="tints_title">Воздух</div>
+            <div class="anatomy-desc" data-i18n="tints_desc">Добавление белого размывает материальность. Нежность, весна, оптимизм. Чрезмерно — уязвимость или мир грез.</div>
+        </div>
+        <div class="anatomy-cell">
+            <div class="legend-label" data-i18n="shades_label">Shades — Затененные</div>
+            <div class="anatomy-title" data-i18n="shades_title">Вес</div>
+            <div class="anatomy-desc" data-i18n="shades_desc">Добавление черного. Авторитет, драма, тайна. Глубокий изумруд или бордо — роскошь, скорбь или груз прошлого.</div>
+        </div>
+        <div class="anatomy-cell">
+            <div class="legend-label" data-i18n="tones_label">Tones — Приглушенные</div>
+            <div class="anatomy-title" data-i18n="tones_title">Опыт</div>
+            <div class="anatomy-desc" data-i18n="tones_desc">Смешивание с серым. Цвета реальности и спокойствия. Интеллектуальность, сложность и связь с землей.</div>
+        </div>
+    </div>
+</section>
+
+<section id="rules-section">
+    <div class="section-head">
+        <div class="section-label" data-i18n="rules_label">04 — Правила баланса</div>
+        <div class="section-desc" data-i18n="rules_desc">Золотые формулы распределения цвета в композиции.</div>
+    </div>
+    <div class="rule-grid">
+        <div class="rule-part" style="background:#555">60%</div>
+        <div class="rule-part" style="background:#888">30%</div>
+        <div class="rule-part" style="background:#bbb">10%</div>
+    </div>
+    <div class="rule-legend">
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="rule_60_label">Доминанта</div>
+            <div class="legend-val">60%</div>
+            <div class="legend-text" data-i18n="rule_60_text">Основной фон. Задает «атмосферный кокон» и объединяет все элементы. Спокойные или нейтральные тона.</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="rule_30_label">Субдоминанта</div>
+            <div class="legend-val">30%</div>
+            <div class="legend-text" data-i18n="rule_30_text">Поддержка основы. Создает визуальный интерес и динамику. Может быть контрастным или близким по тону.</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="rule_10_label">Акцент</div>
+            <div class="legend-val">10%</div>
+            <div class="legend-text" data-i18n="rule_10_text">Эмоциональная кульминация. Самый яркий или контрастный цвет. Привлекает взгляд к смысловому центру.</div>
+        </div>
+    </div>
+</section>
+
+<section id="research-section">
+    <div class="section-head">
+        <div class="section-label" data-i18n="research_label">05 — Ключевые данные</div>
+        <div class="section-desc" data-i18n="research_desc">Нейрофизиологические детерминанты цветового восприятия.</div>
+    </div>
+    <div class="research-grid">
+        <div class="research-cell">
+            <div class="research-number">80%</div>
+            <div class="research-cell-label" data-i18n="stat1_label">Первое впечатление</div>
+            <div class="research-cell-text" data-i18n="stat1_text">Цвет определяет около 80% общего впечатления в первые 20 секунд контакта с объектом.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">+10%</div>
+            <div class="research-cell-label" data-i18n="stat2_label">Красный спектр</div>
+            <div class="research-cell-text" data-i18n="stat2_text">Воздействие красного повышает частоту сердечных сокращений на 5–10% и кожную проводимость.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">−5%</div>
+            <div class="research-cell-label" data-i18n="stat3_label">Синий спектр</div>
+            <div class="research-cell-text" data-i18n="stat3_text">Синий снижает ЧСС на 3–5%, активирует выработку мелатонина и снижает уровень тревожности.</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-name">Pure</div>
+    <div class="footer-copy" data-i18n="footer_copy">© 2026 — Pure: Энциклопедия работы с цветом</div>
+</footer>
+
+<script>
+const RESEARCH_DATA = {
+    colors: [
+        { name: { ru: 'Красный',    en: 'Red' },     hex: '#FF3B30',
+          profile: { ru: 'Цвет витальной энергии, страсти и физического доминирования. Обладает самой длинной волной и мгновенным физиологическим откликом.', en: 'The color of vital energy, passion, and physical dominance. It has the longest wavelength and an immediate physiological response.' },
+          advice: { ru: 'Используйте для захвата внимания, стимуляции к действию или передачи предельного эмоционального напряжения.', en: 'Use to capture attention, stimulate action, or convey extreme emotional tension.' },
+          shades: [
+            { name: { ru: 'Киноварь', en: 'Vermilion' }, hex: '#E34234', desc: { ru: '«Раскаленная сталь». Цвет крайнего возбуждения, триумфа и физической силы.', en: '"Molten steel". Color of extreme excitement, triumph, and physical strength.' }},
+            { ru: 'Пыльная роза', en: 'Dusty Rose', hex: '#C08081', desc: { ru: 'Ностальгический, нежный и пассивный оттенок. Любовь без эротического напряжения, через призму памяти.', en: 'Nostalgic, gentle, and passive shade. Love without erotic tension, through the prism of memory.' }}
+          ]},
+        { name: { ru: 'Синий',      en: 'Blue' },    hex: '#007AFF',
+          profile: { ru: 'Символ интеллектуальной глубины, дистанции и безмолвия. Психологически замедляет ритм, призывая к созерцанию.', en: 'A symbol of intellectual depth, distance, and silence. Psychologically slows the rhythm, calling for contemplation.' },
+          advice: { ru: 'Выбирайте для создания атмосферы доверия, профессионализма или медитативного покоя в пространстве.', en: 'Choose to create an atmosphere of trust, professionalism, or meditative peace in a space.' },
+          shades: [
+            { name: { ru: 'Лазурный', en: 'Azure' }, hex: '#007FFF', desc: { ru: 'Вызывает чувство изумления и благоговения. Воспринимается как «раскрывающийся» и светлый.', en: 'Evokes a sense of wonder and awe. Perceived as "unfolding" and bright.' }},
+            { name: { ru: 'Индиго', en: 'Indigo' }, hex: '#4B0082', desc: { ru: 'Плотный, насыщенный оттенок. Связан со смелостью, но также с антагонизмом или дерзостью.', en: 'Dense, saturated shade. Associated with courage, but also with antagonism or audacity.' }},
+            { name: { ru: 'Небесно-голубой', en: 'Sky Blue' }, hex: '#87CEEB', desc: { ru: 'Наиболее духовный и чистый. Снижает частоту пульса и успокаивает нервную систему. Звучит как флейта.', en: 'Most spiritual and pure. Lowers heart rate and calms the nervous system. Sounds like a flute.' }},
+            { name: { ru: 'Ультрамарин', en: 'Ultramarine' }, hex: '#120A8F', desc: { ru: 'При достижении предельной глубины начинает «звать в бесконечность», пробуждая тягу к сверхъестественному.', en: 'Reaching ultimate depth, it begins to "call to infinity", awakening a craving for the supernatural.' }}
+          ]},
+        { name: { ru: 'Желтый',     en: 'Yellow' },  hex: '#FFCC00',
+          profile: { ru: 'Самый светлый и лучезарный цвет. Прямая ассоциация с интеллектом, надеждой и ментальной стимуляцией.', en: 'The brightest and most radiant color. Direct association with intellect, hope, and mental stimulation.' },
+          advice: { ru: 'Подходит для активации мышления, демонстрации открытости и создания ощущения легкости и радости.', en: 'Suitable for activating logic, demonstrating openness, and creating a sense of lightness and joy.' },
+          shades: [
+            { name: { ru: 'Охра', en: 'Ochre' }, hex: '#CCAA2B', desc: { ru: 'Землистый желтый. Дарит ощущение интимности и тепла домашнего очага.', en: 'Earthy yellow. Gives a sense of intimacy and hearth warmth.' }}
+          ]},
+        { name: { ru: 'Зеленый',    en: 'Green' },   hex: '#34C759',
+          profile: { ru: 'Точка равновесия спектра. Цвет обновления, природной гармонии и статического покоя, комфортный для длительного восприятия.', en: 'The equilibrium point of the spectrum. The color of renewal, natural harmony, and static peace, comfortable for long-term perception.' },
+          advice: { ru: 'Идеален для создания стабилизирующей среды, снижения стресса и подчеркивания естественности объекта.', en: 'Ideal for creating a stabilizing environment, reducing stress, and emphasizing the naturalness of an object.' },
+          shades: [
+            { name: { ru: 'Лаймовый', en: 'Lime' }, hex: '#32CD32', desc: { ru: 'Свежесть, инновации и юношеская энергия. «Эксцентричный» и активный, пробуждает любопытство.', en: 'Freshness, innovation, and youthful energy. "Eccentric" and active, awakens curiosity.' }},
+            { name: { ru: 'Изумрудный', en: 'Emerald' }, hex: '#50C878', desc: { ru: 'Воплощение роскоши, изысканности и стабильности. Процветание и зрелая уверенность.', en: 'The embodiment of luxury, sophistication, and stability. Prosperity and mature confidence.' }},
+            { name: { ru: 'Оливковый', en: 'Olive' }, hex: '#808000', desc: { ru: 'Мир, мудрость и устойчивость. Приземляет композицию, вызывает чувство защищенности.', en: 'Peace, wisdom, and resilience. Grounds the composition, evokes a sense of security.' }},
+            { name: { ru: 'Мятный', en: 'Mint' }, hex: '#98FF98', desc: { ru: 'Легкий и чистый. Ассоциируется с обновлением и исцелением. Атмосфера «новой главы».', en: 'Light and pure. Associated with renewal and healing. Atmosphere of a "new chapter".' }},
+            { name: { ru: 'Шалфей', en: 'Sage' }, hex: '#BCB88A', desc: { ru: 'Мягкий, приглушенный тон. Транслирует осознанность, баланс и глубокое спокойствие.', en: 'Soft, muted tone. Transmits mindfulness, balance, and deep tranquility.' }}
+          ]},
+        { name: { ru: 'Фиолетовый', en: 'Violet' },  hex: '#AF52DE',
+          profile: { ru: 'Мистическое соединение энергии красного и покоя синего. Цвет интуиции, магии и глубокого творческого поиска.', en: 'A mystic fusion of red\'s energy and blue\'s calm. The color of intuition, magic, and deep creative exploration.' },
+          advice: { ru: 'Используйте для подчеркивания таинственности, статуса или сложной интеллектуальной глубины.', en: 'Use to emphasize mystery, status, or complex intellectual depth.' },
+          shades: [
+            { name: { ru: 'Лавандовый', en: 'Lavender' }, hex: '#E6E6FA', desc: { ru: 'Снимает тревогу, создавая атмосферу безмятежности и легкой меланхолии.', en: 'Relieves anxiety, creating an atmosphere of serenity and light melancholy.' }},
+            { name: { ru: 'Маджента', en: 'Magenta' }, hex: '#FF00FF', desc: { ru: 'Мистика, духовная власть и «интуитивное знание». Энергия красного и глубина синего.', en: 'Mysticism, spiritual power, and "intuitive knowledge". Red energy and blue depth.' }}
+          ]},
+        { name: { ru: 'Оранжевый',  en: 'Orange' },  hex: '#FF9500',
+          profile: { ru: 'Цвет энтузиазма и социального взаимодействия. Стимулирует творчество и аппетит, не обладая агрессией красного.', en: 'The color of enthusiasm and social interaction. Stimulates creativity and appetite without red\'s aggression.' },
+          advice: { ru: 'Выбирайте для стимуляции коммуникации, создания дружелюбной атмосферы и передачи радостного импульса.', en: 'Choose to stimulate communication, create a friendly atmosphere, and transmit a joyful impulse.' },
+          shades: [
+            { name: { ru: 'Персиковый', en: 'Peach' }, hex: '#FFDAB9', desc: { ru: 'Очень мягкий. Забота, дружелюбие и тепло. Лишен агрессии чистого оранжевого.', en: 'Very soft. Care, friendliness, and warmth. Lacks the aggression of pure orange.' }},
+            { name: { ru: 'Терракотовый', en: 'Terracotta' }, hex: '#E2725B', desc: { ru: 'Цвет земли и обожженной глины. Ощущение уюта, корней и непоколебимого комфорта.', en: 'The color of earth and fired clay. Sense of comfort, roots, and unwavering coziness.' }}
+          ]},
+        { name: { ru: 'Черный',     en: 'Black' },   hex: '#1C1C1E',
+          profile: { ru: 'Абсолютное отрицание света. Создает максимальный графический контраст, символизируя вес, авторитет и конец цикла.', en: 'Absolute negation of light. Creates maximum graphic contrast, symbolizing weight, authority, and the end of a cycle.' },
+          advice: { ru: 'Подходит для создания композиционного фундамента, акцентирования структуры и придания работе веса и драмы.', en: 'Suitable for creating a compositional foundation, emphasizing structure, and giving the work weight and drama.' },
+          shades: []},
+        { name: { ru: 'Серый',      en: 'Grey' },    hex: '#8E8E93',
+          profile: { ru: 'Нейтральная зона, свободная от эмоционального давления. Символизирует стабильность, реализм и отстраненность.', en: 'A neutral zone free from emotional pressure. Symbolizes stability, realism, and detachment.' },
+          advice: { ru: 'Великолепный фон для активных цветов. Используйте для передачи дистанции, тумана или поиска безопасности.', en: 'A great background for active colors. Use to convey distance, mist, or the search for safety.' },
+          shades: []},
+        { name: { ru: 'Белый',      en: 'White' },   hex: '#E8E8ED',
+          profile: { ru: 'Тишина, полная возможностей. Символ абсолютной чистоты, начала и бесконечного пространства.', en: 'A silence full of possibilities. A symbol of absolute purity, beginning, and infinite space.' },
+          advice: { ru: 'Используйте для визуального расширения пространства, создания воздуха и подчеркивания гигиены или ясности.', en: 'Use for visual expansion of space, creating air, and emphasizing hygiene or clarity.' },
+          shades: []}
+    ],
+    emotions: [
+        { id: 'anxious', name: { ru: 'Тревога', en: 'Anxious' },
+          desc: { ru: 'Диссонанс и скрытая угроза. Конфликт «неистового» лимонного желтого с глубоким черным и фиолетовым создает психологическое давление.', en: 'Dissonance and hidden threat. The conflict of "frenzied" lemon yellow with deep black and violet creates psychological pressure.' },
+          palette: [
+            { hex: '#E6FB04', name: { ru: 'Лимонный', en: 'Lemon' }},
+            { hex: '#1C1C1E', name: { ru: 'Черный', en: 'Black' }},
+            { hex: '#4B0082', name: { ru: 'Индиго', en: 'Indigo' }}
+          ]},
+        { id: 'sadness', name: { ru: 'Грусть', en: 'Sadness' },
+          desc: { ru: 'Меланхолия и интроспекция. Десатурированные холодные тона и «пепельная роза» передают состояние уязвимости и тихой печали.', en: 'Melancholy and introspection. Desaturated cool tones and "ash rose" convey a state of vulnerability and quiet sadness.' },
+          palette: [
+            { hex: '#708090', name: { ru: 'Серо-синий', en: 'Slate Gray' }},
+            { hex: '#BCA3AC', name: { ru: 'Пепельная роза', en: 'Ash Rose' }},
+            { hex: '#2F4F4F', name: { ru: 'Темный сланец', en: 'Dark Slate' }}
+          ]},
+        { id: 'joy', name: { ru: 'Триумф', en: 'Triumph' },
+          desc: { ru: 'Экспансия и бодрость. Золотисто-желтые и алые тона «плюс-стороны» по Гете. Максимальное возбуждение и радость.', en: 'Expansion and vigor. Golden-yellow and scarlet tones of Goethe\'s "plus-side". Maximum excitement and joy.' },
+          palette: [
+            { hex: '#FFD700', name: { ru: 'Золото', en: 'Gold' }},
+            { hex: '#E30B5C', name: { ru: 'Маджента', en: 'Magenta' }},
+            { hex: '#FF4500', name: { ru: 'Киноварь', en: 'Vermilion' }}
+          ]},
+        { id: 'harmony', name: { ru: 'Гармония', en: 'Harmony' },
+          desc: { ru: 'Статическое равновесие. Использование комплементарных пар в мягких оттенках создает чувство завершенности и покоя.', en: 'Static balance. The use of complementary pairs in soft shades creates a sense of completeness and peace.' },
+          palette: [
+            { hex: '#98FB98', name: { ru: 'Мятный', en: 'Mint' }},
+            { hex: '#D8BFD8', name: { ru: 'Чертополох', en: 'Thistle' }},
+            { hex: '#F0F8FF', name: { ru: 'Алиса', en: 'Alice Blue' }}
+          ]}
+    ]
+};
+
+const I18N = {
+    ru: {
+        nav_matrix: 'Матрица', nav_emotions: 'Состояния', nav_anatomy: 'Анатомия', nav_rules: 'Правила', nav_research: 'Данные',
+        hero_meta: 'Энциклопедия цветовой психологии — 2026',
+        matrix_label: '01 — Матрица восприятия', matrix_desc: 'Выберите цвет — получите психологический профиль.',
+        matrix_placeholder: 'Нажмите на цвет',
+        emotions_label: '02 — Палитры состояний', emotions_desc: 'Цветовые стратегии для конструирования эмоций.',
+        anatomy_label: '03 — Анатомия оттенков', anatomy_desc: 'Как изменение светлоты и насыщенности меняет психологический вектор.',
+        tints_label: 'Tints — Разбеленные', tints_title: 'Воздух', tints_desc: 'Нежность, весна, чистота. Чрезмерно — уязвимость или мир грез.',
+        shades_label: 'Shades — Затененные', shades_title: 'Вес', shades_desc: 'Авторитет, драма, тайна. Глубокие тона — роскошь или скорбь.',
+        tones_label: 'Tones — Приглушенные', tones_title: 'Опыт', tones_desc: 'Цвета реальности. Интеллектуальность, сложность и спокойствие.',
+        rules_label: '04 — Правила баланса', rules_desc: 'Золотые формулы распределения цвета в композиции.',
+        rule_60_label: 'Доминанта', rule_60_text: 'Основной фон. Задает «атмосферный кокон». 60% площади.',
+        rule_30_label: 'Субдоминанта', rule_30_text: 'Создает визуальный интерес и динамику. 30% площади.',
+        rule_10_label: 'Акцент', rule_10_text: 'Эмоциональная кульминация. Смысловой центр. 10% площади.',
+        research_label: '05 — Ключевые данные', research_desc: 'Нейрофизиологические детерминанты цветового восприятия.',
+        stat1_label: 'Первое впечатление', stat1_text: 'Цвет определяет около 80% общего впечатления в первые 20 секунд.',
+        stat2_label: 'Красный спектр', stat2_text: 'Повышает ЧСС на 5–10% и усиливает кожную проводимость.',
+        stat3_label: 'Синий спектр', stat3_text: 'Снижает ЧСС на 3–5%, активирует мелатонин и снижает тревогу.',
+        footer_copy: '© 2026 — Pure: Энциклопедия работы с цветом'
+    },
+    en: {
+        nav_matrix: 'Matrix', nav_emotions: 'Emotions', nav_anatomy: 'Anatomy', nav_rules: 'Rules', nav_research: 'Data',
+        hero_meta: 'Encyclopedia of Color Psychology — 2026',
+        matrix_label: '01 — Perception Matrix', matrix_desc: 'Select a color to get its psychological profile.',
+        matrix_placeholder: 'Click a color',
+        emotions_label: '02 — Emotion Palettes', emotions_desc: 'Color strategies for constructing emotional states.',
+        anatomy_label: '03 — Anatomy of Shades', anatomy_desc: 'How changes in lightness and saturation shift the psychological vector.',
+        tints_label: 'Tints', tints_title: 'Air', tints_desc: 'Tenderness, spring, purity. Excessive — vulnerability or a dream world.',
+        shades_label: 'Shades', shades_title: 'Weight', shades_desc: 'Authority, drama, mystery. Deep tones — luxury or mourning.',
+        tones_label: 'Tones', tones_title: 'Experience', tones_desc: 'Colors of reality. Intellectualism, complexity, and tranquility.',
+        rules_label: '04 — Rules of Balance', rules_desc: 'Golden formulas of color distribution in composition.',
+        rule_60_label: 'Dominant', rule_60_text: 'Main background. Sets the "atmospheric cocoon". 60% area.',
+        rule_30_label: 'Sub-dominant', rule_30_text: 'Creates visual interest and dynamics. 30% area.',
+        rule_10_label: 'Accent', rule_10_text: 'Emotional climax. Semantic center. 10% area.',
+        research_label: '05 — Key Data', research_desc: 'Neurophysiological determinants of color perception.',
+        stat1_label: 'First Impression', stat1_text: 'Color determines about 80% of the overall impression in the first 20 seconds.',
+        stat2_label: 'Red Spectrum', stat2_text: 'Raises heart rate by 5–10% and increases skin conductance.',
+        stat3_label: 'Blue Spectrum', stat3_text: 'Lowers heart rate by 3–5%, activates melatonin, and reduces anxiety.',
+        footer_copy: '© 2026 — Pure: Color Work Encyclopedia'
+    }
+};
+
+let lang = 'ru';
+let activeColorIndex = null;
+let activeEmotionId  = null;
+
+function setLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    document.getElementById('btn-ru').classList.toggle('active', l === 'ru');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (I18N[l][key]) el.textContent = I18N[l][key];
+    });
+    if (activeColorIndex !== null) showProfile(activeColorIndex);
+    if (activeEmotionId  !== null) showEmotion(activeEmotionId);
+    renderEmotionTabs();
+}
+
+// Matrix
+const colorGrid    = document.getElementById('colorGrid');
+const shadesGrid   = document.getElementById('shadesGrid');
+const profileText   = document.getElementById('profileText');
+
+RESEARCH_DATA.colors.forEach((color, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'matrix-color-btn';
+    btn.style.backgroundColor = color.hex;
+    btn.onclick = () => showProfile(i);
+    colorGrid.appendChild(btn);
+});
+
+function showProfile(index, shadeIndex = null) {
+    activeColorIndex = index;
+    const color = RESEARCH_DATA.colors[index];
+    
+    // Update main buttons
+    document.querySelectorAll('.matrix-color-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+    
+    // Render shades
+    shadesGrid.innerHTML = '';
+    color.shades.forEach((shade, si) => {
+        const sbtn = document.createElement('button');
+        sbtn.className = 'matrix-shade-btn' + (shadeIndex === si ? ' active' : '');
+        sbtn.style.backgroundColor = shade.hex;
+        sbtn.onclick = () => showProfile(index, si);
+        shadesGrid.appendChild(sbtn);
+    });
+
+    const displayData = shadeIndex !== null ? color.shades[shadeIndex] : color;
+    const isShade = shadeIndex !== null;
+
+    profileText.innerHTML = `
+        <div class="profile-name fade-in">${displayData.name[lang]}</div>
+        <div class="profile-section fade-in">
+            <div class="profile-desc">${isShade ? displayData.desc[lang] : displayData.profile[lang]}</div>
+            ${!isShade ? `
+                <div class="profile-sub-title">${lang === 'ru' ? 'Когда выбирать' : 'When to choose'}</div>
+                <div class="profile-desc">${displayData.advice[lang]}</div>
+            ` : ''}
+        </div>
+    `;
+}
+
+// Emotions
+const emotionTabs    = document.getElementById('emotionTabs');
+const paletteRow     = document.getElementById('paletteRow');
+const emotionDescRow = document.getElementById('emotionDescRow');
+
+function renderEmotionTabs() {
+    emotionTabs.innerHTML = '';
+    RESEARCH_DATA.emotions.forEach(e => {
+        const btn = document.createElement('button');
+        btn.className = 'emotion-tab' + (e.id === activeEmotionId ? ' active' : '');
+        btn.textContent = e.name[lang];
+        btn.onclick = () => showEmotion(e.id);
+        emotionTabs.appendChild(btn);
+    });
+}
+
+function showEmotion(id) {
+    activeEmotionId = id;
+    const emotion = RESEARCH_DATA.emotions.find(e => e.id === id);
+    if (!emotion) return;
+    renderEmotionTabs();
+    emotionDescRow.textContent = emotion.desc[lang];
+    paletteRow.innerHTML = '';
+    emotion.palette.forEach(c => {
+        const cell = document.createElement('div');
+        cell.className = 'palette-cell fade-in';
+        cell.innerHTML = `
+            <div class="palette-swatch" style="background:${c.hex}"></div>
+            <div class="palette-info">
+                <span class="palette-color-name">${c.name[lang]}</span>
+                <span class="palette-hex">${c.hex}</span>
+            </div>
+        `;
+        paletteRow.appendChild(cell);
+    });
+}
+
+renderEmotionTabs();
+showEmotion('anxious');
+</script>
+</body>
+</html>
