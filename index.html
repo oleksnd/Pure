@@ -303,7 +303,7 @@
 
         .palette-row {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
 
         .palette-cell { border-right: 1px solid var(--black); }
@@ -419,7 +419,7 @@
             .research-grid { grid-template-columns: 1fr; }
             .research-cell { border-right: none; border-bottom: 1px solid var(--black); }
             .emotion-tabs { flex-wrap: wrap; }
-            .emotion-tab { flex: 1 1 50%; }
+            .emotion-tab { flex: 1 1 33%; min-width: 120px; }
             footer { flex-direction: column; gap: 12px; text-align: center; }
             .section-label { padding: 24px; }
             .section-desc { padding: 24px; }
@@ -492,6 +492,58 @@
         .legend-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 8px; }
         .legend-text { font-size: 13px; font-weight: 300; line-height: 1.4; color: #444; }
 
+        /* PHYSICAL PARAMS */
+        .physics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--black);
+        }
+
+        .physics-cell {
+            padding: 40px 48px;
+            border-right: 1px solid var(--black);
+        }
+
+        .physics-cell:last-child { border-right: none; }
+
+        .physics-icon {
+            font-size: 28px;
+            line-height: 1;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .physics-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .physics-desc {
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.65;
+            color: #444;
+            margin-bottom: 14px;
+        }
+
+        .physics-examples {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--mid);
+            border-top: 1px solid #e0e0e0;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .physics-grid { grid-template-columns: 1fr; }
+            .physics-cell { border-right: none; border-bottom: 1px solid var(--black); padding: 32px 24px; }
+        }
+
     </style>
 </head>
 <body>
@@ -541,6 +593,7 @@
             <div class="profile-placeholder" data-i18n="matrix_placeholder">Нажмите на цвет</div>
         </div>
     </div>
+    <div class="physics-grid" id="physicsGrid"></div>
 </section>
 
 <section id="emotions-section">
@@ -639,92 +692,176 @@
 const RESEARCH_DATA = {
     colors: [
         { name: { ru: 'Красный',    en: 'Red' },     hex: '#FF3B30',
-          profile: { ru: 'Цвет витальной энергии, страсти и физического доминирования. Обладает самой длинной волной и мгновенным физиологическим откликом.', en: 'The color of vital energy, passion, and physical dominance. It has the longest wavelength and an immediate physiological response.' },
-          advice: { ru: 'Используйте для захвата внимания, стимуляции к действию или передачи предельного эмоционального напряжения.', en: 'Use to capture attention, stimulate action, or convey extreme emotional tension.' },
+          profile: { ru: 'Длинноволновый цвет прямого физиологического действия. Вызывает выброс адреналина, повышение частоты сердечных сокращений и артериального давления. Самый «материальный» цвет спектра — он устремляется к зрителю, доминируя в поле зрения и принуждая к реакции.', en: 'A long-wave color of direct physiological impact. Triggers adrenaline release, raises heart rate and blood pressure. The most "physical" color of the spectrum — it lunges toward the viewer, dominating the field of vision and compelling a reaction.' },
+          advice: { ru: 'Используйте для захвата внимания, стимуляции к действию или передачи предельного эмоционального напряжения. Дозируйте — избыток вызывает агрессию и усталость.', en: 'Use to capture attention, stimulate action, or convey extreme emotional tension. Use sparingly — excess triggers aggression and fatigue.' },
+          feelings: { ru: 'Страсть, любовь, гнев, страх, желание. Зритель перед красным полотном не остаётся холодным — тело реагирует прежде, чем успевает разум. Это цвет, который не даёт смотреть спокойно: он требует, будоражит, притягивает и одновременно тревожит. В зависимости от контекста — экстаз или угроза, жертва или торжество.', en: 'Passion, love, anger, fear, desire. A viewer before a red canvas cannot remain cold — the body reacts before the mind. This color does not allow calm observation: it demands, agitates, attracts and simultaneously alarms. Depending on context — ecstasy or threat, sacrifice or triumph.' },
           shades: [
-            { name: { ru: 'Киноварь', en: 'Vermilion' }, hex: '#E34234', desc: { ru: '«Раскаленная сталь». Цвет крайнего возбуждения, триумфа и физической силы.', en: '"Molten steel". Color of extreme excitement, triumph, and physical strength.' }},
-            { ru: 'Пыльная роза', en: 'Dusty Rose', hex: '#C08081', desc: { ru: 'Ностальгический, нежный и пассивный оттенок. Любовь без эротического напряжения, через призму памяти.', en: 'Nostalgic, gentle, and passive shade. Love without erotic tension, through the prism of memory.' }}
+            { name: { ru: 'Кадмий красный / Киноварь', en: 'Cadmium Red / Vermilion' }, hex: '#E34234', desc: { ru: 'Теплые красные с оранжевым подтоном. Излучают земную страсть, радость бытия и физическую энергию. Стимулируют активность и аппетит. В живописи — символ витальной силы.', en: 'Warm reds with an orange undertone. Radiate earthly passion, joy of being, and physical energy. Stimulate activity and appetite. In painting — a symbol of vital force.' }},
+            { name: { ru: 'Ализариновый / Кармин', en: 'Alizarin / Carmine' }, hex: '#E32636', desc: { ru: 'Холодные красные с пурпурным/розовым подтоном. Транслируют сложную, «болезненную» чувственность. Ассоциируются с глубокими внутренними конфликтами, жертвенностью и торжественной серьёзностью.', en: 'Cold reds with a purple/rose undertone. Convey complex, "tormented" sensuality. Associated with deep inner conflicts, sacrifice, and solemn gravity.' }},
+            { name: { ru: 'Розовый', en: 'Pink' }, hex: '#FF6F91', desc: { ru: 'Светлый малонасыщенный красный. Снижает уровень агрессии, вызывает ощущение беззаботности, нежности и поверхностной радости. «Розовые очки» как метафора наивного оптимизма.', en: 'Light, low-saturation red. Reduces aggression, evokes carefree lightness, tenderness, and superficial joy. "Rose-tinted glasses" as a metaphor for naive optimism.' }},
+            { name: { ru: 'Бордовый / Марсала', en: 'Burgundy / Marsala' }, hex: '#800020', desc: { ru: 'Затемнённый красный с коричневым. Умиряет агрессию, превращая её в символ стабильной власти, исторической преемственности и утончённой роскоши. Цвет достоинства и выдержанности.', en: 'Darkened red with brown. Tames aggression, turning it into a symbol of stable power, historical continuity, and refined luxury. The color of dignity and restraint.' }},
+            { name: { ru: 'Тёмно-красный', en: 'Dark Red' }, hex: '#8B0000', desc: { ru: 'Низкая светлота и насыщенность. Может ассоциироваться с запёкшейся кровью, создавая атмосферу экзистенциального дискомфорта и скрытой угрозы. Давит, но не кричит.', en: 'Low lightness and saturation. Can evoke clotted blood, creating an atmosphere of existential discomfort and latent threat. Oppressive yet silent.' }},
+            { name: { ru: 'Алый', en: 'Scarlet' }, hex: '#FF2400', desc: { ru: 'Цвет энтузиазма и азарта. Ближе к чистому красному, без подтонов. В избытке считывается как агрессивное доминирование и сигнал опасности.', en: 'The color of enthusiasm and excitement. Close to pure red, without undertones. In excess, it reads as aggressive dominance and a danger signal.' }}
           ]},
         { name: { ru: 'Синий',      en: 'Blue' },    hex: '#007AFF',
-          profile: { ru: 'Символ интеллектуальной глубины, дистанции и безмолвия. Психологически замедляет ритм, призывая к созерцанию.', en: 'A symbol of intellectual depth, distance, and silence. Psychologically slows the rhythm, calling for contemplation.' },
-          advice: { ru: 'Выбирайте для создания атмосферы доверия, профессионализма или медитативного покоя в пространстве.', en: 'Choose to create an atmosphere of trust, professionalism, or meditative peace in a space.' },
+          profile: { ru: 'Коротковолновый спектр, активирующий парасимпатическую нервную систему — замедляет дыхание и пульс, способствует релаксации. Оптически «отступает» (рецессия), создавая иллюзию бесконечности и дистанции. Цвет интеллектуальной глубины, доверия и безмолвия.', en: 'A short-wave spectrum activating the parasympathetic nervous system — slows breathing and pulse, promotes relaxation. Optically "recedes" (recession), creating an illusion of infinity and distance. The color of intellectual depth, trust, and silence.' },
+          advice: { ru: 'Выбирайте для создания атмосферы доверия, профессионализма или медитативного покоя. Не злоупотребляйте холодными тонами — они могут создавать дистанцию и отчуждение.', en: 'Choose to create an atmosphere of trust, professionalism, or meditative peace. Avoid overusing cold shades — they can create distance and alienation.' },
+          feelings: { ru: 'Покой, меланхолия, одиночество, духовное созерцание. Зритель ощущает, как мир отступает и растворяется. Синее полотно не обнимает — оно открывает бездну. Это чувство безбрежности, которое может быть и освобождением, и тоской. Глубокий синий рождает внутреннюю тишину, граничащую со слезами без причины.', en: 'Peace, melancholy, solitude, spiritual contemplation. The viewer feels the world receding and dissolving. A blue canvas does not embrace — it opens an abyss. It is the feeling of boundlessness that can be both liberation and longing. Deep blue breeds an inner silence bordering on tears without reason.' },
           shades: [
-            { name: { ru: 'Лазурный', en: 'Azure' }, hex: '#007FFF', desc: { ru: 'Вызывает чувство изумления и благоговения. Воспринимается как «раскрывающийся» и светлый.', en: 'Evokes a sense of wonder and awe. Perceived as "unfolding" and bright.' }},
-            { name: { ru: 'Индиго', en: 'Indigo' }, hex: '#4B0082', desc: { ru: 'Плотный, насыщенный оттенок. Связан со смелостью, но также с антагонизмом или дерзостью.', en: 'Dense, saturated shade. Associated with courage, but also with antagonism or audacity.' }},
-            { name: { ru: 'Небесно-голубой', en: 'Sky Blue' }, hex: '#87CEEB', desc: { ru: 'Наиболее духовный и чистый. Снижает частоту пульса и успокаивает нервную систему. Звучит как флейта.', en: 'Most spiritual and pure. Lowers heart rate and calms the nervous system. Sounds like a flute.' }},
-            { name: { ru: 'Ультрамарин', en: 'Ultramarine' }, hex: '#120A8F', desc: { ru: 'При достижении предельной глубины начинает «звать в бесконечность», пробуждая тягу к сверхъестественному.', en: 'Reaching ultimate depth, it begins to "call to infinity", awakening a craving for the supernatural.' }}
+            { name: { ru: 'Церилеум', en: 'Cerulean' }, hex: '#007BA7', desc: { ru: 'Светло-небесный синий. Транслирует ясность, безмятежность и надежду. Ощущение открытого неба и интеллектуальной свободы.', en: 'Light sky blue. Conveys clarity, serenity, and hope. The feeling of an open sky and intellectual freedom.' }},
+            { name: { ru: 'Ультрамарин', en: 'Ultramarine' }, hex: '#120A8F', desc: { ru: '«Духовный» синий с фиолетовым подтоном. Вызывает чувство покоя, граничащего с печалью. Ассоциируется с высшей мудростью и мистическим созерцанием.', en: '"Spiritual" blue with a violet undertone. Evokes a feeling of peace bordering on sadness. Associated with higher wisdom and mystical contemplation.' }},
+            { name: { ru: 'Кобальт синий', en: 'Cobalt Blue' }, hex: '#0047AB', desc: { ru: 'Чистый и стабильный синий без подтонов. Вызывает чувство абсолютного покоя, доверия и порядка. Наиболее «нейтральный» представитель спектра.', en: 'Pure and stable blue without undertones. Evokes absolute peace, trust, and order. The most "neutral" representative of the spectrum.' }},
+            { name: { ru: 'Прусская синь', en: 'Prussian Blue' }, hex: '#003153', desc: { ru: 'Глубокий синий с зелёным подтоном. Холодный, тревожный оттенок. Используется для передачи меланхолии, одиночества и «холодного» интеллекта.', en: 'Deep blue with a green undertone. Cold, tense shade. Used to convey melancholy, loneliness, and "cold" intellect.' }},
+            { name: { ru: 'Индиго', en: 'Indigo' }, hex: '#4B0082', desc: { ru: 'Почти чёрный сине-фиолетовый. Связан с подсознанием, тайной и глубокими психологическими состояниями. Погружает в интроспекцию и тихую скорбь.', en: 'Near-black blue-violet. Connected to the subconscious, mystery, and deep psychological states. Draws into introspection and quiet grief.' }},
+            { name: { ru: 'Фталоцианиновый синий', en: 'Phthalo Blue' }, hex: '#000F89', desc: { ru: 'Интенсивный и вибрирующий. Может восприниматься как электрический и подавляющий, если не сбалансирован нейтральным фоном.', en: 'Intense and vibrant. Can be perceived as electric and overwhelming if not balanced by a neutral background.' }}
           ]},
         { name: { ru: 'Желтый',     en: 'Yellow' },  hex: '#FFCC00',
-          profile: { ru: 'Самый светлый и лучезарный цвет. Прямая ассоциация с интеллектом, надеждой и ментальной стимуляцией.', en: 'The brightest and most radiant color. Direct association with intellect, hope, and mental stimulation.' },
-          advice: { ru: 'Подходит для активации мышления, демонстрации открытости и создания ощущения легкости и радости.', en: 'Suitable for activating logic, demonstrating openness, and creating a sense of lightness and joy.' },
+          profile: { ru: 'Самый светлый хроматический цвет, активирующий логику и симпатическую нервную систему. Стимулирует импульсивность и ментальную активность. По Кандинскому, интенсивный желтый может доводить до состояния «безумия» — подобно резкому, пронзительному звуку трубы.', en: 'The lightest chromatic color, activating logic and the sympathetic nervous system. Stimulates impulsiveness and mental activity. According to Kandinsky, intense yellow can lead to a state of "madness" — like the sharp, piercing sound of a trumpet.' },
+          advice: { ru: 'Подходит для активации мышления, демонстрации открытости и создания ощущения легкости. Насыщенный желтый — только как акцент, его избыток утомляет и раздражает.', en: 'Suitable for activating thinking, demonstrating openness, and creating a sense of lightness. Saturated yellow — only as an accent; its excess tires and irritates.' },
+          feelings: { ru: 'Радость, тревога, эйфория, нервозность. Жёлтый — самый противоречивый из тёплых цветов. Мягкие золотистые тона вызывают ощущение солнечного тепла и счастья. Чистый интенсивный жёлтый — беспокойство и внутреннее напряжение, как отблеск чего-то слишком яркого и ускользающего. Зритель то ли радуется, то ли щурится.', en: 'Joy, anxiety, euphoria, nervousness. Yellow is the most contradictory of the warm colors. Soft golden tones evoke feelings of warm sunlight and happiness. Pure intense yellow — unease and inner tension, like the glare of something too bright and fleeting. The viewer is either rejoicing or squinting.' },
           shades: [
-            { name: { ru: 'Охра', en: 'Ochre' }, hex: '#CCAA2B', desc: { ru: 'Землистый желтый. Дарит ощущение интимности и тепла домашнего очага.', en: 'Earthy yellow. Gives a sense of intimacy and hearth warmth.' }}
+            { name: { ru: 'Лимонно-желтый', en: 'Lemon Yellow' }, hex: '#FFF700', desc: { ru: 'Холодный желтый с зелёным подтоном. Свежесть и высокая ментальная энергия. При избытке — «кислотный» эффект, раздражение и тревожность. Самый «нервный» из жёлтых.', en: 'Cold yellow with a green undertone. Freshness and high mental energy. In excess — an "acidic" effect, irritation, and anxiety. The most "nervous" of yellows.' }},
+            { name: { ru: 'Золотисто-желтый / Индийская желтая', en: 'Golden Yellow / Indian Yellow' }, hex: '#E3A857', desc: { ru: 'Солнечный свет в пике. Излучает тепло, оптимизм и витальную силу. Ассоциируется с роскошью, торжеством и духовной энергией.', en: 'Sunlight at its peak. Radiates warmth, optimism, and vital power. Associated with luxury, triumph, and spiritual energy.' }},
+            { name: { ru: 'Янтарный', en: 'Amber' }, hex: '#FFBF00', desc: { ru: 'Тёплый жёлто-оранжевый. Создаёт ощущение уюта, «золотого часа» и тёплой памяти. Мягче и интимнее чистого золота.', en: 'Warm yellow-orange. Creates a sense of coziness, "golden hour" and warm memory. Softer and more intimate than pure gold.' }},
+            { name: { ru: 'Желтая охра', en: 'Yellow Ochre' }, hex: '#CCAA2B', desc: { ru: 'Земляной, приглушённый жёлтый. Стабильность, надёжность и связь с землёй. Вызывает чувство вечности и родового опыта.', en: 'Earthy, muted yellow. Stability, reliability, and connection with the earth. Evokes a sense of eternity and ancestral experience.' }},
+            { name: { ru: 'Неаполитанская желтая', en: 'Naples Yellow' }, hex: '#FADA5E', desc: { ru: 'Мягкий, тёплый, размытый. Транслирует спокойную радость и уют без резкости лимонного или интенсивности золота.', en: 'Soft, warm, diffuse. Conveys calm joy and coziness without the sharpness of lemon or the intensity of gold.' }},
+            { name: { ru: 'Грязно-желтый', en: 'Dirty Yellow' }, hex: '#B5A642', desc: { ru: 'Десатурированный, болезненный жёлтый. Ассоциируется с болезнью, разложением, завистью и социальным упадком. Один из самых психологически негативных оттенков спектра.', en: 'Desaturated, sickly yellow. Associated with illness, decay, envy, and social decline. One of the most psychologically negative shades of the spectrum.' }}
           ]},
         { name: { ru: 'Зеленый',    en: 'Green' },   hex: '#34C759',
-          profile: { ru: 'Точка равновесия спектра. Цвет обновления, природной гармонии и статического покоя, комфортный для длительного восприятия.', en: 'The equilibrium point of the spectrum. The color of renewal, natural harmony, and static peace, comfortable for long-term perception.' },
-          advice: { ru: 'Идеален для создания стабилизирующей среды, снижения стресса и подчеркивания естественности объекта.', en: 'Ideal for creating a stabilizing environment, reducing stress, and emphasizing the naturalness of an object.' },
+          profile: { ru: 'Точка равновесия спектра — человеческий глаз не требует аккомодации для его восприятия, поэтому зелёный физиологически расслабляет. Цвет статики и восстановления. Баланс между тёплым и холодным, активным и пассивным.', en: 'The equilibrium point of the spectrum — the human eye requires no accommodation to perceive it, so green is physiologically relaxing. The color of stasis and recovery. Balance between warm and cold, active and passive.' },
+          advice: { ru: 'Идеален для создания стабилизирующей среды, снижения стресса и подчёркивания естественности объекта. Оливковый и хаки — для зрелой, сдержанной эстетики.', en: 'Ideal for creating a stabilizing environment, reducing stress, and emphasizing the naturalness of an object. Olive and khaki — for a mature, restrained aesthetic.' },
+          feelings: { ru: 'Умиротворение, надежда, исцеление, равновесие. Зритель перед зелёным полотном буквально выдыхает. Это чувство, что всё будет хорошо — не через триумф, а через рост и природный порядок вещей. Изумруд рождает восхищение и жажду жизни; тёмный оливковый — тихую мудрость человека, который многое видел.', en: 'Peace, hope, healing, balance. A viewer before a green canvas literally exhales. It is the feeling that everything will be all right — not through triumph, but through growth and the natural order of things. Emerald breeds admiration and a thirst for life; dark olive — the quiet wisdom of someone who has seen much.' },
           shades: [
-            { name: { ru: 'Лаймовый', en: 'Lime' }, hex: '#32CD32', desc: { ru: 'Свежесть, инновации и юношеская энергия. «Эксцентричный» и активный, пробуждает любопытство.', en: 'Freshness, innovation, and youthful energy. "Eccentric" and active, awakens curiosity.' }},
-            { name: { ru: 'Изумрудный', en: 'Emerald' }, hex: '#50C878', desc: { ru: 'Воплощение роскоши, изысканности и стабильности. Процветание и зрелая уверенность.', en: 'The embodiment of luxury, sophistication, and stability. Prosperity and mature confidence.' }},
-            { name: { ru: 'Оливковый', en: 'Olive' }, hex: '#808000', desc: { ru: 'Мир, мудрость и устойчивость. Приземляет композицию, вызывает чувство защищенности.', en: 'Peace, wisdom, and resilience. Grounds the composition, evokes a sense of security.' }},
-            { name: { ru: 'Мятный', en: 'Mint' }, hex: '#98FF98', desc: { ru: 'Легкий и чистый. Ассоциируется с обновлением и исцелением. Атмосфера «новой главы».', en: 'Light and pure. Associated with renewal and healing. Atmosphere of a "new chapter".' }},
-            { name: { ru: 'Шалфей', en: 'Sage' }, hex: '#BCB88A', desc: { ru: 'Мягкий, приглушенный тон. Транслирует осознанность, баланс и глубокое спокойствие.', en: 'Soft, muted tone. Transmits mindfulness, balance, and deep tranquility.' }}
+            { name: { ru: 'Изумрудный / Виридон', en: 'Emerald / Viridian' }, hex: '#50C878', desc: { ru: 'Процветание, чистота и весеннее обновление. Выглядит благородно и освежающе, символизируя природный расцвет.', en: 'Prosperity, purity, and spring renewal. Looks noble and refreshing, symbolizing natural flourishing.' }},
+            { name: { ru: 'Травяной', en: 'Sap Green' }, hex: '#679267', desc: { ru: 'Дружелюбие и спокойная связь с природой. Способствует исцелению и эмоциональному обновлению без интенсивности изумруда.', en: 'Friendliness and calm connection with nature. Promotes healing and emotional renewal without the intensity of emerald.' }},
+            { name: { ru: 'Оливковый / Хаки', en: 'Olive / Khaki' }, hex: '#808000', desc: { ru: 'Десатурированный зелёный. Символ смирения и профессиональной зрелости. При избытке может считываться как цвет увядания или скрытой угрозы.', en: 'Desaturated green. A symbol of humility and professional maturity. In excess, it can read as the color of decay or hidden threat.' }},
+            { name: { ru: 'Бирюзовый / Тиль', en: 'Turquoise / Teal' }, hex: '#008080', desc: { ru: 'Зелено-синий диапазон. Бирюза даёт энергию потока и открытости; тёмный Тиль — цвет рациональности, интеллектуального спокойствия и индивидуализма.', en: 'Green-blue range. Turquoise gives the energy of flow and openness; dark Teal — the color of rationality, intellectual calm, and individualism.' }},
+            { name: { ru: 'Шартрез', en: 'Chartreuse' }, hex: '#7FFF00', desc: { ru: 'Смесь жёлтого и зелёного. Символизирует дерзость, футуризм и взрывную креативность. Один из самых «острых» хроматических оттенков.', en: 'A mix of yellow and green. Symbolizes boldness, futurism, and explosive creativity. One of the most "sharp" chromatic shades.' }}
           ]},
         { name: { ru: 'Фиолетовый', en: 'Violet' },  hex: '#AF52DE',
           profile: { ru: 'Мистическое соединение энергии красного и покоя синего. Цвет интуиции, магии и глубокого творческого поиска.', en: 'A mystic fusion of red\'s energy and blue\'s calm. The color of intuition, magic, and deep creative exploration.' },
           advice: { ru: 'Используйте для подчеркивания таинственности, статуса или сложной интеллектуальной глубины.', en: 'Use to emphasize mystery, status, or complex intellectual depth.' },
+          feelings: { ru: 'Тайна, восхищение, лёгкая тревога, духовный трепет. Фиолетовое полотно вызывает ощущение присутствия чего-то большего — неназываемого. Зритель чувствует себя на пороге: между явью и сном, между земным и сакральным. Это цвет, перед которым хочется молчать.', en: 'Mystery, awe, slight anxiety, spiritual reverence. A violet canvas evokes the sensation of something greater — something unnameable — being present. The viewer feels themselves on a threshold: between waking and dream, between earthly and sacred. This is the color before which one wants to fall silent.' },
           shades: [
             { name: { ru: 'Лавандовый', en: 'Lavender' }, hex: '#E6E6FA', desc: { ru: 'Снимает тревогу, создавая атмосферу безмятежности и легкой меланхолии.', en: 'Relieves anxiety, creating an atmosphere of serenity and light melancholy.' }},
             { name: { ru: 'Маджента', en: 'Magenta' }, hex: '#FF00FF', desc: { ru: 'Мистика, духовная власть и «интуитивное знание». Энергия красного и глубина синего.', en: 'Mysticism, spiritual power, and "intuitive knowledge". Red energy and blue depth.' }}
           ]},
         { name: { ru: 'Оранжевый',  en: 'Orange' },  hex: '#FF9500',
-          profile: { ru: 'Цвет энтузиазма и социального взаимодействия. Стимулирует творчество и аппетит, не обладая агрессией красного.', en: 'The color of enthusiasm and social interaction. Stimulates creativity and appetite without red\'s aggression.' },
-          advice: { ru: 'Выбирайте для стимуляции коммуникации, создания дружелюбной атмосферы и передачи радостного импульса.', en: 'Choose to stimulate communication, create a friendly atmosphere, and transmit a joyful impulse.' },
+          profile: { ru: '«Социальный» цвет, соединяющий физическую энергию красного с ментальной активностью жёлтого. Стимулирует симпатическую нервную систему, коммуникацию, оптимизм и аппетит. Менее агрессивен, чем красный, но столь же активен.', en: 'A "social" color uniting red\'s physical energy with yellow\'s mental activity. Stimulates the sympathetic nervous system, communication, optimism, and appetite. Less aggressive than red but equally active.' },
+          advice: { ru: 'Выбирайте для стимуляции коммуникации, создания дружелюбной атмосферы и передачи радостного импульса. Это акцентный цвет — используйте точечно.', en: 'Choose to stimulate communication, create a friendly atmosphere, and transmit a joyful impulse. It is an accent color — use it pointedly.' },
+          feelings: { ru: 'Тепло, радость, вдохновение, открытость, жизнелюбие. Оранжевый — самый «общительный» из цветов. Зритель ощущает желание улыбнуться и заговорить. Это не страсть красного и не покой зелёного — это энергия встречи, праздника, первого солнечного дня после долгой зимы.', en: 'Warmth, joy, inspiration, openness, love of life. Orange is the most "sociable" of colors. The viewer feels the urge to smile and speak. This is not the passion of red nor the peace of green — it is the energy of encounter, celebration, the first sunny day after a long winter.' },
           shades: [
-            { name: { ru: 'Персиковый', en: 'Peach' }, hex: '#FFDAB9', desc: { ru: 'Очень мягкий. Забота, дружелюбие и тепло. Лишен агрессии чистого оранжевого.', en: 'Very soft. Care, friendliness, and warmth. Lacks the aggression of pure orange.' }},
-            { name: { ru: 'Терракотовый', en: 'Terracotta' }, hex: '#E2725B', desc: { ru: 'Цвет земли и обожженной глины. Ощущение уюта, корней и непоколебимого комфорта.', en: 'The color of earth and fired clay. Sense of comfort, roots, and unwavering coziness.' }}
+            { name: { ru: 'Янтарный', en: 'Amber' }, hex: '#FFBF00', desc: { ru: 'На стыке оранжевого и жёлтого. Создаёт ощущение уюта, тепла и «золотого часа» памяти. Более интимный и ностальгический, чем чистый оранжевый.', en: 'At the junction of orange and yellow. Creates a sense of coziness, warmth, and the "golden hour" of memory. More intimate and nostalgic than pure orange.' }},
+            { name: { ru: 'Персиковый', en: 'Peach' }, hex: '#FFDAB9', desc: { ru: 'Очень мягкий, светлый оранжевый. Забота, дружелюбие и тепло без агрессии насыщенного оранжевого.', en: 'Very soft, light orange. Care, friendliness, and warmth without the aggression of saturated orange.' }},
+            { name: { ru: 'Терракотовый', en: 'Terracotta' }, hex: '#E2725B', desc: { ru: 'Цвет обожжённой земли и глины. Ощущение укоренённости, уюта и непоколебимого природного комфорта.', en: 'The color of fired earth and clay. A sense of rootedness, coziness, and unwavering natural comfort.' }}
           ]},
         { name: { ru: 'Черный',     en: 'Black' },   hex: '#1C1C1E',
-          profile: { ru: 'Абсолютное отрицание света. Создает максимальный графический контраст, символизируя вес, авторитет и конец цикла.', en: 'Absolute negation of light. Creates maximum graphic contrast, symbolizing weight, authority, and the end of a cycle.' },
+          profile: { ru: 'Тайное, скрытое и глубокое. Создает ощущение авторитета и тайны. Основа и контраст.', en: 'Secret, hidden, and deep. Creates a sense of authority and mystery. Foundation and contrast.' },
           advice: { ru: 'Подходит для создания композиционного фундамента, акцентирования структуры и придания работе веса и драмы.', en: 'Suitable for creating a compositional foundation, emphasizing structure, and giving the work weight and drama.' },
-          shades: []},
+          feelings: { ru: 'Страх, скорбь, благоговение, экзистенциальная пустота и одновременно — невероятная сила. Чёрное полотно поглощает зрителя. Это может быть ужас небытия, торжественность траура или же абсолютная свобода — пространство, в котором ещё ничего не произошло. Чёрный заставляет смотреть внутрь себя.', en: 'Fear, grief, awe, existential emptiness and simultaneously — immense strength. A black canvas absorbs the viewer. This can be the terror of non-being, the solemnity of mourning, or absolute freedom — a space where nothing has yet occurred. Black makes you look inward.' },
+          shades: [
+            { name: { ru: 'Костяная черная', en: 'Bone Black' }, hex: '#0A0A0A', desc: { ru: 'Глубокий черный, транслирующий абсолютную тишину и мощный авторитет.', en: 'Deep black, conveying absolute silence and powerful authority.' }}
+          ]},
         { name: { ru: 'Серый',      en: 'Grey' },    hex: '#8E8E93',
-          profile: { ru: 'Нейтральная зона, свободная от эмоционального давления. Символизирует стабильность, реализм и отстраненность.', en: 'A neutral zone free from emotional pressure. Symbolizes stability, realism, and detachment.' },
+          profile: { ru: 'Отрешенность и нейтральность. Идеален для создания дистанции и профессиональной сдержанности. Ощущение прохладной стабильности.', en: 'Detachment and neutrality. Ideal for creating distance and professional restraint. A sense of cool stability.' },
           advice: { ru: 'Великолепный фон для активных цветов. Используйте для передачи дистанции, тумана или поиска безопасности.', en: 'A great background for active colors. Use to convey distance, mist, or the search for safety.' },
-          shades: []},
+          feelings: { ru: 'Отстранённость, усталость, неопределённость, тихая тоска. Серое полотно не захватывает — оно удерживает зрителя в роли наблюдателя. Это не грусть и не радость, а то промежуточное состояние, когда не знаешь, что чувствовать. Иногда это облегчение от отсутствия требований; иногда — ощущение потери.', en: 'Detachment, fatigue, uncertainty, quiet longing. A gray canvas does not capture — it keeps the viewer as an observer. This is neither sadness nor joy, but that in-between state when you do not know what to feel. Sometimes this is relief from the absence of demands; sometimes — a sense of loss.' },
+          shades: [
+            { name: { ru: 'Серый Пейна', en: 'Payne\'s Gray' }, hex: '#536878', desc: { ru: 'Холодный серый с синим подтоном. Создает атмосферу серьезности и отстраненности.', en: 'Cool gray with a blue undertone. Creates an atmosphere of seriousness and detachment.' }},
+            { name: { ru: 'Шиферный', en: 'Slate' }, hex: '#708090', desc: { ru: 'Цвет компромисса и индустриальной тишины. Вызывает ощущение прохладной стабильности.', en: 'The color of compromise and industrial silence. Evokes a sense of cool stability.' }}
+          ]},
         { name: { ru: 'Белый',      en: 'White' },   hex: '#E8E8ED',
-          profile: { ru: 'Тишина, полная возможностей. Символ абсолютной чистоты, начала и бесконечного пространства.', en: 'A silence full of possibilities. A symbol of absolute purity, beginning, and infinite space.' },
+          profile: { ru: 'Абсолютная чистота и завершенность. Символизирует божественный свет и новое начало.', en: 'Absolute purity and completeness. Symbolizes divine light and a new beginning.' },
           advice: { ru: 'Используйте для визуального расширения пространства, создания воздуха и подчеркивания гигиены или ясности.', en: 'Use for visual expansion of space, creating air, and emphasizing hygiene or clarity.' },
-          shades: []}
+          feelings: { ru: 'Чистота, пустота, трепет перед началом, сакральная тишина. Белое полотно — это вопрос без ответа. Зритель ощущает невесомость и лёгкую тревогу одновременно: здесь всё возможно, но ничего ещё не случилось. Белый фон — дыхание, пространство между смыслами, которое дарит ощущение свободы или одиночества в зависимости от внутреннего состояния.', en: 'Purity, emptiness, awe before a beginning, sacred silence. A white canvas is an unanswered question. The viewer feels weightlessness and slight anxiety simultaneously: everything is possible here, yet nothing has happened yet. White ground is breath, a space between meanings that grants freedom or loneliness depending on one\'s inner state.' },
+          shades: [
+            { name: { ru: 'Титановые белила', en: 'Titanium White' }, hex: '#FFFFFF', desc: { ru: 'Максимальная кроющая способность и холодная чистота.', en: 'Maximum covering power and cold purity.' }},
+            { name: { ru: 'Цинковые белила', en: 'Zinc White' }, hex: '#F8F8FF', desc: { ru: 'Эфирность и прозрачность. Используются для создания туманных слоев и тонких лессировок.', en: 'Ethereality and transparency. Used for creating misty layers and thin glazes.' }}
+          ]}
+    ],
+    physicalParams: [
+        {
+            id: 'weight',
+            title: { ru: 'Тяжесть', en: 'Weight' },
+            icon: '↓',
+            desc: { ru: 'Тёмные и тёплые цвета воспринимаются как более тяжёлые и плотные. Чёрный, тёмно-коричневый и тёмно-серый — цвета приземлённости и «безутешной неподвижности». Светлые и холодные — воздушны и невесомы.', en: 'Dark and warm colors are perceived as heavier and denser. Black, dark brown, and dark gray are colors of groundedness and "inconsolable stillness". Light and cool — airy and weightless.' },
+            examples: { ru: 'Тяжёлые: Коричневый, Чёрный, Тёмно-серый / Лёгкие: Белый, Светло-голубой', en: 'Heavy: Brown, Black, Dark Gray / Light: White, Light Blue' }
+        },
+        {
+            id: 'temperature',
+            title: { ru: 'Температура', en: 'Temperature' },
+            icon: '◐',
+            desc: { ru: 'Сине-зелёный диапазон вызывает физиологическое ощущение прохлады — реальная субъективная температура воспринимается ниже на 2–3°. Красно-оранжевый создаёт ощущение тепла. Этот эффект используется в архитектуре и дизайне интерьеров.', en: 'The blue-green range induces a physiological sensation of coolness — the actual subjective temperature feels 2–3° lower. Red-orange creates a sense of warmth. This effect is used in architecture and interior design.' },
+            examples: { ru: 'Тёплые: Красный, Оранжевый, Жёлтый / Холодные: Синий, Голубой, Сине-зелёный', en: 'Warm: Red, Orange, Yellow / Cool: Blue, Cyan, Blue-Green' }
+        },
+        {
+            id: 'space',
+            title: { ru: 'Пространство', en: 'Space' },
+            icon: '⇔',
+            desc: { ru: 'Тёплые и яркие цвета зрительно «тянутся» к наблюдателю (Pull), сокращая воспринимаемое расстояние. Холодные и тёмные — «толкают» плоскость вглубь (Push), визуально расширяя пространство. Этот принцип — основа воздушной перспективы.', en: 'Warm and bright colors visually "pull" toward the observer (Pull), reducing perceived distance. Cold and dark — "push" the plane back (Push), visually expanding space. This principle is the basis of aerial perspective.' },
+            examples: { ru: 'Pull (вперёд): Красный, Оранжевый, Жёлтый / Push (вглубь): Синий, Фиолетовый, Чёрный', en: 'Pull (forward): Red, Orange, Yellow / Push (back): Blue, Violet, Black' }
+        }
     ],
     emotions: [
-        { id: 'anxious', name: { ru: 'Тревога', en: 'Anxious' },
-          desc: { ru: 'Диссонанс и скрытая угроза. Конфликт «неистового» лимонного желтого с глубоким черным и фиолетовым создает психологическое давление.', en: 'Dissonance and hidden threat. The conflict of "frenzied" lemon yellow with deep black and violet creates psychological pressure.' },
+        { id: 'nostalgia', name: { ru: 'Ностальгия', en: 'Nostalgia' },
+          desc: { ru: 'Тёплая печаль. Палитра выцветших фотографий — лишённая резких спектральных цветов, она вызывает чувство безопасного убежища и лёгкую грусть по прошлому. Основана на нейрофизиологии «малонасыщенных» тонов по Люшеру.', en: 'Warm sorrow. A palette of faded photographs — devoid of sharp spectral colors, it evokes a sense of safe shelter and gentle longing for the past. Based on Lüscher\'s neurophysiology of low-saturation tones.' },
           palette: [
-            { hex: '#E6FB04', name: { ru: 'Лимонный', en: 'Lemon' }},
-            { hex: '#1C1C1E', name: { ru: 'Черный', en: 'Black' }},
-            { hex: '#4B0082', name: { ru: 'Индиго', en: 'Indigo' }}
+            { hex: '#C8A2A2', name: { ru: 'Пыльная роза', en: 'Dusty Rose' }},
+            { hex: '#CC7722', name: { ru: 'Охра', en: 'Ochre' }},
+            { hex: '#CFB53B', name: { ru: 'Старое золото', en: 'Old Gold' }},
+            { hex: '#A0675A', name: { ru: 'Приглушённый терракот', en: 'Muted Terracotta' }}
           ]},
-        { id: 'sadness', name: { ru: 'Грусть', en: 'Sadness' },
-          desc: { ru: 'Меланхолия и интроспекция. Десатурированные холодные тона и «пепельная роза» передают состояние уязвимости и тихой печали.', en: 'Melancholy and introspection. Desaturated cool tones and "ash rose" convey a state of vulnerability and quiet sadness.' },
+        { id: 'loneliness', name: { ru: 'Одиночество', en: 'Loneliness' },
+          desc: { ru: 'Социальная изоляция. «Холодные» и «стерильные» палитры, лишённые тёплых объединяющих тонов, создают эффект «цветовых капсул». Прусская синь при воздействии повышает ощущение психологической дистанции.', en: 'Social isolation. "Cold" and "sterile" palettes, stripped of warm unifying tones, create the effect of "color capsules". Prussian blue increases the sense of psychological distance.' },
           palette: [
-            { hex: '#708090', name: { ru: 'Серо-синий', en: 'Slate Gray' }},
-            { hex: '#BCA3AC', name: { ru: 'Пепельная роза', en: 'Ash Rose' }},
-            { hex: '#2F4F4F', name: { ru: 'Темный сланец', en: 'Dark Slate' }}
+            { hex: '#003153', name: { ru: 'Прусская синь', en: 'Prussian Blue' }},
+            { hex: '#536878', name: { ru: 'Серый Пейна', en: 'Payne\'s Gray' }},
+            { hex: '#FFFFCC', name: { ru: 'Бледно-жёлтый', en: 'Pale Yellow' }},
+            { hex: '#D3D3D3', name: { ru: 'Светло-серый', en: 'Light Gray' }}
           ]},
-        { id: 'joy', name: { ru: 'Триумф', en: 'Triumph' },
-          desc: { ru: 'Экспансия и бодрость. Золотисто-желтые и алые тона «плюс-стороны» по Гете. Максимальное возбуждение и радость.', en: 'Expansion and vigor. Golden-yellow and scarlet tones of Goethe\'s "plus-side". Maximum excitement and joy.' },
+        { id: 'anger', name: { ru: 'Гнев', en: 'Anger' },
+          desc: { ru: 'Злая активность. Чёрный придаёт красному зловещий характер, а красный пробуждает в чёрном агрессию — по теории контрастов Иттена. Тёмно-красный создаёт атмосферу экзистенциального дискомфорта и скрытой угрозы.', en: 'Destructive activity. Black gives red a sinister quality, while red awakens aggression in black — per Itten\'s theory of contrasts. Dark red creates an atmosphere of existential discomfort and latent threat.' },
           palette: [
-            { hex: '#FFD700', name: { ru: 'Золото', en: 'Gold' }},
-            { hex: '#E30B5C', name: { ru: 'Маджента', en: 'Magenta' }},
-            { hex: '#FF4500', name: { ru: 'Киноварь', en: 'Vermilion' }}
+            { hex: '#FF2400', name: { ru: 'Насыщенный алый', en: 'Scarlet' }},
+            { hex: '#1C1C1E', name: { ru: 'Чёрный', en: 'Black' }},
+            { hex: '#8B0000', name: { ru: 'Тёмно-красный', en: 'Dark Red' }}
           ]},
-        { id: 'harmony', name: { ru: 'Гармония', en: 'Harmony' },
-          desc: { ru: 'Статическое равновесие. Использование комплементарных пар в мягких оттенках создает чувство завершенности и покоя.', en: 'Static balance. The use of complementary pairs in soft shades creates a sense of completeness and peace.' },
+        { id: 'serenity', name: { ru: 'Безмятежность', en: 'Serenity' },
+          desc: { ru: 'Покой и равновесие. Палитра активирует парасимпатическую нервную систему — замедляет дыхание и расслабляет мышечный тонус. Церилеум и мягкий зелёный — физиологически наиболее расслабляющие цвета спектра.', en: 'Peace and balance. The palette activates the parasympathetic nervous system — slows breathing and relaxes muscle tone. Cerulean and soft green are the most physiologically relaxing colors of the spectrum.' },
           palette: [
-            { hex: '#98FB98', name: { ru: 'Мятный', en: 'Mint' }},
-            { hex: '#D8BFD8', name: { ru: 'Чертополох', en: 'Thistle' }},
-            { hex: '#F0F8FF', name: { ru: 'Алиса', en: 'Alice Blue' }}
+            { hex: '#007BA7', name: { ru: 'Церилеум', en: 'Cerulean' }},
+            { hex: '#679267', name: { ru: 'Мягкий зелёный', en: 'Soft Green' }},
+            { hex: '#FFFFFF', name: { ru: 'Белый', en: 'White' }},
+            { hex: '#E6E6FA', name: { ru: 'Лаванда', en: 'Lavender' }}
+          ]},
+        { id: 'vitality', name: { ru: 'Витальность', en: 'Vitality' },
+          desc: { ru: 'Весеннее обновление. Состояние юности, надежды и лёгкости. «Разбелённые» тоны (Tints) по Кандинскому размывают материальность — рождается ощущение духовного подъёма и жизненной силы.', en: 'Spring renewal. A state of youth, hope, and lightness. Kandinsky\'s "tinted" tones (Tints) dissolve materiality — generating a sense of spiritual uplift and vital force.' },
+          palette: [
+            { hex: '#FFE135', name: { ru: 'Лучистый жёлтый', en: 'Radiant Yellow' }},
+            { hex: '#50C878', name: { ru: 'Изумрудно-зелёный', en: 'Emerald Green' }},
+            { hex: '#FFB6C1', name: { ru: 'Розовый', en: 'Pink' }},
+            { hex: '#C8A2C8', name: { ru: 'Сиреневый', en: 'Lilac' }}
+          ]},
+        { id: 'apathy', name: { ru: 'Апатия', en: 'Apathy' },
+          desc: { ru: 'Усталость и упадок сил. Палитра «низкой светлоты и низкой насыщенности» по Люшеру — передаёт подавленность, статику и регресс к физическим потребностям. Свинцово-серый — «безутешная неподвижность».', en: 'Fatigue and depletion. Lüscher\'s "low lightness and low saturation" palette — conveys suppression, stasis, and regression to physical needs. Lead gray — "inconsolable stillness".' },
+          palette: [
+            { hex: '#708090', name: { ru: 'Свинцово-серый', en: 'Lead Gray' }},
+            { hex: '#8B4513', name: { ru: 'Коричневый', en: 'Brown' }},
+            { hex: '#B5A642', name: { ru: 'Грязно-жёлтый', en: 'Dirty Yellow' }}
+          ]},
+        { id: 'mysticism', name: { ru: 'Мистицизм', en: 'Mysticism' },
+          desc: { ru: 'Тайна и магия. Сочетание цветов, редко встречающихся в природе в больших объёмах, создаёт ощущение ирреальности. Фиолетовый и индиго — по «языку красок» Кандинского — связаны с интуицией, подсознанием и магической властью.', en: 'Mystery and magic. A combination of colors rarely found in nature in large volumes creates a sense of the unreal. Violet and indigo — in Kandinsky\'s "language of colors" — are connected to intuition, the subconscious, and magical power.' },
+          palette: [
+            { hex: '#8B00FF', name: { ru: 'Фиолетовый', en: 'Violet' }},
+            { hex: '#4B0082', name: { ru: 'Индиго', en: 'Indigo' }},
+            { hex: '#6A0DAD', name: { ru: 'Глубокий пурпур', en: 'Deep Purple' }}
+          ]},
+        { id: 'fear', name: { ru: 'Страх', en: 'Fear' },
+          desc: { ru: 'Экзистенциальная тревога. Резкие, физиологически дискомфортные контрасты — ядовито-оранжевый против почти чёрного синего — создают максимальное нейронное напряжение. Маджента действует как «кричащий» сигнал эмоционального диссонанса.', en: 'Existential anxiety. Sharp, physiologically uncomfortable contrasts — toxic orange against near-black blue — create maximum neural tension. Magenta acts as a "screaming" signal of emotional dissonance.' },
+          palette: [
+            { hex: '#FF6600', name: { ru: 'Ядовито-оранжевый', en: 'Toxic Orange' }},
+            { hex: '#0A1045', name: { ru: 'Тёмно-синий', en: 'Near-Black Blue' }},
+            { hex: '#FF00FF', name: { ru: 'Маджента', en: 'Magenta' }}
           ]}
     ]
 };
@@ -788,6 +925,7 @@ function setLang(l) {
     if (activeColorIndex !== null) showProfile(activeColorIndex);
     if (activeEmotionId  !== null) showEmotion(activeEmotionId);
     renderEmotionTabs();
+    renderPhysicsGrid();
 }
 
 // Matrix
@@ -802,6 +940,24 @@ RESEARCH_DATA.colors.forEach((color, i) => {
     btn.onclick = () => showProfile(i);
     colorGrid.appendChild(btn);
 });
+
+// Physical params
+const physicsGrid = document.getElementById('physicsGrid');
+function renderPhysicsGrid() {
+    physicsGrid.innerHTML = '';
+    RESEARCH_DATA.physicalParams.forEach(param => {
+        const cell = document.createElement('div');
+        cell.className = 'physics-cell';
+        cell.innerHTML = `
+            <span class="physics-icon">${param.icon}</span>
+            <div class="physics-title">${param.title[lang]}</div>
+            <div class="physics-desc">${param.desc[lang]}</div>
+            <div class="physics-examples">${param.examples[lang]}</div>
+        `;
+        physicsGrid.appendChild(cell);
+    });
+}
+renderPhysicsGrid();
 
 function showProfile(index, shadeIndex = null) {
     activeColorIndex = index;
@@ -830,6 +986,8 @@ function showProfile(index, shadeIndex = null) {
             ${!isShade ? `
                 <div class="profile-sub-title">${lang === 'ru' ? 'Когда выбирать' : 'When to choose'}</div>
                 <div class="profile-desc">${displayData.advice[lang]}</div>
+                <div class="profile-sub-title">${lang === 'ru' ? 'Что чувствует зритель' : 'What the viewer feels'}</div>
+                <div class="profile-desc">${displayData.feelings[lang]}</div>
             ` : ''}
         </div>
     `;
@@ -873,7 +1031,7 @@ function showEmotion(id) {
 }
 
 renderEmotionTabs();
-showEmotion('anxious');
+showEmotion('nostalgia');
 </script>
 </body>
 </html>
