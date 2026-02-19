@@ -573,6 +573,250 @@
         .legend-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 8px; }
         .legend-text { font-size: 13px; font-weight: 300; line-height: 1.4; color: #444; }
 
+        /* FORMULA BLOCKS */
+        .formula-title-bar {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            padding: 28px 48px 20px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .formula-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.02em;
+        }
+
+        .formula-ratio {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            color: var(--mid);
+            text-transform: uppercase;
+        }
+
+        .formula-tagline {
+            font-size: 12px;
+            font-weight: 300;
+            color: #777;
+            margin-left: auto;
+            font-style: italic;
+        }
+
+        .rule-grid-9010 {
+            display: grid;
+            grid-template-columns: 90fr 10fr;
+            height: 120px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-5050 {
+            display: grid;
+            grid-template-columns: 50fr 50fr;
+            height: 120px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-702010 {
+            display: grid;
+            grid-template-columns: 70fr 20fr 10fr;
+            height: 120px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-2 .legend-item:last-child { border-right: none; }
+
+        .rule-legend-702010 {
+            display: grid;
+            grid-template-columns: 70fr 20fr 10fr;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-702010 .legend-item:last-child { border-right: none; }
+
+        .formula-effect {
+            padding: 20px 48px;
+            font-size: 13px;
+            font-weight: 300;
+            color: #555;
+            line-height: 1.6;
+            border-bottom: 1px solid var(--black);
+            background: #fafafa;
+        }
+
+        .formula-effect strong {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        /* ADVANCED PRINCIPLES */
+        .adv-rules-header {
+            padding: 52px 48px 28px;
+            border-bottom: 1px solid var(--black);
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+        }
+
+        .adv-rules-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+
+        .adv-rules-desc {
+            font-size: 13px;
+            font-weight: 300;
+            color: #888;
+        }
+
+        .principle-card {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .principle-num-col {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 36px;
+            border-right: 1px solid var(--black);
+        }
+
+        .principle-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 1;
+            color: #e0e0e0;
+            user-select: none;
+        }
+
+        .principle-body {
+            padding: 36px 48px;
+        }
+
+        .principle-source {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 6px;
+        }
+
+        .principle-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .principle-intro {
+            font-size: 13px;
+            font-weight: 300;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 760px;
+        }
+
+        .principle-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .principle-bullet {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .pbullet-tag {
+            flex-shrink: 0;
+            padding: 3px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            border: 1px solid currentColor;
+            white-space: nowrap;
+            align-self: center;
+        }
+
+        .pbullet-swatch {
+            flex-shrink: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            align-self: center;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+
+        .pbullet-text {
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .pbullet-text strong {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .principle-note {
+            font-size: 12px;
+            font-weight: 400;
+            color: #888;
+            background: #f5f5f5;
+            border-left: 3px solid var(--black);
+            padding: 10px 16px;
+            line-height: 1.5;
+        }
+
+        .opponent-pairs {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .opponent-pair {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1px solid var(--black);
+            overflow: hidden;
+        }
+
+        .op-half {
+            width: 40px;
+            height: 28px;
+        }
+
+        .op-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 0 8px;
+            text-transform: uppercase;
+            color: #555;
+        }
+
         /* PHYSICAL PARAMS */
         .physics-grid {
             display: grid;
@@ -637,6 +881,7 @@
             <a href="#emotions-section" data-i18n="nav_emotions">Состояния</a>
             <a href="#anatomy-section" data-i18n="nav_anatomy">Анатомия</a>
             <a href="#rules-section" data-i18n="nav_rules">Правила</a>
+            <a href="#advanced-section" data-i18n="nav_advanced">Принципы</a>
             <a href="#research-section" data-i18n="nav_research">Исследование</a>
         </div>
         <div class="lang-toggle">
@@ -746,11 +991,229 @@
             <div class="legend-text" data-i18n="rule_10_text">Эмоциональная кульминация. Самый яркий или контрастный цвет. Привлекает взгляд к смысловому центру.</div>
         </div>
     </div>
+
+    <!-- FORMULA: The Minimalist 90/10 -->
+    <div class="formula-title-bar">
+        <div class="formula-name" data-i18n="formula1_name">The Minimalist</div>
+        <div class="formula-ratio">90 / 10</div>
+        <div class="formula-tagline" data-i18n="formula1_tagline">«Абсолютный акцент»</div>
+    </div>
+    <div class="rule-grid-9010">
+        <div class="rule-part" style="background:#1a1a1a">90%</div>
+        <div class="rule-part" style="background:#E8C84A; color:#1a1a1a">10%</div>
+    </div>
+    <div class="rule-legend-2">
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula1_base_label">Base — Основа</div>
+            <div class="legend-val">90%</div>
+            <div class="legend-text" data-i18n="formula1_base_text">Огромное монохромное или нейтральное пространство. Белый, серый или глубокий темный. Создает «пустоту», в которой живет смысл.</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula1_active_label">Active — Акцент</div>
+            <div class="legend-val">10%</div>
+            <div class="legend-text" data-i18n="formula1_active_text">Один единственный «звенящий» акцент. Взгляд зрителя мгновенно приковывается к смысловому центру.</div>
+        </div>
+    </div>
+    <div class="formula-effect">
+        <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula1_effect">Максимальный драматизм и чистота. Формула одиночества, святости или исключительной важности объекта. Идеальна для эстетики минимализма — когда один элемент несёт весь смысл.</span>
+    </div>
+
+    <!-- FORMULA: The Duel 50/50 -->
+    <div class="formula-title-bar">
+        <div class="formula-name" data-i18n="formula2_name">The Duel</div>
+        <div class="formula-ratio">50 / 50</div>
+        <div class="formula-tagline" data-i18n="formula2_tagline">«Противостояние»</div>
+    </div>
+    <div class="rule-grid-5050">
+        <div class="rule-part" style="background:#2a4f7e">50%</div>
+        <div class="rule-part" style="background:#D4643A">50%</div>
+    </div>
+    <div class="rule-legend-2">
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula2_forceA_label">Force A — Первая сила</div>
+            <div class="legend-val">50%</div>
+            <div class="legend-text" data-i18n="formula2_forceA_text">Первый цвет — носитель одной идеи, стихии или характера. Ни один из двух не доминирует — они равны по праву.</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula2_forceB_label">Force B — Вторая сила</div>
+            <div class="legend-val">50%</div>
+            <div class="legend-text" data-i18n="formula2_forceB_text">Второй цвет — антагонист или партнёр. Граница между ними становится главным смысловым событием картины.</div>
+        </div>
+    </div>
+    <div class="formula-effect">
+        <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula2_effect">Дуальность, борьба или неразрывная связь противоположностей. Самая напряженная формула — отрицает иерархию ради конфликта. Картина перестаёт быть спокойной и начинает «пульсировать» на границе цветов.</span>
+    </div>
+
+    <!-- FORMULA: The Monolith 70/20/10 -->
+    <div class="formula-title-bar">
+        <div class="formula-name" data-i18n="formula3_name">The Monolith</div>
+        <div class="formula-ratio">70 / 20 / 10</div>
+        <div class="formula-tagline" data-i18n="formula3_tagline">«Мягкая поддержка»</div>
+    </div>
+    <div class="rule-grid-702010">
+        <div class="rule-part" style="background:#2C3A47">70%</div>
+        <div class="rule-part" style="background:#4B5F6A">20%</div>
+        <div class="rule-part" style="background:#8FB8CC; color:#1a1a1a">10%</div>
+    </div>
+    <div class="rule-legend-702010">
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula3_dom_label">Dominant — Доминанта</div>
+            <div class="legend-val">70%</div>
+            <div class="legend-text" data-i18n="formula3_dom_text">Глубокое погружение в одно состояние. Задаёт тональность и эмоцию всей работы целиком.</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula3_sup_label">Support — Поддержка</div>
+            <div class="legend-val">20%</div>
+            <div class="legend-text" data-i18n="formula3_sup_text">Близкий по тону или температуре оттенок. Помогает глазу не устать от основы, добавляет объём и дыхание.</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-label" data-i18n="formula3_high_label">Highlight — Блик</div>
+            <div class="legend-val">10%</div>
+            <div class="legend-text" data-i18n="formula3_high_text">Крошечный блик другого смысла. Не разрушает монолит, но оживляет его — добавляет точку притяжения.</div>
+        </div>
+    </div>
+    <div class="formula-effect">
+        <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula3_effect">Монументальность, надёжность и полное спокойствие. Вариация классики, где доминанта ещё сильнее подавляет остальные цвета. Идеально для пейзажей, философских полотен и тем вечности.</span>
+    </div>
+
+</section>
+
+<section id="advanced-section">
+    <div class="section-head">
+        <div class="section-label" data-i18n="advanced_label">05 — Продвинутые принципы</div>
+        <div class="section-desc" data-i18n="advanced_desc">Физика материала, геометрия и нейрофизиология цвета.</div>
+    </div>
+
+    <!-- PRINCIPLE 1: Geometric Resonance -->
+    <div class="principle-card">
+        <div class="principle-num-col"><div class="principle-num">I</div></div>
+        <div class="principle-body">
+            <div class="principle-source" data-i18n="pr1_source">В. Кандинский</div>
+            <div class="principle-name" data-i18n="pr1_name">Геометрический резонанс</div>
+            <div class="principle-intro" data-i18n="pr1_intro">Форма способна усиливать или подавлять воздействие цвета. Правильное сочетание форм и цвета умножает их суммарный психологический заряд — неправильное порождает скрытое напряжение.</div>
+            <div class="principle-bullets">
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#F5C518; color:#1a1a1a; border-color:#F5C518">△ Желтый</div>
+                    <div class="pbullet-text"><strong data-i18n="pr1_b1_head">Максимальный резонанс.</strong> <span data-i18n="pr1_b1_body">Острота треугольника усиливает «колющий» характер желтого — эффект агрессии и возбуждения.</span></div>
+                </div>
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#2a4f7e; color:#fff; border-color:#2a4f7e">○ Синий</div>
+                    <div class="pbullet-text"><strong data-i18n="pr1_b2_head">Глубокое погружение.</strong> <span data-i18n="pr1_b2_body">Круг усиливает центростремительное движение синего — духовность и полный покой.</span></div>
+                </div>
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#CC1111; color:#fff; border-color:#CC1111">□ Красный</div>
+                    <div class="pbullet-text"><strong data-i18n="pr1_b3_head">Сдержанная мощь.</strong> <span data-i18n="pr1_b3_body">Прямые углы квадрата уравновешивают волевой напор красного, превращая его в стабильную силу.</span></div>
+                </div>
+            </div>
+            <div class="principle-note" data-i18n="pr1_note">Применение: конфликт формы и цвета (желтый в круге) рождает «скрытую угрозу» или «сдерживаемое безумие» — мощный инструмент для сложных нарративов.</div>
+        </div>
+    </div>
+
+    <!-- PRINCIPLE 2: Neural Opponency -->
+    <div class="principle-card">
+        <div class="principle-num-col"><div class="principle-num">II</div></div>
+        <div class="principle-body">
+            <div class="principle-source" data-i18n="pr2_source">Э. Херинг · Физиология сетчатки</div>
+            <div class="principle-name" data-i18n="pr2_name">Нейронная оппонентность</div>
+            <div class="principle-intro" data-i18n="pr2_intro">Нейроны коленчатого тела обрабатывают цвет строго парами оппонентов. Если один из пары активирован, другой подавляется — и при «усталости» глаз сам порождает оппонентный цвет.</div>
+            <div class="opponent-pairs">
+                <div class="opponent-pair">
+                    <div class="op-half" style="background:#CC1111"></div>
+                    <div class="op-half" style="background:#2E8B57"></div>
+                    <div class="op-label" data-i18n="pr2_pair1">Красный ↔ Зеленый</div>
+                </div>
+                <div class="opponent-pair">
+                    <div class="op-half" style="background:#2a4f7e"></div>
+                    <div class="op-half" style="background:#F5C518"></div>
+                    <div class="op-label" data-i18n="pr2_pair2">Синий ↔ Желтый</div>
+                </div>
+                <div class="opponent-pair">
+                    <div class="op-half" style="background:#0a0a0a"></div>
+                    <div class="op-half" style="background:#ffffff"></div>
+                    <div class="op-label" data-i18n="pr2_pair3">Черный ↔ Белый</div>
+                </div>
+            </div>
+            <div class="principle-bullets">
+                <div class="principle-bullet">
+                    <div class="pbullet-swatch" style="background: conic-gradient(#CC1111 50%, #2E8B57 50%)"></div>
+                    <div class="pbullet-text"><strong data-i18n="pr2_b1_head">Эффект пост-изображения.</strong> <span data-i18n="pr2_b1_body">После долгого взгляда на яркий цвет глаз сам создаёт пятно оппонентного цвета на нейтральной поверхности.</span></div>
+                </div>
+                <div class="principle-bullet">
+                    <div class="pbullet-swatch" style="background:#2E8B57"></div>
+                    <div class="pbullet-text"><strong data-i18n="pr2_b2_head">Физиологический баланс.</strong> <span data-i18n="pr2_b2_body">В композиции с доминирующим красным (60%) акцент (10%) должен быть строго зелёным — это восстанавливает нейронный баланс и предотвращает «цветовую усталость».</span></div>
+                </div>
+            </div>
+            <div class="principle-note" data-i18n="pr2_note">Применение: используйте оппонентный цвет в роли акцента для физиологически «правильного» баланса, а не только эстетического.</div>
+        </div>
+    </div>
+
+    <!-- PRINCIPLE 3: Texture Weight -->
+    <div class="principle-card">
+        <div class="principle-num-col"><div class="principle-num">III</div></div>
+        <div class="principle-body">
+            <div class="principle-source" data-i18n="pr3_source">Фактурный вес материала</div>
+            <div class="principle-name" data-i18n="pr3_name">Баланс материальности</div>
+            <div class="principle-intro" data-i18n="pr3_intro">Психологическое воздействие цвета неотделимо от способа его нанесения. Фактура изменяет воспринимаемый «вес» и телесность — независимо от самого цвета.</div>
+            <div class="principle-bullets">
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#2a2a2a; color:#fff; border-color:#2a2a2a">Импасто</div>
+                    <div class="pbullet-text"><strong data-i18n="pr3_b1_head">Густой мазок — телесность.</strong> <span data-i18n="pr3_b1_body">Тени в рельефе делают цвет тяжёлым, осязаемым и «материальным». Усиливает эмоциональную вовлечённость и физическое присутствие зрителя.</span></div>
+                </div>
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#c8d8e8; color:#2a2a2a; border-color:#c8d8e8">Лессировка</div>
+                    <div class="pbullet-text"><strong data-i18n="pr3_b2_head">Прозрачные слои — эфирность.</strong> <span data-i18n="pr3_b2_body">Создают эффект «глубокого бассейна» — цвет кажется уходящим в бесконечность. Идеально для состояний транса, молитвы или внутреннего созерцания.</span></div>
+                </div>
+            </div>
+            <div class="principle-note" data-i18n="pr3_note">Применение: тёмный цвет, нанесённый тонко, кажется менее «давящим», чем светлый, нанесённый густым слоем. Фактура переписывает психологию цвета.</div>
+        </div>
+    </div>
+
+    <!-- PRINCIPLE 4: Circadian Validity -->
+    <div class="principle-card">
+        <div class="principle-num-col"><div class="principle-num">IV</div></div>
+        <div class="principle-body">
+            <div class="principle-source" data-i18n="pr4_source">Свет · Биоритм · Среда</div>
+            <div class="principle-name" data-i18n="pr4_name">Циркадная валидность</div>
+            <div class="principle-intro" data-i18n="pr4_intro">Правило баланса между цветом объекта и окружающим светом. Восприятие работы принципиально меняется в зависимости от спектра освещения, экспозиции помещения и времени суток.</div>
+            <div class="principle-bullets">
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#b8d4f0; color:#1a1a1a; border-color:#b8d4f0">Север</div>
+                    <div class="pbullet-text"><strong data-i18n="pr4_b1_head">Температурная компенсация.</strong> <span data-i18n="pr4_b1_body">Холодный северный свет требует смещения палитры в сторону тёплых тонов для достижения гармонии. Южный солнечный спектр, напротив, может сделать красную картину чрезмерно агрессивной.</span></div>
+                </div>
+                <div class="principle-bullet">
+                    <div class="pbullet-tag" style="background:#1a1a3a; color:#aac4ff; border-color:#1a1a3a">Ночь</div>
+                    <div class="pbullet-text"><strong data-i18n="pr4_b2_head">Биоритмический баланс.</strong> <span data-i18n="pr4_b2_body">Спальня — холодный спектр (синий активирует выработку мелатонина). Столовая — тёплый (красный и оранжевый стимулируют аппетит и выброс адреналина).</span></div>
+                </div>
+            </div>
+            <div class="principle-note" data-i18n="pr4_note">Применение: перед финальным выбором палитры проверьте работу в условиях реального освещения помещения, для которого она создаётся.</div>
+        </div>
+    </div>
+
+    <!-- PRINCIPLE 5: Cultural Counterweight -->
+    <div class="principle-card">
+        <div class="principle-num-col"><div class="principle-num">V</div></div>
+        <div class="principle-body">
+            <div class="principle-source" data-i18n="pr5_source">Культурный контекст · Архетипы</div>
+            <div class="principle-name" data-i18n="pr5_name">Культурный противовес</div>
+            <div class="principle-intro" data-i18n="pr5_intro">Универсальных значений цвета не существует. Баланс смыслов для глобальной аудитории требует учёта географического и культурного контекста.</div>
+            <div class="principle-bullets">
+                <div class="principle-bullet">
+                    <div class="pbullet-swatch" style="background:#ffffff"></div>
+                    <div class="pbullet-text"><strong data-i18n="pr5_b1_head">Белый.</strong> <span data-i18n="pr5_b1_body">Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.</span></div>
+                </div>
+                <div class="principle-bullet">
+                    <div class="pbullet-swatch" style="background:#CC1111"></div>
+                    <div class="pbullet-text"><strong data-i18n="pr5_b2_head">Красный.</strong> <span data-i18n="pr5_b2_body">Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.</span></div>
+                </div>
+            </div>
+            <div class="principle-note" data-i18n="pr5_note">Применение: балансируйте символику цвета так, чтобы она не вступала в конфликт с базовыми архетипами целевой аудитории.</div>
+        </div>
+    </div>
 </section>
 
 <section id="research-section">
     <div class="section-head">
-        <div class="section-label" data-i18n="research_label">05 — Ключевые данные</div>
+        <div class="section-label" data-i18n="research_label">06 — Ключевые данные</div>
         <div class="section-desc" data-i18n="research_desc">Нейрофизиологические детерминанты цветового восприятия.</div>
     </div>
     <div class="research-grid">
@@ -1171,7 +1634,7 @@ const RESEARCH_DATA = {
 
 const I18N = {
     ru: {
-        nav_matrix: 'Матрица', nav_emotions: 'Состояния', nav_anatomy: 'Анатомия', nav_rules: 'Правила', nav_research: 'Данные',
+        nav_matrix: 'Матрица', nav_emotions: 'Состояния', nav_anatomy: 'Анатомия', nav_rules: 'Правила', nav_advanced: 'Принципы', nav_research: 'Данные',
         hero_meta: 'Энциклопедия цветовой психологии — 2026',
         matrix_label: '01 — Матрица восприятия', matrix_desc: 'Выберите цвет — получите психологический профиль.',
         matrix_placeholder: 'Нажмите на цвет',
@@ -1184,14 +1647,56 @@ const I18N = {
         rule_60_label: 'Доминанта', rule_60_text: 'Основной фон. Задает «атмосферный кокон». 60% площади.',
         rule_30_label: 'Субдоминанта', rule_30_text: 'Создает визуальный интерес и динамику. 30% площади.',
         rule_10_label: 'Акцент', rule_10_text: 'Эмоциональная кульминация. Смысловой центр. 10% площади.',
-        research_label: '05 — Ключевые данные', research_desc: 'Нейрофизиологические детерминанты цветового восприятия.',
+        effect_label: 'Эффект:',
+        formula1_name: 'The Minimalist', formula1_tagline: '«Абсолютный акцент»',
+        formula1_base_label: 'Base — Основа', formula1_base_text: 'Огромное монохромное или нейтральное пространство. Белый, серый или глубокий темный. Создает «пустоту», в которой живет смысл.',
+        formula1_active_label: 'Active — Акцент', formula1_active_text: 'Один единственный «звенящий» акцент. Взгляд зрителя мгновенно приковывается к смысловому центру.',
+        formula1_effect: 'Максимальный драматизм и чистота. Формула одиночества, святости или исключительной важности объекта. Идеальна для эстетики минимализма — когда один элемент несёт весь смысл.',
+        formula2_name: 'The Duel', formula2_tagline: '«Противостояние»',
+        formula2_forceA_label: 'Force A — Первая сила', formula2_forceA_text: 'Первый цвет — носитель одной идеи, стихии или характера. Ни один из двух не доминирует — они равны по праву.',
+        formula2_forceB_label: 'Force B — Вторая сила', formula2_forceB_text: 'Второй цвет — антагонист или партнёр. Граница между ними становится главным смысловым событием картины.',
+        formula2_effect: 'Дуальность, борьба или неразрывная связь противоположностей. Самая напряженная формула — отрицает иерархию ради конфликта. Картина перестаёт быть спокойной и начинает «пульсировать» на границе цветов.',
+        formula3_name: 'The Monolith', formula3_tagline: '«Мягкая поддержка»',
+        formula3_dom_label: 'Dominant — Доминанта', formula3_dom_text: 'Глубокое погружение в одно состояние. Задаёт тональность и эмоцию всей работы целиком.',
+        formula3_sup_label: 'Support — Поддержка', formula3_sup_text: 'Близкий по тону или температуре оттенок. Помогает глазу не устать от основы, добавляет объём и дыхание.',
+        formula3_high_label: 'Highlight — Блик', formula3_high_text: 'Крошечный блик другого смысла. Не разрушает монолит, но оживляет его — добавляет точку притяжения.',
+        formula3_effect: 'Монументальность, надёжность и полное спокойствие. Вариация классики, где доминанта ещё сильнее подавляет остальные цвета. Идеально для пейзажей, философских полотен и тем вечности.',
+        advanced_label: '05 — Продвинутые принципы', advanced_desc: 'Физика материала, геометрия и нейрофизиология цвета.',
+        pr1_source: 'В. Кандинский', pr1_name: 'Геометрический резонанс',
+        pr1_intro: 'Форма способна усиливать или подавлять воздействие цвета. Правильное сочетание форм и цвета умножает их суммарный психологический заряд — неправильное порождает скрытое напряжение.',
+        pr1_b1_head: 'Максимальный резонанс.', pr1_b1_body: 'Острота треугольника усиливает «колющий» характер желтого — эффект агрессии и возбуждения.',
+        pr1_b2_head: 'Глубокое погружение.', pr1_b2_body: 'Круг усиливает центростремительное движение синего — духовность и полный покой.',
+        pr1_b3_head: 'Сдержанная мощь.', pr1_b3_body: 'Прямые углы квадрата уравновешивают волевой напор красного, превращая его в стабильную силу.',
+        pr1_note: 'Применение: конфликт формы и цвета (желтый в круге) рождает «скрытую угрозу» или «сдерживаемое безумие» — мощный инструмент для сложных нарративов.',
+        pr2_source: 'Э. Херинг · Физиология сетчатки', pr2_name: 'Нейронная оппонентность',
+        pr2_intro: 'Нейроны коленчатого тела обрабатывают цвет строго парами оппонентов. Если один из пары активирован, другой подавляется — и при «усталости» глаз сам порождает оппонентный цвет.',
+        pr2_pair1: 'Красный ↔ Зеленый', pr2_pair2: 'Синий ↔ Желтый', pr2_pair3: 'Черный ↔ Белый',
+        pr2_b1_head: 'Эффект пост-изображения.', pr2_b1_body: 'После долгого взгляда на яркий цвет глаз сам создаёт пятно оппонентного цвета на нейтральной поверхности.',
+        pr2_b2_head: 'Физиологический баланс.', pr2_b2_body: 'В композиции с доминирующим красным (60%) акцент (10%) должен быть строго зелёным — это восстанавливает нейронный баланс и предотвращает «цветовую усталость».',
+        pr2_note: 'Применение: используйте оппонентный цвет в роли акцента для физиологически «правильного» баланса, а не только эстетического.',
+        pr3_source: 'Фактурный вес материала', pr3_name: 'Баланс материальности',
+        pr3_intro: 'Психологическое воздействие цвета неотделимо от способа его нанесения. Фактура изменяет воспринимаемый «вес» и телесность — независимо от самого цвета.',
+        pr3_b1_head: 'Густой мазок — телесность.', pr3_b1_body: 'Тени в рельефе делают цвет тяжёлым, осязаемым и «материальным». Усиливает эмоциональную вовлечённость и физическое присутствие зрителя.',
+        pr3_b2_head: 'Прозрачные слои — эфирность.', pr3_b2_body: 'Создают эффект «глубокого бассейна» — цвет кажется уходящим в бесконечность. Идеально для состояний транса, молитвы или внутреннего созерцания.',
+        pr3_note: 'Применение: тёмный цвет, нанесённый тонко, кажется менее «давящим», чем светлый, нанесённый густым слоем. Фактура переписывает психологию цвета.',
+        pr4_source: 'Свет · Биоритм · Среда', pr4_name: 'Циркадная валидность',
+        pr4_intro: 'Правило баланса между цветом объекта и окружающим светом. Восприятие работы принципиально меняется в зависимости от спектра освещения, экспозиции помещения и времени суток.',
+        pr4_b1_head: 'Температурная компенсация.', pr4_b1_body: 'Холодный северный свет требует смещения палитры в сторону тёплых тонов для достижения гармонии. Южный солнечный спектр, напротив, может сделать красную картину чрезмерно агрессивной.',
+        pr4_b2_head: 'Биоритмический баланс.', pr4_b2_body: 'Спальня — холодный спектр (синий активирует выработку мелатонина). Столовая — тёплый (красный и оранжевый стимулируют аппетит и выброс адреналина).',
+        pr4_note: 'Применение: перед финальным выбором палитры проверьте работу в условиях реального освещения помещения, для которого она создаётся.',
+        pr5_source: 'Культурный контекст · Архетипы', pr5_name: 'Культурный противовес',
+        pr5_intro: 'Универсальных значений цвета не существует. Баланс смыслов для глобальной аудитории требует учёта географического и культурного контекста.',
+        pr5_b1_head: 'Белый.', pr5_b1_body: 'Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.',
+        pr5_b2_head: 'Красный.', pr5_b2_body: 'Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.',
+        pr5_note: 'Применение: балансируйте символику цвета так, чтобы она не вступала в конфликт с базовыми архетипами целевой аудитории.',
+        research_label: '06 — Ключевые данные', research_desc: 'Нейрофизиологические детерминанты цветового восприятия.',
         stat1_label: 'Первое впечатление', stat1_text: 'Цвет определяет около 80% общего впечатления в первые 20 секунд.',
         stat2_label: 'Красный спектр', stat2_text: 'Повышает ЧСС на 5–10% и усиливает кожную проводимость.',
         stat3_label: 'Синий спектр', stat3_text: 'Снижает ЧСС на 3–5%, активирует мелатонин и снижает тревогу.',
         footer_copy: '© 2026 — Pure: Энциклопедия работы с цветом'
     },
     en: {
-        nav_matrix: 'Matrix', nav_emotions: 'Emotions', nav_anatomy: 'Anatomy', nav_rules: 'Rules', nav_research: 'Data',
+        nav_matrix: 'Matrix', nav_emotions: 'Emotions', nav_anatomy: 'Anatomy', nav_rules: 'Rules', nav_advanced: 'Principles', nav_research: 'Data',
         hero_meta: 'Encyclopedia of Color Psychology — 2026',
         matrix_label: '01 — Perception Matrix', matrix_desc: 'Select a color to get its psychological profile.',
         matrix_placeholder: 'Click a color',
@@ -1204,7 +1709,49 @@ const I18N = {
         rule_60_label: 'Dominant', rule_60_text: 'Main background. Sets the "atmospheric cocoon". 60% area.',
         rule_30_label: 'Sub-dominant', rule_30_text: 'Creates visual interest and dynamics. 30% area.',
         rule_10_label: 'Accent', rule_10_text: 'Emotional climax. Semantic center. 10% area.',
-        research_label: '05 — Key Data', research_desc: 'Neurophysiological determinants of color perception.',
+        effect_label: 'Effect:',
+        formula1_name: 'The Minimalist', formula1_tagline: '"Absolute Accent"',
+        formula1_base_label: 'Base', formula1_base_text: 'A vast monochrome or neutral space. White, grey, or deep dark from your matrix. Creates a "void" in which meaning lives.',
+        formula1_active_label: 'Active — Accent', formula1_active_text: 'One single "ringing" accent. The viewer\'s gaze is instantly riveted to the semantic center.',
+        formula1_effect: 'Maximum drama and purity. The formula of solitude, sanctity, or the singular importance of an object. Perfect for minimalist aesthetics — when one element carries all the meaning.',
+        formula2_name: 'The Duel', formula2_tagline: '"Confrontation"',
+        formula2_forceA_label: 'Force A', formula2_forceA_text: 'The first color — bearer of one idea, element, or character. Neither dominates — they are equal by right.',
+        formula2_forceB_label: 'Force B', formula2_forceB_text: 'The second color — antagonist or partner. The boundary between them becomes the main semantic event of the painting.',
+        formula2_effect: 'Duality, struggle, or an inseparable bond of opposites. The most tense formula — it denies hierarchy in favor of conflict. The painting stops being calm and begins to "pulse" along the color boundary.',
+        formula3_name: 'The Monolith', formula3_tagline: '"Soft Support"',
+        formula3_dom_label: 'Dominant', formula3_dom_text: 'Deep immersion in one state. Sets the tonality and emotion of the entire work.',
+        formula3_sup_label: 'Support', formula3_sup_text: 'A shade close in tone or temperature. Helps the eye from tiring of the base, adds volume and breath.',
+        formula3_high_label: 'Highlight', formula3_high_text: 'A tiny gleam of another meaning. Does not break the monolith but enlivens it — adds a focal point.',
+        formula3_effect: 'Monumentality, reliability, and complete calm. A variation of the classic where the dominant even more powerfully subdues the rest. Ideal for landscapes, philosophical canvases, and themes of eternity.',
+        advanced_label: '05 — Advanced Principles', advanced_desc: 'Material physics, geometry, and neurophysiology of color.',
+        pr1_source: 'V. Kandinsky', pr1_name: 'Geometric Resonance',
+        pr1_intro: 'Form can amplify or suppress the impact of color. The correct pairing of shape and color multiplies their combined psychological charge — the wrong pairing creates hidden tension.',
+        pr1_b1_head: 'Maximum resonance.', pr1_b1_body: 'The sharpness of the triangle amplifies the "piercing" character of yellow — an effect of aggression and arousal.',
+        pr1_b2_head: 'Deep immersion.', pr1_b2_body: 'The circle intensifies the centripetal movement of blue — spirituality and complete stillness.',
+        pr1_b3_head: 'Restrained power.', pr1_b3_body: 'Right angles of the square balance the willful thrust of red, transforming it into stable force.',
+        pr1_note: 'Application: conflict of form and color (yellow in a circle) creates a "hidden threat" or "contained madness" — a powerful tool for complex narratives.',
+        pr2_source: 'E. Hering · Retinal Physiology', pr2_name: 'Neural Opponency',
+        pr2_intro: 'Neurons in the lateral geniculate nucleus process color in strict opponent pairs. When one of the pair is activated, the other is suppressed — and when the eye is "fatigued", it generates the opponent color itself.',
+        pr2_pair1: 'Red ↔ Green', pr2_pair2: 'Blue ↔ Yellow', pr2_pair3: 'Black ↔ White',
+        pr2_b1_head: 'After-image effect.', pr2_b1_body: 'After prolonged exposure to a vivid color, the eye automatically generates an opponent-color patch on a neutral surface.',
+        pr2_b2_head: 'Physiological balance.', pr2_b2_body: 'In a composition with dominant red (60%), the accent (10%) must be strictly green — this restores neural balance and prevents "color fatigue".',
+        pr2_note: 'Application: use opponent color as the accent for a physiologically "correct" balance, not merely an aesthetic one.',
+        pr3_source: 'Textural Weight of Material', pr3_name: 'Balance of Materiality',
+        pr3_intro: 'The psychological impact of color is inseparable from the method of its application. Texture changes the perceived "weight" and corporeality — regardless of the color itself.',
+        pr3_b1_head: 'Impasto — corporeality.', pr3_b1_body: 'Shadows in the relief make color heavy, tactile, and "physical". Intensifies emotional engagement and the viewer\'s physical presence.',
+        pr3_b2_head: 'Glazing — ethereality.', pr3_b2_body: 'Creates a "deep pool" effect — color seems to recede into infinity. Ideal for states of trance, prayer, or inner contemplation.',
+        pr3_note: 'Application: a dark color applied thinly feels less "oppressive" than a light color applied thickly. Texture rewrites the psychology of color.',
+        pr4_source: 'Light · Rhythm · Environment', pr4_name: 'Circadian Validity',
+        pr4_intro: 'The rule of balance between the color of an object and its surrounding light. Perception of the work changes fundamentally depending on the spectrum of illumination, room exposure, and time of day.',
+        pr4_b1_head: 'Temperature compensation.', pr4_b1_body: 'Cold northern light requires shifting the palette toward warm tones to achieve harmony. Southern sunlight, conversely, can make an active red painting excessively aggressive.',
+        pr4_b2_head: 'Biorhythmic balance.', pr4_b2_body: 'Bedroom — cool spectrum (blue activates melatonin production). Dining room — warm (red and orange stimulate appetite and adrenaline release).',
+        pr4_note: 'Application: before the final palette choice, test the work under the actual lighting conditions of the space it is created for.',
+        pr5_source: 'Cultural Context · Archetypes', pr5_name: 'Cultural Counterweight',
+        pr5_intro: 'Universal color meanings do not exist. The balance of meanings for a global audience requires awareness of geographic and cultural context.',
+        pr5_b1_head: 'White.', pr5_b1_body: 'Western tradition — purity and innocence. For an Eastern viewer — mourning and grief. Balancing with vivid accents of life (red or gold) is required.',
+        pr5_b2_head: 'Red.', pr5_b2_body: 'In China — luck and celebration. Western tradition — danger and passion. One color, two fundamentally different archetypes.',
+        pr5_note: 'Application: balance the color symbolism so that it does not conflict with the core archetypes of your target audience.',
+        research_label: '06 — Key Data', research_desc: 'Neurophysiological determinants of color perception.',
         stat1_label: 'First Impression', stat1_text: 'Color determines about 80% of the overall impression in the first 20 seconds.',
         stat2_label: 'Red Spectrum', stat2_text: 'Raises heart rate by 5–10% and increases skin conductance.',
         stat3_label: 'Blue Spectrum', stat3_text: 'Lowers heart rate by 3–5%, activates melatonin, and reduces anxiety.',
