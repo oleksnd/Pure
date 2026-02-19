@@ -117,9 +117,10 @@
 
         .hero-meta {
             font-size: 12px;
-            color: var(--mid);
+            color: var(--black);
             letter-spacing: 0.08em;
             text-transform: uppercase;
+            font-weight: 500;
         }
 
         .hero-right {
@@ -146,14 +147,30 @@
         .section-label {
             padding: 32px 48px;
             border-right: 1px solid var(--black);
-            font-size: 11px;
-            letter-spacing: 0.2em;
+            font-size: 12px;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             font-weight: 700;
-            color: var(--mid);
+            color: var(--black);
             display: flex;
             align-items: center;
         }
+
+        .section-label::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--accent, #ff4700);
+            margin-right: 14px;
+            display: inline-block;
+        }
+
+        #matrix-section   { --accent: #FF3B30; }
+        #emotions-section { --accent: #FF9500; }
+        #anatomy-section  { --accent: #FFCC00; }
+        #rules-section    { --accent: #34C759; }
+        #advanced-section { --accent: #007AFF; }
+        #research-section { --accent: #5856D6; }
 
         .section-desc {
             padding: 32px 48px;
@@ -375,7 +392,7 @@
         }
 
         .emotion-desc-row {
-            padding: 32px 48px;
+            padding: 32px;
             border-top: 1px solid var(--black);
             font-size: 14px;
             font-weight: 300;
@@ -386,14 +403,16 @@
         /* RESEARCH */
         #research-section { border-bottom: 1px solid var(--black); }
 
-        .research-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        .research-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; }
 
         .research-cell {
             padding: 56px 48px;
             border-right: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
         }
 
-        .research-cell:last-child { border-right: none; }
+        .research-cell:nth-child(4n) { border-right: none; }
+        .research-cell:last-child { grid-column: 1 / -1; border-right: none; border-bottom: none; }
 
         .research-number {
             font-family: 'Space Grotesk', sans-serif;
@@ -444,6 +463,29 @@
             padding-left: 20px;
             font-style: italic;
             color: #333;
+        }
+
+        /* PAIRINGS */
+        .pairings-reason {
+            font-size: 13px;
+            font-weight: 300;
+            color: #555;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-top: 12px;
+        }
+
+        .pairings-reason b {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .pairings-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+            max-width: 800px;
         }
 
         /* SCIENCE BLOCK */
@@ -498,7 +540,8 @@
             .palette-row { grid-template-columns: 1fr; }
             .palette-cell { border-right: none; border-bottom: 1px solid var(--black); }
             .research-grid { grid-template-columns: 1fr; }
-            .research-cell { border-right: none; border-bottom: 1px solid var(--black); }
+            .research-cell { border-right: none !important; border-bottom: 1px solid var(--black) !important; }
+            .research-cell:last-child { border-bottom: none !important; }
             .emotions-head-right { padding: 24px; }
             .emotion-tab { padding: 18px 20px; }
             footer { flex-direction: column; gap: 12px; text-align: center; }
@@ -570,7 +613,7 @@
         .legend-item:last-child { border-right: none; }
 
         .legend-val { font-weight: 900; font-size: 18px; margin-bottom: 4px; }
-        .legend-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 8px; }
+        .legend-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--black); margin-bottom: 8px; font-weight: 700; }
         .legend-text { font-size: 13px; font-weight: 300; line-height: 1.4; color: #444; }
 
         /* FORMULA BLOCKS */
@@ -643,7 +686,7 @@
         .rule-legend-702010 .legend-item:last-child { border-right: none; }
 
         .formula-effect {
-            padding: 20px 48px;
+            padding: 24px;
             font-size: 13px;
             font-weight: 300;
             color: #555;
@@ -801,6 +844,30 @@
             gap: 0;
             border: 1px solid var(--black);
             overflow: hidden;
+        }
+
+        .principle-sample {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--black);
+            overflow: hidden;
+            margin-bottom: 8px;
+            width: fit-content;
+        }
+
+        .psample-box {
+            width: 40px;
+            height: 24px;
+            border-right: 1px solid var(--black);
+        }
+
+        .psample-label {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--black);
         }
 
         .op-half {
@@ -969,6 +1036,14 @@
         <div class="section-label" data-i18n="rules_label">04 — Правила баланса</div>
         <div class="section-desc" data-i18n="rules_desc">Золотые формулы распределения цвета в композиции.</div>
     </div>
+
+    <!-- FORMULA: The Classic 60/30/10 -->
+    <div class="formula-title-bar">
+        <div class="formula-name" data-i18n="rule_classic_name">The Classic</div>
+        <div class="formula-ratio">60 / 30 / 10</div>
+        <div class="formula-tagline" data-i18n="rule_classic_tagline">«Золотое сечение гармонии»</div>
+    </div>
+
     <div class="rule-grid">
         <div class="rule-part" style="background:#555">60%</div>
         <div class="rule-part" style="background:#888">30%</div>
@@ -1093,15 +1168,24 @@
             <div class="principle-intro" data-i18n="pr1_intro">Форма способна усиливать или подавлять воздействие цвета. Правильное сочетание форм и цвета умножает их суммарный психологический заряд — неправильное порождает скрытое напряжение.</div>
             <div class="principle-bullets">
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#F5C518; color:#1a1a1a; border-color:#F5C518">△ Желтый</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#F5C518"></div>
+                        <div class="psample-label" data-i18n="pr1_yellow">△ Желтый</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr1_b1_head">Максимальный резонанс.</strong> <span data-i18n="pr1_b1_body">Острота треугольника усиливает «колющий» характер желтого — эффект агрессии и возбуждения.</span></div>
                 </div>
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#2a4f7e; color:#fff; border-color:#2a4f7e">○ Синий</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#2a4f7e"></div>
+                        <div class="psample-label" data-i18n="pr1_blue">○ Синий</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr1_b2_head">Глубокое погружение.</strong> <span data-i18n="pr1_b2_body">Круг усиливает центростремительное движение синего — духовность и полный покой.</span></div>
                 </div>
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#CC1111; color:#fff; border-color:#CC1111">□ Красный</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#CC1111"></div>
+                        <div class="psample-label" data-i18n="pr1_red">□ Красный</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr1_b3_head">Сдержанная мощь.</strong> <span data-i18n="pr1_b3_body">Прямые углы квадрата уравновешивают волевой напор красного, превращая его в стабильную силу.</span></div>
                 </div>
             </div>
@@ -1135,11 +1219,17 @@
             </div>
             <div class="principle-bullets">
                 <div class="principle-bullet">
-                    <div class="pbullet-swatch" style="background: conic-gradient(#CC1111 50%, #2E8B57 50%)"></div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background: conic-gradient(#CC1111 50%, #2E8B57 50%)"></div>
+                        <div class="psample-label" data-i18n="pr2_afterimage">Пост-эффект</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr2_b1_head">Эффект пост-изображения.</strong> <span data-i18n="pr2_b1_body">После долгого взгляда на яркий цвет глаз сам создаёт пятно оппонентного цвета на нейтральной поверхности.</span></div>
                 </div>
                 <div class="principle-bullet">
-                    <div class="pbullet-swatch" style="background:#2E8B57"></div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#2E8B57"></div>
+                        <div class="psample-label" data-i18n="pr2_balance">Баланс</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr2_b2_head">Физиологический баланс.</strong> <span data-i18n="pr2_b2_body">В композиции с доминирующим красным (60%) акцент (10%) должен быть строго зелёным — это восстанавливает нейронный баланс и предотвращает «цветовую усталость».</span></div>
                 </div>
             </div>
@@ -1156,11 +1246,17 @@
             <div class="principle-intro" data-i18n="pr3_intro">Психологическое воздействие цвета неотделимо от способа его нанесения. Фактура изменяет воспринимаемый «вес» и телесность — независимо от самого цвета.</div>
             <div class="principle-bullets">
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#2a2a2a; color:#fff; border-color:#2a2a2a">Импасто</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#2a2a2a"></div>
+                        <div class="psample-label" data-i18n="pr3_impasto">Импасто</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr3_b1_head">Густой мазок — телесность.</strong> <span data-i18n="pr3_b1_body">Тени в рельефе делают цвет тяжёлым, осязаемым и «материальным». Усиливает эмоциональную вовлечённость и физическое присутствие зрителя.</span></div>
                 </div>
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#c8d8e8; color:#2a2a2a; border-color:#c8d8e8">Лессировка</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#c8d8e8"></div>
+                        <div class="psample-label" data-i18n="pr3_glazing">Лессировка</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr3_b2_head">Прозрачные слои — эфирность.</strong> <span data-i18n="pr3_b2_body">Создают эффект «глубокого бассейна» — цвет кажется уходящим в бесконечность. Идеально для состояний транса, молитвы или внутреннего созерцания.</span></div>
                 </div>
             </div>
@@ -1177,11 +1273,17 @@
             <div class="principle-intro" data-i18n="pr4_intro">Правило баланса между цветом объекта и окружающим светом. Восприятие работы принципиально меняется в зависимости от спектра освещения, экспозиции помещения и времени суток.</div>
             <div class="principle-bullets">
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#b8d4f0; color:#1a1a1a; border-color:#b8d4f0">Север</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#b8d4f0"></div>
+                        <div class="psample-label" data-i18n="pr4_north">Север</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr4_b1_head">Температурная компенсация.</strong> <span data-i18n="pr4_b1_body">Холодный северный свет требует смещения палитры в сторону тёплых тонов для достижения гармонии. Южный солнечный спектр, напротив, может сделать красную картину чрезмерно агрессивной.</span></div>
                 </div>
                 <div class="principle-bullet">
-                    <div class="pbullet-tag" style="background:#1a1a3a; color:#aac4ff; border-color:#1a1a3a">Ночь</div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#1a1a3a"></div>
+                        <div class="psample-label" data-i18n="pr4_night">Ночь</div>
+                    </div>
                     <div class="pbullet-text"><strong data-i18n="pr4_b2_head">Биоритмический баланс.</strong> <span data-i18n="pr4_b2_body">Спальня — холодный спектр (синий активирует выработку мелатонина). Столовая — тёплый (красный и оранжевый стимулируют аппетит и выброс адреналина).</span></div>
                 </div>
             </div>
@@ -1198,12 +1300,18 @@
             <div class="principle-intro" data-i18n="pr5_intro">Универсальных значений цвета не существует. Баланс смыслов для глобальной аудитории требует учёта географического и культурного контекста.</div>
             <div class="principle-bullets">
                 <div class="principle-bullet">
-                    <div class="pbullet-swatch" style="background:#ffffff"></div>
-                    <div class="pbullet-text"><strong data-i18n="pr5_b1_head">Белый.</strong> <span data-i18n="pr5_b1_body">Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.</span></div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#ffffff"></div>
+                        <div class="psample-label" data-i18n="pr5_white">Белый</div>
+                    </div>
+                    <div class="pbullet-text"><strong data-i18n="pr5_b1_head">Глобальный контекст.</strong> <span data-i18n="pr5_b1_body">Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.</span></div>
                 </div>
                 <div class="principle-bullet">
-                    <div class="pbullet-swatch" style="background:#CC1111"></div>
-                    <div class="pbullet-text"><strong data-i18n="pr5_b2_head">Красный.</strong> <span data-i18n="pr5_b2_body">Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.</span></div>
+                    <div class="principle-sample">
+                        <div class="psample-box" style="background:#CC1111"></div>
+                        <div class="psample-label" data-i18n="pr5_red">Красный</div>
+                    </div>
+                    <div class="pbullet-text"><strong data-i18n="pr5_b2_head">Культурный код.</strong> <span data-i18n="pr5_b2_body">Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.</span></div>
                 </div>
             </div>
             <div class="principle-note" data-i18n="pr5_note">Применение: балансируйте символику цвета так, чтобы она не вступала в конфликт с базовыми архетипами целевой аудитории.</div>
@@ -1232,6 +1340,56 @@
             <div class="research-cell-label" data-i18n="stat3_label">Синий спектр</div>
             <div class="research-cell-text" data-i18n="stat3_text">Синий снижает ЧСС на 3–5%, активирует выработку мелатонина и снижает уровень тревожности.</div>
         </div>
+        <div class="research-cell">
+            <div class="research-number">93%</div>
+            <div class="research-cell-label" data-i18n="stat4_label">Sensory Priority</div>
+            <div class="research-cell-text" data-i18n="stat4_text">Визуальная составляющая является решающим фактором при оценке любого нового объекта для 93% людей.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">+20%</div>
+            <div class="research-cell-label" data-i18n="stat5_label">Creative Pulse</div>
+            <div class="research-cell-text" data-i18n="stat5_text">Нахождение в окружении зелёного спектра (Nature-based) повышает продуктивность творческого мышления в среднем на 20%.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">−30%</div>
+            <div class="research-cell-label" data-i18n="stat6_label">Cortisol Drop</div>
+            <div class="research-cell-text" data-i18n="stat6_text">Созерцание глубоких природных оттенков снижает уровень кортизола на 30% в течение 15 минут.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">60%</div>
+            <div class="research-cell-label" data-i18n="stat7_label">Memory Recall</div>
+            <div class="research-cell-text" data-i18n="stat7_text">Использование цвета в подаче информации увеличивает её запоминаемость на 60% по сравнению с монохромом.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">Yellow</div>
+            <div class="research-cell-label" data-i18n="stat8_label">Left Hemisphere</div>
+            <div class="research-cell-text" data-i18n="stat8_text">Жёлтый психологически активирует левое полушарие мозга, стимулируя аналитическое мышление, память и решительность.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">Green</div>
+            <div class="research-cell-label" data-i18n="stat9_label">Min. Accommodation</div>
+            <div class="research-cell-text" data-i18n="stat9_text">Зелёный требует минимальной аккомодации хрусталика — единственный цвет, на котором глаз физически отдыхает. Расширяет капилляры, снижает артериальное давление.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">Warm</div>
+            <div class="research-cell-label" data-i18n="stat10_label">Cortical Suppression</div>
+            <div class="research-cell-text" data-i18n="stat10_text">Тёплые цвета подавляют кортикальную деятельность — импульсивность растёт, время на обдумывание сокращается. Человек действует «здесь и сейчас».</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">Cold</div>
+            <div class="research-cell-label" data-i18n="stat11_label">Time Perception</div>
+            <div class="research-cell-text" data-i18n="stat11_text">Холодные оттенки снижают возбуждение и субъективно ускоряют восприятие времени — в холодном окружении время загрузки кажется меньше.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">Red</div>
+            <div class="research-cell-label" data-i18n="stat12_label">Chromostereopsis</div>
+            <div class="research-cell-text" data-i18n="stat12_text">Красные волны фокусируются за сетчаткой: хрусталик становится выпуклым, и объект физически кажется ближе, чем есть. Синий работает обратно — отдаляет.</div>
+        </div>
+        <div class="research-cell">
+            <div class="research-number">Dark</div>
+            <div class="research-cell-label" data-i18n="stat13_label">Anxiety Effect</div>
+            <div class="research-cell-text" data-i18n="stat13_text">Тёмные тона при низкой светлоте повышают кожную проводимость (КГР) и частоту сердечных сокращений — тело интерпретирует темноту как биологический сигнал угрозы. Чем глубже тень, тем интенсивнее отклик.</div>
+        </div>
     </div>
 </section>
 
@@ -1248,7 +1406,10 @@ const RESEARCH_DATA = {
           physiology: { ru: 'Активирует симпатическую нервную систему и реакцию «бей или беги». Повышает ЧСС на 5–10%, поднимает артериальное давление и кожную проводимость. Стимулирует выброс кортизола, адреналина и тестостерона — обостряет внимание и возбуждение. Кратковременно усиливает мышечное напряжение и ускоряет дыхание; стимулирует аппетит и физическую активность.', en: 'Activates the sympathetic nervous system and the fight-or-flight response. Raises heart rate by 5–10%, increases blood pressure and skin conductance. Stimulates cortisol, adrenaline, and testosterone release — sharpens attention and arousal. Briefly increases muscle tension and breathing rate; stimulates appetite and physical activity.' },
           profile: { ru: 'Длинноволновый цвет прямого физиологического действия. Вызывает выброс адреналина, повышение частоты сердечных сокращений и артериального давления. Самый «материальный» цвет спектра — он устремляется к зрителю, доминируя в поле зрения и принуждая к реакции.', en: 'A long-wave color of direct physiological impact. Triggers adrenaline release, raises heart rate and blood pressure. The most "physical" color of the spectrum — it lunges toward the viewer, dominating the field of vision and compelling a reaction.' },
           advice: { ru: 'Используйте для захвата внимания, стимуляции к действию или передачи предельного эмоционального напряжения. Дозируйте — избыток вызывает агрессию и усталость.', en: 'Use to capture attention, stimulate action, or convey extreme emotional tension. Use sparingly — excess triggers aggression and fatigue.' },
-          tip: { ru: 'Чем ближе красный к белому (светлее), тем больше в нём надежды. Чем он гуще и темнее, тем больше в нём судьбы и неизбежности. Используй светлые оттенки как «дыхание» картины, а тёмные — как её «фундамент» или скрытую тревогу.', en: 'The closer red is to white (lighter), the more hope it carries. The denser and darker it is, the more fate and inevitability it holds. Use light shades as the painting\'s "breath", and dark ones as its "foundation" or hidden anxiety.' },
+          tip: { ru: 'Чем ближе красный к белому (светлее), тем больше в нём надежды. Чем он гуще и темнее, тем больше в нём судьбы и неизбежности. Используй светлые оттенки как «дыхание» картины, а тёмные — как её «фундамент» или скрытую тревогу. Идеальный партнёр-антагонист красного — зелёный: это сочетание физиологически восстанавливает баланс нейронов сетчатки и предотвращает «цветовую усталость».', en: 'The closer red is to white (lighter), the more hope it carries. The denser and darker it is, the more fate and inevitability it holds. Use light shades as the painting\'s "breath", and dark ones as its "foundation" or hidden anxiety. Red\'s ideal antagonist partner is green: this pairing physiologically restores retinal neuron balance and prevents "color fatigue".' },
+          pairings: [
+            { hex: '#34C759', name: { ru: 'Зелёный', en: 'Green' }, reason: { ru: 'Физиологически восстанавливает баланс нейронов сетчатки и нейтрализует агрессию красного. Самый сильный дополнительный контраст по Иттену.', en: 'Physiologically restores retinal neuron balance and neutralizes the aggression of red. The strongest complementary contrast per Itten.' }}
+          ],
           feelings: { ru: 'Страсть, любовь, гнев, страх, желание. Зритель перед красным полотном не остаётся холодным — тело реагирует прежде, чем успевает разум. Это цвет, который не даёт смотреть спокойно: он требует, будоражит, притягивает и одновременно тревожит. В зависимости от контекста — экстаз или угроза, жертва или торжество.', en: 'Passion, love, anger, fear, desire. A viewer before a red canvas cannot remain cold — the body reacts before the mind. This color does not allow calm observation: it demands, agitates, attracts and simultaneously alarms. Depending on context — ecstasy or threat, sacrifice or triumph.' },
           shades: [
             { name: { ru: 'Светло-розовый / Нежность', en: 'Pale Rose / Tenderness' }, hex: '#FFC2C7', desc: { ru: 'Невинность, мягкость, отсутствие агрессии. Это «разбавленная» энергия красного, которая не пугает, а ласкает. Ассоциируется с юностью, первой влюблённостью и хрупкими мечтами.', en: 'Innocence, softness, absence of aggression. This is the "diluted" energy of red — it does not frighten, but caresses. Associated with youth, first love, and fragile dreams.' }},
@@ -1265,7 +1426,11 @@ const RESEARCH_DATA = {
           profile: { ru: 'Оранжевый — мост между неистовым пламенем красного и ясным светом жёлтого. Если красный требует подчинения, то оранжевый приглашает к диалогу. «Социальный» цвет, соединяющий физическую энергию красного с ментальной активностью жёлтого. Стимулирует симпатическую нервную систему, коммуникацию, оптимизм и аппетит. Это цвет коммуникации, творческого потока и физического комфорта. Менее агрессивен, чем красный, но столь же активен.', en: 'Orange is a bridge between the fierce flame of red and the clear light of yellow. If red demands submission, orange invites dialogue. A "social" color uniting red\'s physical energy with yellow\'s mental activity. Stimulates the sympathetic nervous system, communication, optimism, and appetite. It is the color of communication, creative flow, and physical comfort. Less aggressive than red but equally active.' },
           advice: { ru: 'Выбирайте для стимуляции коммуникации, создания дружелюбной атмосферы и передачи радостного импульса. В живописи оранжевый часто коварен: его избыток может сделать работу «дешёвой» или кричащей, но правильный выбор оттенка способен согреть душу зрителя. Это акцентный цвет — используйте точечно.', en: 'Choose to stimulate communication, create a friendly atmosphere, and transmit a joyful impulse. In painting, orange is often treacherous: its excess can make the work look "cheap" or garish, but the right shade choice can warm the viewer\'s soul. It is an accent color — use it pointedly.' },
           feelings: { ru: 'Тепло, радость, вдохновение, открытость, жизнелюбие. Оранжевый — самый «общительный» из цветов. Зритель ощущает желание улыбнуться и заговорить. Это не страсть красного и не покой зелёного — это энергия встречи, праздника, первого солнечного дня после долгой зимы. В тёплых приглушённых оттенках — уют и первобытный комфорт; в глубоких терракотах — память о земле и корнях.', en: 'Warmth, joy, inspiration, openness, love of life. Orange is the most "sociable" of colors. The viewer feels the urge to smile and speak. This is not the passion of red nor the peace of green — it is the energy of encounter, celebration, the first sunny day after a long winter. In warm, muted shades — coziness and primal comfort; in deep terracottas — memory of earth and roots.' },
-          tip: { ru: 'Оранжевый — единственный цвет, который не имеет «холодных» оттенков по своей природе. Но его можно сделать «тихим» через добавление коричневого или «звонким» через жёлтый. Используй терракоту, чтобы заземлить палитру, и персиковый, чтобы впустить в картину воздух и доброту.', en: 'Orange is the only color that has no "cool" shades by its very nature. But it can be made "quiet" by adding brown, or "ringing" through yellow. Use terracotta to ground the palette, and peach to let air and kindness into the painting.' },
+          tip: { ru: 'Оранжевый — единственный цвет, который не имеет «холодных» оттенков по своей природе. Но его можно сделать «тихим» через добавление коричневого или «звонким» через жёлтый. Используй терракоту, чтобы заземлить палитру, и персиковый, чтобы впустить в картину воздух и доброту. Противовес оранжевого — глубокий синий или ультрамарин: это сочетание уравновешивает физическое возбуждение интеллектуальным спокойствием.', en: 'Orange is the only color that has no "cool" shades by its very nature. But it can be made "quiet" by adding brown, or "ringing" through yellow. Use terracotta to ground the palette, and peach to let air and kindness into the painting. Orange\'s counterweight is deep blue or ultramarine: this pairing balances physical arousal with intellectual calm.' },
+          pairings: [
+            { hex: '#007AFF', name: { ru: 'Глубокий синий', en: 'Deep Blue' }, reason: { ru: 'Уравновешивает физическое возбуждение оранжевого интеллектуальным спокойствием. Максимальный температурный контраст.', en: 'Balances the physical arousal of orange with intellectual calm. Maximum temperature contrast.' }},
+            { hex: '#3B00AB', name: { ru: 'Ультрамарин', en: 'Ultramarine' }, reason: { ru: 'Погружает энергию оранжевого в глубину и создаёт ощущение драматического напряжения.', en: 'Grounds the energy of orange in depth and creates dramatic tension.' }}
+          ],
           shades: [
             { name: { ru: 'Персиковый / Искренность', en: 'Peach / Sincerity' }, hex: '#FFDAB9', desc: { ru: 'Мягкое гостеприимство, открытость, тактильность. Самый «человечный» и безопасный оттенок оранжевого — невинность и нежность без агрессии насыщенного цвета. Идеален для портретов, передачи нежной кожи и атмосферы доверия.', en: 'Soft hospitality, openness, tactility. The most "human" and safe shade of orange — innocence and tenderness without the aggression of a saturated color. Ideal for portraits, capturing tender skin tones, and an atmosphere of trust.' }},
             { name: { ru: 'Абрикосовый / Оптимизм', en: 'Apricot / Optimism' }, hex: '#FFBE8E', desc: { ru: 'Лёгкая радость, отсутствие забот. Цвет, который «улыбается» зрителю, не навязываясь. Теплее персикового, но ещё далёк от интенсивности чистого оранжевого. Подходит для утренних пейзажей, детских сюжетов и темы надежды на лучшее.', en: 'Light joy, freedom from care. The color that "smiles" at the viewer without imposing itself. Warmer than peach, but still far from the intensity of pure orange. Suited for morning landscapes, children\'s subjects, and themes of hope.' }},
@@ -1281,7 +1446,10 @@ const RESEARCH_DATA = {
           profile: { ru: 'Самый яркий, самый «высокий» по звучанию цвет спектра. Если красный — это тело, а оранжевый — чувства, то жёлтый — это разум, интеллект и осознание. Самый светлый хроматический цвет, активирующий логику и симпатическую нервную систему. Это цвет самого Солнца: он дарит жизнь, но при избытке может ослепить или вызвать тревогу. По Кандинскому, интенсивный жёлтый может доводить до состояния «безумия» — подобно резкому, пронзительному звуку трубы.', en: 'The brightest, most "high-pitched" color of the spectrum. If red is the body and orange is feeling, then yellow is the mind, intellect, and awareness. The lightest chromatic color, activating logic and the sympathetic nervous system. It is the color of the Sun itself: it gives life, but in excess can blind or trigger anxiety. According to Kandinsky, intense yellow can lead to a state of "madness" — like the sharp, piercing sound of a trumpet.' },
           advice: { ru: 'В живописи жёлтый часто выступает как источник внутреннего света. Используйте первые четыре оттенка для передачи света и радости. Для передачи времени, плотности и мудрости — работайте с горчичными и оливковыми тонами. Насыщенный жёлтый — только как акцент: его избыток утомляет и раздражает.', en: 'In painting, yellow often serves as a source of inner light. Use the first four shades to convey light and joy. To convey time, density, and wisdom — work with mustard and olive tones. Saturated yellow — only as an accent; its excess tires and irritates.' },
           feelings: { ru: 'Радость, тревога, эйфория, нервозность. Жёлтый — самый противоречивый из тёплых цветов. Мягкие кремовые и медовые тона вызывают ощущение солнечного тепла, уюта и тихой надежды. Чистый интенсивный жёлтый — беспокойство и внутреннее напряжение, как отблеск чего-то слишком яркого и ускользающего. Приглушённый горчичный несёт зрелость и опыт; оливковый — меланхолию и тяжесть. Зритель перед жёлтым полотном то ли радуется, то ли щурится.', en: 'Joy, anxiety, euphoria, nervousness. Yellow is the most contradictory of the warm colors. Soft cream and honey tones evoke feelings of warm sunlight, coziness, and quiet hope. Pure intense yellow — unease and inner tension, like the glare of something too bright and fleeting. Muted mustard carries maturity and experience; olive — melancholy and heaviness. The viewer before a yellow canvas is either rejoicing or squinting.' },
-          tip: { ru: 'Жёлтый — самый «слабый» цвет перед лицом тени. Стоит добавить в него каплю чёрного, и он мгновенно «загрязняется», приобретая болезненный оттенок. Поэтому, если хочешь передать свет — используй первые четыре оттенка. Если хочешь передать время и плотность — работай с горчичными и оливковыми тонами.', en: 'Yellow is the most "fragile" color when faced with shadow. Add just a drop of black and it instantly becomes "contaminated", acquiring a sickly hue. So if you want to convey light — use the first four shades. If you want to convey time and density — work with mustard and olive tones.' },
+          tip: { ru: 'Жёлтый — самый «слабый» цвет перед лицом тени. Стоит добавить в него каплю чёрного, и он мгновенно «загрязняется», приобретая болезненный оттенок. Поэтому, если хочешь передать свет — используй первые четыре оттенка. Если хочешь передать время и плотность — работай с горчичными и оливковыми тонами. Для достижения статического равновесия жёлтый требует присутствия фиолетового — это сочетание нейтрализует когнитивную перегрузку от его интенсивности.', en: 'Yellow is the most "fragile" color when faced with shadow. Add just a drop of black and it instantly becomes "contaminated", acquiring a sickly hue. So if you want to convey light — use the first four shades. If you want to convey time and density — work with mustard and olive tones. To achieve static equilibrium, yellow needs the presence of violet — this pairing neutralizes the cognitive overload of its intensity.' },
+          pairings: [
+            { hex: '#AF52DE', name: { ru: 'Фиолетовый', en: 'Violet' }, reason: { ru: 'Создаёт статическое равновесие и нейтрализует когнитивную перегрузку от интенсивного жёлтого. Самый сильный психологический контраст по Кандинскому.', en: 'Creates static equilibrium and neutralizes the cognitive overload of intense yellow. The strongest psychological contrast per Kandinsky.' }}
+          ],
           shades: [
             { name: { ru: 'Кремовый / Пробуждение', en: 'Cream / Awakening' }, hex: '#FFFDD0', desc: { ru: 'Хрупкость, чистота помыслов, тихая надежда. Самый деликатный жёлтый — лишённый агрессии насыщенного оттенка, он несёт ощущение свежего воздуха и первой чистоты. Идеален для рассветных бликов и атмосферы начала.', en: 'Fragility, purity of thought, quiet hope. The most delicate yellow — stripped of the aggression of a saturated hue, it conveys fresh air and first purity. Ideal for dawn highlights and an atmosphere of beginnings.' }},
             { name: { ru: 'Лимонный / Интеллект', en: 'Lemon / Intellect' }, hex: '#FFF44F', desc: { ru: 'Острота восприятия, свежесть, высокая концентрация. Холодный жёлтый с зелёным подтоном — самый «нервный» из жёлтых. При избытке читается как «кислый» или тревожный. Используйте для акцента на деталях, требующих анализа, или моментов прозрения.', en: 'Sharpness of perception, freshness, high concentration. Cold yellow with a green undertone — the most "nervous" of yellows. In excess it reads as "sour" or anxious. Use to accent details requiring analysis or moments of insight.' }},
@@ -1297,7 +1465,11 @@ const RESEARCH_DATA = {
           profile: { ru: 'Зелёный — сердце спектра, точка идеального равновесия между жаром солнца (жёлтым) и холодом воды (синим). Это единственный цвет, на котором человеческий глаз отдыхает физически: не требует аккомодации, физиологически расслабляет и замедляет дыхание. Если красный — это крик, то зелёный — это мерное дыхание самой жизни. Цвет восстановления, баланса между тёплым и холодным, активным и пассивным.', en: 'Green is the heart of the spectrum, the point of perfect equilibrium between the warmth of the sun (yellow) and the cold of water (blue). It is the only color on which the human eye physically rests: it requires no accommodation, physiologically relaxes, and slows the breath. If red is a cry, green is the measured breathing of life itself. The color of recovery, balance between warm and cold, active and passive.' },
           advice: { ru: 'Светлые оттенки делают картину гостеприимной, а тёмные — авторитетной. Если добавить в зелёный слишком много синего — он станет холодным и отстранённым. Если много жёлтого — тёплым и дружелюбным. Используйте хвойный, чтобы «заземлить» композицию и придать ей веса. Оливковый и хаки — для зрелой, сдержанной эстетики.', en: 'Light shades make a painting welcoming, dark ones — authoritative. Add too much blue and green becomes cold and distant. Add more yellow and it becomes warm and friendly. Use forest green to "ground" the composition and give it weight. Olive and khaki — for a mature, restrained aesthetic.' },
           feelings: { ru: 'Умиротворение, надежда, исцеление, равновесие. Зритель перед зелёным полотном буквально выдыхает. Это чувство, что всё будет хорошо — не через триумф, а через рост и природный порядок вещей. Мятный и лаймовый рождают юношескую лёгкость и азарт; изумруд — восхищение и жажду жизни; тёмный хвойный и мшистый — тихую мудрость человека, который многое видел и которого уже не так легко сдвинуть с места.', en: 'Peace, hope, healing, balance. A viewer before a green canvas literally exhales. It is the feeling that everything will be all right — not through triumph, but through growth and the natural order of things. Mint and lime produce youthful lightness and excitement; emerald — admiration and a thirst for life; dark forest and mossy greens — the quiet wisdom of someone who has seen much and is no longer easily moved.' },
-          tip: { ru: 'Зелёный — самый «социальный» цвет. Светлые оттенки делают картину гостеприимной, тёмные — авторитетной. Помни: зелёный с синим становится холодным и отстранённым, зелёный с жёлтым — тёплым и дружелюбным. Используй хвойный, чтобы «заземлить» композицию и придать ей веса.', en: 'Green is the most "social" color. Light shades make a painting welcoming, dark ones make it authoritative. Remember: green with blue becomes cold and distant, green with yellow becomes warm and friendly. Use forest green to "ground" the composition and give it weight.' },
+          tip: { ru: 'Зелёный — самый «социальный» цвет. Светлые оттенки делают картину гостеприимной, тёмные — авторитетной. Помни: зелёный с синим становится холодным и отстранённым, зелёный с жёлтым — тёплым и дружелюбным. Используй хвойный, чтобы «заземлить» композицию и придать ей веса. Чтобы вывести зелёный из состояния пассивности — ищи в нём акценты красного или движение в сторону жёлтого: эти цвета придают «буржуазному спокойствию» зелёного необходимую витальность.', en: 'Green is the most "social" color. Light shades make a painting welcoming, dark ones make it authoritative. Remember: green with blue becomes cold and distant, green with yellow becomes warm and friendly. Use forest green to "ground" the composition and give it weight. To lift green from passivity — seek red accents within it or lean toward yellow: these colors give green\'s "bourgeois calm" the vitality it needs.' },
+          pairings: [
+            { hex: '#FF3B30', name: { ru: 'Красный', en: 'Red' }, reason: { ru: 'Выводит зелёный из статики и придаёт витальность. Это взаимодополняющий контраст, восстанавливающий баланс нейронов сетчатки.', en: 'Lifts green from stasis and adds vitality. A complementary contrast that restores retinal neuron balance.' }},
+            { hex: '#FFCC00', name: { ru: 'Жёлтый', en: 'Yellow' }, reason: { ru: 'Придаёт зелёному тепло и энергию роста. Сдвигает его в сторону активности и дружелюбия.', en: 'Adds warmth and growth energy to green. Shifts it toward activity and friendliness.' }}
+          ],
           shades: [
             { name: { ru: 'Мятный / Обновление', en: 'Mint / Renewal' }, hex: '#AAF0D1', desc: { ru: 'Свежесть, лёгкость, юность. Ощущение чистого листа и прохладного утра. Самый деликатный зелёный — без агрессии и плотности. Идеален для тем весны, чистоты помыслов и начала нового пути.', en: 'Freshness, lightness, youth. The sensation of a clean slate and a cool morning. The most delicate green — without aggression or density. Ideal for themes of spring, purity of thought, and the beginning of a new journey.' }},
             { name: { ru: 'Лаймовый / Энергия роста', en: 'Lime / Growth Energy' }, hex: '#AADD00', desc: { ru: 'Дерзость, активность, «электрическая» жизнь. Самый динамичный из зелёных — горячий жёлтый подтон делает его почти вызывающим. Привлекает внимание к живым деталям и создаёт акцент на бодрости и движении.', en: 'Boldness, activity, "electric" life. The most dynamic of greens — a hot yellow undertone makes it almost provocative. Draws attention to living details and creates an accent of vitality and motion.' }},
@@ -1313,7 +1485,11 @@ const RESEARCH_DATA = {
           profile: { ru: 'Синий — вертикаль духа, уходящая в бесконечность. Если зелёный — это земная жизнь, то синий — это небо над ней и океан под ней. Самый холодный, самый интровертный цвет, который заставляет зрителя не действовать, а созерцать. Коротковолновый спектр активирует парасимпатическую нервную систему — замедляет дыхание и пульс, охлаждает страсти, переводя фокус с физического на ментальное. Оптически «отступает» (рецессия), создавая иллюзию бесконечности и дистанции.', en: 'Blue is the vertical of the spirit, receding into infinity. If green is earthly life, then blue is the sky above it and the ocean below. The coldest, most introverted color — it compels the viewer not to act, but to contemplate. Its short-wave spectrum activates the parasympathetic nervous system — slows breathing and pulse, cools passions, shifting focus from the physical to the mental. It optically "recedes" (recession), creating an illusion of infinity and distance.' },
           advice: { ru: 'Синий обладает уникальным свойством — он дистанцирует. Если хочешь, чтобы предмет казался далёким или недосягаемым — используй синие оттенки. Светлый синий — это надежда на чудо; тёмный — покорность перед великой тайной или судьбой. Не злоупотребляйте холодными тонами — они могут создавать дистанцию и отчуждение.', en: 'Blue possesses a unique quality — it distances. If you want an object to appear distant or unattainable, use blue shades. Light blue is the hope for a miracle; dark blue is submission before a great mystery or fate. Avoid overusing cold shades — they can create distance and alienation.' },
           feelings: { ru: 'Покой, меланхолия, одиночество, духовное созерцание. Зритель ощущает, как мир отступает и растворяется. Синее полотно не обнимает — оно открывает бездну. Это чувство безбрежности, которое может быть и освобождением, и тоской. Светлые оттенки дарят надежду и лёгкость; тёмные рождают внутреннюю тишину, граничащую со слезами без причины.', en: 'Peace, melancholy, solitude, spiritual contemplation. The viewer feels the world receding and dissolving. A blue canvas does not embrace — it opens an abyss. It is the feeling of boundlessness that can be both liberation and longing. Light shades bring hope and lightness; dark ones breed an inner silence bordering on tears without reason.' },
-          tip: { ru: 'Синий дистанцирует. Светлый синий — это надежда на чудо, а тёмный синий — это покорность перед великой тайной или судьбой. Если хочешь, чтобы предмет казался далёким или недосягаемым — используй синие оттенки. Работай с небесными голубыми там, где нужен воздух, и с полуночными — там, где нужна глубина.', en: 'Blue distances. Light blue is the hope for a miracle, dark blue is submission before a great mystery or fate. If you want an object to appear distant or unattainable, use blue shades. Work with sky blues where air is needed, and with midnight blues where depth is required.' },
+          tip: { ru: 'Синий дистанцирует. Светлый синий — это надежда на чудо, а тёмный синий — это покорность перед великой тайной или судьбой. Если хочешь, чтобы предмет казался далёким или недосягаемым — используй синие оттенки. Работай с небесными голубыми там, где нужен воздух, и с полуночными — там, где нужна глубина. Чтобы «оживить» синий — добавляй оранжевый или золотисто-жёлтый: эта пара создаёт максимальный визуальный резонанс и динамическое напряжение.', en: 'Blue distances. Light blue is the hope for a miracle, dark blue is submission before a great mystery or fate. If you want an object to appear distant or unattainable, use blue shades. Work with sky blues where air is needed, and with midnight blues where depth is required. To "revive" blue — add orange or golden yellow: this pair creates maximum visual resonance and dynamic tension.' },
+          pairings: [
+            { hex: '#FF9500', name: { ru: 'Оранжевый', en: 'Orange' }, reason: { ru: 'Создаёт максимальный визуальный резонанс. Уравновешивает холодную отстранённость синего физической теплотой оранжевого.', en: 'Creates maximum visual resonance. Balances the cold detachment of blue with the physical warmth of orange.' }},
+            { hex: '#E3A857', name: { ru: 'Золотисто-жёлтый', en: 'Golden Yellow' }, reason: { ru: 'Создаёт динамическое напряжение и «оживляет» синий, добавляя ощущение тепла и света.', en: 'Creates dynamic tension and "revives" blue by adding warmth and light.' }}
+          ],
           shades: [
             { name: { ru: 'Светло-голубой / Безмятежность', en: 'Sky Blue / Serenity' }, hex: '#AED6F1', desc: { ru: 'Лёгкость, свобода, чистота намерений. Цвет, который «раздвигает» стены и даёт дышать — оптически расширяет пространство и снимает тревогу. Идеален для тем мечты, духовной чистоты и воздуха в пейзаже.', en: 'Lightness, freedom, purity of intention. The color that "pushes walls apart" and lets one breathe — optically expands space and relieves anxiety. Ideal for themes of dreams, spiritual purity, and air in a landscape.' }},
             { name: { ru: 'Лазурный / Ясность', en: 'Azure / Clarity' }, hex: '#007BA7', desc: { ru: 'Доверие, прямолинейность, честность. Более активный и насыщенный, чем голубой, он внушает веру в лучшее и ощущение открытого горизонта. Идеален как фон для важных идей и символ верности.', en: 'Trust, directness, honesty. More active and saturated than light blue, it inspires faith in the best and the feeling of an open horizon. Ideal as a background for important ideas and a symbol of fidelity.' }},
@@ -1330,6 +1506,10 @@ const RESEARCH_DATA = {
           advice: { ru: 'Будьте осторожны: большие плоскости тёмного фиолетового могут вызвать у зрителя чувство подавленности. Всегда ищите в нём искру «света» — золотистый или жёлтый являются его идеальными партнёрами-антагонистами. Используйте для подчёркивания таинственности, статуса или сложной духовной глубины.', en: 'Be careful: large areas of dark violet can cause the viewer to feel oppressed. Always seek a spark of "light" within it — gold or yellow are its ideal antagonist partners. Use to emphasize mystery, status, or complex spiritual depth.' },
           feelings: { ru: 'Тайна, восхищение, лёгкая тревога, духовный трепет. Фиолетовое полотно вызывает ощущение присутствия чего-то большего — неназываемого. Зритель чувствует себя на пороге: между явью и сном, между земным и сакральным. Светлые оттенки — лаванда и сирень — рождают хрупкую нежность и романтику. Тёмные — слива и баклажан — погружают в глубины подсознания и заставляют молчать.', en: 'Mystery, awe, slight anxiety, spiritual reverence. A violet canvas evokes the sensation of something greater — something unnameable — being present. The viewer stands on a threshold: between waking and dream, between earthly and sacred. Light shades — lavender and lilac — produce fragile tenderness and romance. Dark shades — plum and eggplant — plunge into the depths of the unconscious and demand silence.' },
           tip: { ru: 'Фиолетовый — цвет трансформации. Если в нём больше красного (пурпур) — он кричит о земной власти. Если больше синего (фиалковый) — шепчет о небесной тайне. Большие плоскости тёмного фиолетового подавляют — всегда ищи в нём искру золотистого или жёлтого, его идеальных партнёров-антагонистов.', en: 'Violet is the color of transformation. When more red (purple) — it cries of earthly power. When more blue (violet) — it whispers of celestial mystery. Large areas of dark violet oppress — always seek within it a spark of gold or yellow, its ideal antagonist partners.' },
+          pairings: [
+            { hex: '#E3A857', name: { ru: 'Золотистый', en: 'Gold' }, reason: { ru: 'Идеальный партнёр-антагонист: золотой «пробуждает» подавляющую тьму фиолетового и создаёт ощущение сакрального сияния сквозь мрак.', en: 'The ideal antagonist partner: gold "awakens" violet\'s oppressive darkness and creates a sense of sacred radiance shining through shadow.' }},
+            { hex: '#FFCC00', name: { ru: 'Жёлтый', en: 'Yellow' }, reason: { ru: 'Максимальный психологический контраст по Кандинскому. Нейтрализует тяжесть фиолетового, вводя в него свет и движение.', en: 'Maximum psychological contrast per Kandinsky. Neutralizes the heaviness of violet by introducing light and movement.' }}
+          ],
           shades: [
             { name: { ru: 'Лавандовый / Ностальгия', en: 'Lavender / Nostalgia' }, hex: '#E6E6FA', desc: { ru: 'Хрупкость, мечтательность, лёгкая меланхолия. Цвет воспоминаний и чистоты — он снимает тревогу, создавая атмосферу безмятежности. Идеален для идиллических сюжетов, детских снов и передачи нежных рассветов.', en: 'Fragility, dreaminess, gentle melancholy. The color of memory and purity — it relieves anxiety, creating an atmosphere of serenity. Ideal for idyllic narratives, children\'s dreams, and conveying tender dawns.' }},
             { name: { ru: 'Сиреневый / Пробуждение чувств', en: 'Lilac / Awakening' }, hex: '#C8A2C8', desc: { ru: 'Романтика, юношеская влюблённость, открытость новому. Более «живой» и тёплый, чем лаванда — он несёт в себе предвкушение и лёгкое волнение. Идеален для весенних мотивов, лирических портретов и атмосферы чуда.', en: 'Romance, youthful love, openness to the new. More "alive" and warm than lavender — it carries anticipation and gentle excitement. Ideal for spring motifs, lyrical portraits, and an atmosphere of wonder.' }},
@@ -1345,7 +1525,12 @@ const RESEARCH_DATA = {
           profile: { ru: 'Абсолютное отрицание света — и одновременно его необходимое условие. В живописи чёрный никогда не бывает просто чёрным: он всегда «съедает» отражения окружающих цветов, приобретая их тень. Это финал пути, граница и высшая форма авторитета. Он подавляет, но и защищает — создаёт тот самый «каркас», на котором держится всё остальное.', en: 'The absolute negation of light — and simultaneously its necessary condition. In painting, black is never simply black: it always "consumes" the reflections of surrounding colors, acquiring their shadow. It is the end of a journey, a boundary, and the highest form of authority. It suppresses, but also protects — creating the very "framework" on which everything else rests.' },
           advice: { ru: 'Используйте для создания композиционного фундамента, акцентирования структуры и придания работе максимального веса и драмы. Матовый чёрный поглощает и успокаивает; глянцевый — давит и устрашает. Чёрный как обрамление «запечатывает» картину, придавая ей завершённость.', en: 'Use to create a compositional foundation, emphasize structure, and give the work maximum weight and drama. Matte black absorbs and calms; glossy black — oppresses and intimidates. Black as a border "seals" the painting, lending it finality.' },
           feelings: { ru: 'Страх, скорбь, благоговение, экзистенциальная пустота — и одновременно невероятная сила. Чёрное полотно поглощает зрителя. Это может быть ужас небытия, торжественность траура или же абсолютная свобода — пространство, в котором ещё ничего не произошло. Чёрный заставляет смотреть внутрь себя и не даёт уйти без ответа.', en: 'Fear, grief, awe, existential emptiness — and simultaneously immense strength. A black canvas absorbs the viewer. This can be the terror of non-being, the solemnity of mourning, or absolute freedom — a space where nothing has yet occurred. Black makes you look inward and will not let you leave without an answer.' },
-          tip: { ru: 'Чёрный в живописи никогда не бывает просто чёрным — он поглощает отражения всех соседних цветов. Матовый чёрный интровертен и тих; глянцевый — властен и бесконечен. Используй чёрный как «финальное слово» картины — её границу и фундамент.', en: 'Black in painting is never simply black — it absorbs the reflections of all neighboring colors. Matte black is introverted and quiet; glossy black — commanding and infinite. Use black as the painting\'s "final word" — its border and foundation.' },
+          tip: { ru: 'Чёрный в живописи никогда не бывает просто чёрным — он поглощает отражения всех соседних цветов. Матовый чёрный интровертен и тих; глянцевый — властен и бесконечен. Используй чёрный как «финальное слово» картины — её границу и фундамент. Любой яркий цвет на чёрном фоне звучит максимально интенсивно — особенно красный и жёлтый, превращая «тьму» в глубокий драматический контраст.', en: 'Black in painting is never simply black — it absorbs the reflections of all neighboring colors. Matte black is introverted and quiet; glossy black — commanding and infinite. Use black as the painting\'s "final word" — its border and foundation. Any bright color on a black background sounds at maximum intensity — especially red and yellow, transforming "darkness" into deep dramatic contrast.' },
+          pairings: [
+            { hex: '#FF3B30', name: { ru: 'Красный', en: 'Red' }, reason: { ru: 'На чёрном фоне красный звучит максимально интенсивно — это архетип угрозы, страсти и жизни на краю бездны.', en: 'On a black ground red sounds at maximum intensity — the archetype of threat, passion, and life at the edge of the abyss.' }},
+            { hex: '#FFCC00', name: { ru: 'Жёлтый', en: 'Yellow' }, reason: { ru: 'Жёлтый на чёрном создаёт максимальный светлотный контраст и превращает «тьму» в драматическую сцену.', en: 'Yellow on black creates maximum luminance contrast and transforms "darkness" into a dramatic stage.' }},
+            { hex: '#FFFFFF', name: { ru: 'Белый', en: 'White' }, reason: { ru: 'Чистейший контраст — превращает чёрный в элегантную пустоту, а белый — в абсолютный свет.', en: 'Purest contrast — transforms black into elegant void and white into absolute light.' }}
+          ],
           shades: [
             { name: { ru: 'Матовый чёрный / Скорбь', en: 'Soft Black / Grief' }, hex: '#1C1C1E', desc: { ru: 'Интроверсия, смирение, тишина. Чёрный, который поглощает, но не пугает — он создаёт интимную атмосферу и защищает внутренний мир. Идеален для глубоких раздумий и сдержанной драмы.', en: 'Introversion, humility, silence. Black that absorbs without frightening — it creates an intimate atmosphere and protects the inner world. Ideal for deep reflection and restrained drama.' }},
             { name: { ru: 'Глянцевый чёрный / Бездна', en: 'Obsidian / The Abyss' }, hex: '#0A0A0A', desc: { ru: 'Финал, авторитет, бесконечность, абсолютное отрицание или высшая защита. Чёрный, который отражает — он одновременно поглощает и возвращает взгляд зрителю. Граница картины, утверждение непоколебимой воли, бездна космоса.', en: 'End, authority, infinity, absolute negation or supreme protection. Black that reflects — it simultaneously absorbs and returns the viewer\'s gaze. The border of a painting, an affirmation of unshakeable will, the abyss of the cosmos.' }}
@@ -1368,7 +1553,12 @@ const RESEARCH_DATA = {
           profile: { ru: 'Белый — начало всего. Абсолютная чистота и потенциал, не реализованный ещё ни в одну форму. Это свет как таковой, освобождённый от любой материи. Но белый может быть и самым холодным цветом, если он одинок — тогда он превращается в стерильность или одиночество. Его тепло или холод определяется лишь соседством других цветов.', en: 'White is the beginning of everything. Absolute purity and potential not yet realized into any form. It is light as such, freed from all matter. But white can also be the coldest color when it is alone — then it becomes sterility or loneliness. Its warmth or coolness is determined solely by the company of other colors.' },
           advice: { ru: 'Используйте для визуального расширения пространства, создания воздуха и подчёркивания ясности. Помните: белый в одиночестве холоден и стерилен. Его оживляет соседство — тёплые цвета делают его уютным, холодные — торжественным. Слоновая кость и кремовый — человечные альтернативы для создания тепла без яркости.', en: 'Use for visual expansion of space, creating air, and emphasizing clarity. Remember: white alone is cold and sterile. It is brought to life by company — warm colors make it cozy, cool ones make it solemn. Ivory and cream are human alternatives for creating warmth without brightness.' },
           feelings: { ru: 'Чистота, пустота, трепет перед началом, сакральная тишина. Белое полотно — это вопрос без ответа. Зритель ощущает невесомость и лёгкую тревогу одновременно: здесь всё возможно, но ничего ещё не случилось. Белый фон — это дыхание, пространство между смыслами, которое дарит ощущение свободы или одиночества в зависимости от внутреннего состояния.', en: 'Purity, emptiness, awe before a beginning, sacred silence. A white canvas is an unanswered question. The viewer feels weightlessness and slight anxiety simultaneously: everything is possible here, yet nothing has happened yet. White ground is breath, a space between meanings that grants freedom or loneliness depending on one\'s inner state.' },
-          tip: { ru: 'Белый в одиночестве — это холод и стерильность. Его согревает лишь соседство. Кипенно-белый — высший свет и абсолют; слоновая кость — тот же свет, но уже с дыханием жизни. Используй белый как «паузу» в картине — момент, где взгляд отдыхает перед следующим смыслом.', en: 'White alone is cold and sterile. Only company warms it. Pure white is supreme light and the absolute; ivory is the same light, but already with the breath of life. Use white as a "pause" in a painting — a moment where the eye rests before the next meaning.' },
+          tip: { ru: 'Белый в одиночестве — это холод и стерильность. Его согревает лишь соседство. Кипенно-белый — высший свет и абсолют; слоновая кость — тот же свет, но уже с дыханием жизни. Используй белый как «паузу» в картине — момент, где взгляд отдыхает перед следующим смыслом. Белый лучше всего работает как инструмент фокусировки: когда он окружает насыщенные цвета, он заставляет их выступать вперёд и подчёркивает их чистоту.', en: 'White alone is cold and sterile. Only company warms it. Pure white is supreme light and the absolute; ivory is the same light, but already with the breath of life. Use white as a "pause" in a painting — a moment where the eye rests before the next meaning. White works best as a focusing instrument: surrounding saturated colors, it makes them step forward and amplifies their purity.' },
+          pairings: [
+            { hex: '#FF3B30', name: { ru: 'Красный', en: 'Red' }, reason: { ru: 'Белый подчёркивает чистоту красного и усиливает его звучание. Архетип силы и чистоты.', en: 'White amplifies the purity of red and intensifies its resonance. The archetype of power and purity.' }},
+            { hex: '#007AFF', name: { ru: 'Синий', en: 'Blue' }, reason: { ru: 'Белый делает синий торжественным и открытым. Классическое сочетание ясности и пространства.', en: 'White makes blue solemn and open. The classic pairing of clarity and space.' }},
+            { hex: '#FFCC00', name: { ru: 'Жёлтый', en: 'Yellow' }, reason: { ru: 'Белый дает жёлтому воздух и свет, не давая перегрузить взгляд. Идеально для передачи солнечной радости.', en: 'White gives yellow air and light without overwhelming the eye. Ideal for conveying solar joy.' }}
+          ],
           shades: [
             { name: { ru: 'Кипенно-белый / Чистота', en: 'Pure White / Purity' }, hex: '#FFFFFF', desc: { ru: 'Абсолют, святость, божественное присутствие, пустота как потенциал. Самый холодный и «требовательный» белый — он символизирует начало всего и высшую точку света. Используйте как источник сияния и акцент истины.', en: 'The absolute, sanctity, divine presence, emptiness as potential. The coldest and most "demanding" white — it symbolizes the beginning of everything and the highest point of light. Use as a source of radiance and an accent of truth.' }},
             { name: { ru: 'Слоновая кость / Жизнь', en: 'Ivory / Life' }, hex: '#FFFFF0', desc: { ru: 'Теплота, мягкость, человечность. Белый, в котором появилось дыхание — жёлтый подтон делает его живым и уютным. Ассоциируется с благородной стариной и естественным светом. Идеален для передачи натурального тепла и создания доверительной атмосферы.', en: 'Warmth, softness, humanity. White in which breath has appeared — a yellow undertone makes it alive and cozy. Associated with noble antiquity and natural light. Ideal for conveying natural warmth and creating a trustful atmosphere.' }},
@@ -1644,6 +1834,7 @@ const I18N = {
         shades_label: 'Shades — Затененные', shades_title: 'Вес', shades_desc: 'Авторитет, драма, тайна. Глубокие тона — роскошь или скорбь.',
         tones_label: 'Tones — Приглушенные', tones_title: 'Опыт', tones_desc: 'Цвета реальности. Интеллектуальность, сложность и спокойствие.',
         rules_label: '04 — Правила баланса', rules_desc: 'Золотые формулы распределения цвета в композиции.',
+        rule_classic_name: 'The Classic', rule_classic_tagline: '«Золотое сечение гармонии»',
         rule_60_label: 'Доминанта', rule_60_text: 'Основной фон. Задает «атмосферный кокон». 60% площади.',
         rule_30_label: 'Субдоминанта', rule_30_text: 'Создает визуальный интерес и динамику. 30% площади.',
         rule_10_label: 'Акцент', rule_10_text: 'Эмоциональная кульминация. Смысловой центр. 10% площади.',
@@ -1664,6 +1855,7 @@ const I18N = {
         advanced_label: '05 — Продвинутые принципы', advanced_desc: 'Физика материала, геометрия и нейрофизиология цвета.',
         pr1_source: 'В. Кандинский', pr1_name: 'Геометрический резонанс',
         pr1_intro: 'Форма способна усиливать или подавлять воздействие цвета. Правильное сочетание форм и цвета умножает их суммарный психологический заряд — неправильное порождает скрытое напряжение.',
+        pr1_yellow: 'Желтый', pr1_blue: 'Синий', pr1_red: 'Красный',
         pr1_b1_head: 'Максимальный резонанс.', pr1_b1_body: 'Острота треугольника усиливает «колющий» характер желтого — эффект агрессии и возбуждения.',
         pr1_b2_head: 'Глубокое погружение.', pr1_b2_body: 'Круг усиливает центростремительное движение синего — духовность и полный покой.',
         pr1_b3_head: 'Сдержанная мощь.', pr1_b3_body: 'Прямые углы квадрата уравновешивают волевой напор красного, превращая его в стабильную силу.',
@@ -1671,28 +1863,42 @@ const I18N = {
         pr2_source: 'Э. Херинг · Физиология сетчатки', pr2_name: 'Нейронная оппонентность',
         pr2_intro: 'Нейроны коленчатого тела обрабатывают цвет строго парами оппонентов. Если один из пары активирован, другой подавляется — и при «усталости» глаз сам порождает оппонентный цвет.',
         pr2_pair1: 'Красный ↔ Зеленый', pr2_pair2: 'Синий ↔ Желтый', pr2_pair3: 'Черный ↔ Белый',
+        pr2_afterimage: 'Пост-эффект', pr2_balance: 'Баланс',
         pr2_b1_head: 'Эффект пост-изображения.', pr2_b1_body: 'После долгого взгляда на яркий цвет глаз сам создаёт пятно оппонентного цвета на нейтральной поверхности.',
         pr2_b2_head: 'Физиологический баланс.', pr2_b2_body: 'В композиции с доминирующим красным (60%) акцент (10%) должен быть строго зелёным — это восстанавливает нейронный баланс и предотвращает «цветовую усталость».',
         pr2_note: 'Применение: используйте оппонентный цвет в роли акцента для физиологически «правильного» баланса, а не только эстетического.',
         pr3_source: 'Фактурный вес материала', pr3_name: 'Баланс материальности',
         pr3_intro: 'Психологическое воздействие цвета неотделимо от способа его нанесения. Фактура изменяет воспринимаемый «вес» и телесность — независимо от самого цвета.',
+        pr3_impasto: 'Импасто', pr3_glazing: 'Лессировка',
         pr3_b1_head: 'Густой мазок — телесность.', pr3_b1_body: 'Тени в рельефе делают цвет тяжёлым, осязаемым и «материальным». Усиливает эмоциональную вовлечённость и физическое присутствие зрителя.',
         pr3_b2_head: 'Прозрачные слои — эфирность.', pr3_b2_body: 'Создают эффект «глубокого бассейна» — цвет кажется уходящим в бесконечность. Идеально для состояний транса, молитвы или внутреннего созерцания.',
         pr3_note: 'Применение: тёмный цвет, нанесённый тонко, кажется менее «давящим», чем светлый, нанесённый густым слоем. Фактура переписывает психологию цвета.',
         pr4_source: 'Свет · Биоритм · Среда', pr4_name: 'Циркадная валидность',
         pr4_intro: 'Правило баланса между цветом объекта и окружающим светом. Восприятие работы принципиально меняется в зависимости от спектра освещения, экспозиции помещения и времени суток.',
+        pr4_north: 'Север', pr4_night: 'Ночь',
         pr4_b1_head: 'Температурная компенсация.', pr4_b1_body: 'Холодный северный свет требует смещения палитры в сторону тёплых тонов для достижения гармонии. Южный солнечный спектр, напротив, может сделать красную картину чрезмерно агрессивной.',
         pr4_b2_head: 'Биоритмический баланс.', pr4_b2_body: 'Спальня — холодный спектр (синий активирует выработку мелатонина). Столовая — тёплый (красный и оранжевый стимулируют аппетит и выброс адреналина).',
         pr4_note: 'Применение: перед финальным выбором палитры проверьте работу в условиях реального освещения помещения, для которого она создаётся.',
         pr5_source: 'Культурный контекст · Архетипы', pr5_name: 'Культурный противовес',
         pr5_intro: 'Универсальных значений цвета не существует. Баланс смыслов для глобальной аудитории требует учёта географического и культурного контекста.',
-        pr5_b1_head: 'Белый.', pr5_b1_body: 'Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.',
-        pr5_b2_head: 'Красный.', pr5_b2_body: 'Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.',
+        pr5_white: 'Белый', pr5_red: 'Красный',
+        pr5_b1_head: 'Глобальный контекст.', pr5_b1_body: 'Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.',
+        pr5_b2_head: 'Культурный код.', pr5_b2_body: 'Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.',
         pr5_note: 'Применение: балансируйте символику цвета так, чтобы она не вступала в конфликт с базовыми архетипами целевой аудитории.',
         research_label: '06 — Ключевые данные', research_desc: 'Нейрофизиологические детерминанты цветового восприятия.',
         stat1_label: 'Первое впечатление', stat1_text: 'Цвет определяет около 80% общего впечатления в первые 20 секунд.',
         stat2_label: 'Красный спектр', stat2_text: 'Повышает ЧСС на 5–10% и усиливает кожную проводимость.',
         stat3_label: 'Синий спектр', stat3_text: 'Снижает ЧСС на 3–5%, активирует мелатонин и снижает тревогу.',
+        stat4_label: 'Сенсорный приоритет', stat4_text: 'Визуальная составляющая — решающий фактор оценки нового объекта для 93% людей.',
+        stat5_label: 'Творческий импульс', stat5_text: 'Зелёный спектр (Nature-based) повышает продуктивность творческого мышления на 20%.',
+        stat6_label: 'Падение кортизола', stat6_text: 'Глубокие природные оттенки снижают уровень кортизола на 30% за 15 минут.',
+        stat7_label: 'Память и запоминание', stat7_text: 'Цвет в подаче информации повышает запоминаемость на 60% по сравнению с монохромом.',
+        stat8_label: 'Левое полушарие', stat8_text: 'Жёлтый активирует левое полушарие: аналитика, память, решительность.',
+        stat9_label: 'Мин. аккомодация', stat9_text: 'Зелёный — единственный цвет, на котором глаз реально отдыхает: минимальная аккомодация, расширение капилляров.',
+        stat10_label: 'Подавление коры', stat10_text: 'Тёплые цвета подавляют кортикальную активность — растёт импульсивность, сокращается время на обдумывание.',
+        stat11_label: 'Восприятие времени', stat11_text: 'Холодные оттенки снижают возбуждение и субъективно ускоряют время — время загрузки кажется меньше.',
+        stat12_label: 'Хромостереопсис', stat12_text: 'Красные волны фокусируются за сетчаткой — хрусталик изгибается, объект кажется ближе. Синий работает обратно.',
+        stat13_label: 'Эффект тревоги', stat13_text: 'Тёмные тона повышают кожную проводимость и ЧСС — тело реагирует на отсутствие света как на сигнал угрозы. Чем глубже тень, тем интенсивнее отклик.',
         footer_copy: '© 2026 — Pure: Энциклопедия работы с цветом'
     },
     en: {
@@ -1706,6 +1912,7 @@ const I18N = {
         shades_label: 'Shades', shades_title: 'Weight', shades_desc: 'Authority, drama, mystery. Deep tones — luxury or mourning.',
         tones_label: 'Tones', tones_title: 'Experience', tones_desc: 'Colors of reality. Intellectualism, complexity, and tranquility.',
         rules_label: '04 — Rules of Balance', rules_desc: 'Golden formulas of color distribution in composition.',
+        rule_classic_name: 'The Classic', rule_classic_tagline: '"The Golden Harmony"',
         rule_60_label: 'Dominant', rule_60_text: 'Main background. Sets the "atmospheric cocoon". 60% area.',
         rule_30_label: 'Sub-dominant', rule_30_text: 'Creates visual interest and dynamics. 30% area.',
         rule_10_label: 'Accent', rule_10_text: 'Emotional climax. Semantic center. 10% area.',
@@ -1726,6 +1933,7 @@ const I18N = {
         advanced_label: '05 — Advanced Principles', advanced_desc: 'Material physics, geometry, and neurophysiology of color.',
         pr1_source: 'V. Kandinsky', pr1_name: 'Geometric Resonance',
         pr1_intro: 'Form can amplify or suppress the impact of color. The correct pairing of shape and color multiplies their combined psychological charge — the wrong pairing creates hidden tension.',
+        pr1_yellow: 'Yellow', pr1_blue: 'Blue', pr1_red: 'Red',
         pr1_b1_head: 'Maximum resonance.', pr1_b1_body: 'The sharpness of the triangle amplifies the "piercing" character of yellow — an effect of aggression and arousal.',
         pr1_b2_head: 'Deep immersion.', pr1_b2_body: 'The circle intensifies the centripetal movement of blue — spirituality and complete stillness.',
         pr1_b3_head: 'Restrained power.', pr1_b3_body: 'Right angles of the square balance the willful thrust of red, transforming it into stable force.',
@@ -1733,28 +1941,42 @@ const I18N = {
         pr2_source: 'E. Hering · Retinal Physiology', pr2_name: 'Neural Opponency',
         pr2_intro: 'Neurons in the lateral geniculate nucleus process color in strict opponent pairs. When one of the pair is activated, the other is suppressed — and when the eye is "fatigued", it generates the opponent color itself.',
         pr2_pair1: 'Red ↔ Green', pr2_pair2: 'Blue ↔ Yellow', pr2_pair3: 'Black ↔ White',
+        pr2_afterimage: 'Post-effect', pr2_balance: 'Balance',
         pr2_b1_head: 'After-image effect.', pr2_b1_body: 'After prolonged exposure to a vivid color, the eye automatically generates an opponent-color patch on a neutral surface.',
         pr2_b2_head: 'Physiological balance.', pr2_b2_body: 'In a composition with dominant red (60%), the accent (10%) must be strictly green — this restores neural balance and prevents "color fatigue".',
         pr2_note: 'Application: use opponent color as the accent for a physiologically "correct" balance, not merely an aesthetic one.',
         pr3_source: 'Textural Weight of Material', pr3_name: 'Balance of Materiality',
         pr3_intro: 'The psychological impact of color is inseparable from the method of its application. Texture changes the perceived "weight" and corporeality — regardless of the color itself.',
+        pr3_impasto: 'Impasto', pr3_glazing: 'Glazing',
         pr3_b1_head: 'Impasto — corporeality.', pr3_b1_body: 'Shadows in the relief make color heavy, tactile, and "physical". Intensifies emotional engagement and the viewer\'s physical presence.',
         pr3_b2_head: 'Glazing — ethereality.', pr3_b2_body: 'Creates a "deep pool" effect — color seems to recede into infinity. Ideal for states of trance, prayer, or inner contemplation.',
         pr3_note: 'Application: a dark color applied thinly feels less "oppressive" than a light color applied thickly. Texture rewrites the psychology of color.',
         pr4_source: 'Light · Rhythm · Environment', pr4_name: 'Circadian Validity',
         pr4_intro: 'The rule of balance between the color of an object and its surrounding light. Perception of the work changes fundamentally depending on the spectrum of illumination, room exposure, and time of day.',
+        pr4_north: 'North', pr4_night: 'Night',
         pr4_b1_head: 'Temperature compensation.', pr4_b1_body: 'Cold northern light requires shifting the palette toward warm tones to achieve harmony. Southern sunlight, conversely, can make an active red painting excessively aggressive.',
         pr4_b2_head: 'Biorhythmic balance.', pr4_b2_body: 'Bedroom — cool spectrum (blue activates melatonin production). Dining room — warm (red and orange stimulate appetite and adrenaline release).',
         pr4_note: 'Application: before the final palette choice, test the work under the actual lighting conditions of the space it is created for.',
         pr5_source: 'Cultural Context · Archetypes', pr5_name: 'Cultural Counterweight',
         pr5_intro: 'Universal color meanings do not exist. The balance of meanings for a global audience requires awareness of geographic and cultural context.',
-        pr5_b1_head: 'White.', pr5_b1_body: 'Western tradition — purity and innocence. For an Eastern viewer — mourning and grief. Balancing with vivid accents of life (red or gold) is required.',
-        pr5_b2_head: 'Red.', pr5_b2_body: 'In China — luck and celebration. Western tradition — danger and passion. One color, two fundamentally different archetypes.',
+        pr5_white: 'White', pr5_red: 'Red',
+        pr5_b1_head: 'Global Context.', pr5_b1_body: 'Western tradition — purity and innocence. For an Eastern viewer — mourning and grief. Balancing with vivid accents of life (red or gold) is required.',
+        pr5_b2_head: 'Cultural Code.', pr5_b2_body: 'In China — luck and celebration. Western tradition — danger and passion. One color, two fundamentally different archetypes.',
         pr5_note: 'Application: balance the color symbolism so that it does not conflict with the core archetypes of your target audience.',
         research_label: '06 — Key Data', research_desc: 'Neurophysiological determinants of color perception.',
         stat1_label: 'First Impression', stat1_text: 'Color determines about 80% of the overall impression in the first 20 seconds.',
         stat2_label: 'Red Spectrum', stat2_text: 'Raises heart rate by 5–10% and increases skin conductance.',
         stat3_label: 'Blue Spectrum', stat3_text: 'Lowers heart rate by 3–5%, activates melatonin, and reduces anxiety.',
+        stat4_label: 'Sensory Priority', stat4_text: 'Visual appearance is the decisive factor in evaluating any new object for 93% of people.',
+        stat5_label: 'Creative Pulse', stat5_text: 'Surrounding yourself with the green spectrum (Nature-based) boosts creative thinking productivity by 20% on average.',
+        stat6_label: 'Cortisol Drop', stat6_text: 'Contemplating deep natural tones (forest, sea) reduces cortisol levels by 30% within 15 minutes.',
+        stat7_label: 'Memory Recall', stat7_text: 'Using color in information presentation increases memorability and recall speed by 60% compared to monochrome.',
+        stat8_label: 'Left Hemisphere', stat8_text: 'Yellow psychologically activates the left brain hemisphere, stimulating analytical thinking, memory, and decisiveness.',
+        stat9_label: 'Min. Accommodation', stat9_text: 'Green requires minimal lens accommodation — the only color that physically rests the eye. It dilates capillaries and lowers blood pressure.',
+        stat10_label: 'Cortical Suppression', stat10_text: 'Warm color arousal (red, orange) suppresses cortical activity — impulsivity rises while deliberation time shrinks. People act in the "here and now".',
+        stat11_label: 'Time Perception', stat11_text: 'Cool tones reduce arousal and subjectively accelerate the perception of time — loading times feel shorter in cool-toned environments.',
+        stat12_label: 'Chromostereopsis', stat12_text: 'Red wavelengths focus behind the retina, forcing the lens to become more convex — objects appear physically closer. Blue works in reverse.',
+        stat13_label: 'Anxiety Effect', stat13_text: 'Dark tones at low luminosity raise skin conductance (SCR) and heart rate — the body reads an absence of light as a biological threat signal. The deeper the shadow, the more intense the response.',
         footer_copy: '© 2026 — Pure: Color Work Encyclopedia'
     }
 };
@@ -1840,6 +2062,18 @@ function showProfile(index, shadeIndex = null) {
                 <div class="profile-sub-title">${lang === 'ru' ? 'Что чувствует зритель' : 'What the viewer feels'}</div>
                 <div class="profile-desc">${displayData.feelings[lang]}</div>
                 ${displayData.tip ? `<div class="profile-sub-title">${lang === 'ru' ? 'Совет мастера' : 'Master\'s Tip'}</div><div class="profile-desc profile-tip">${displayData.tip[lang]}</div>` : ''}
+                ${displayData.pairings ? `
+                <div class="profile-sub-title" style="margin-top:28px;">${lang === 'ru' ? 'Лучшие сочетания' : 'Best Pairings'}</div>
+                <div class="pairings-row">
+                    ${displayData.pairings.map(p => `
+                        <div class="principle-sample">
+                            <div class="psample-box" style="background:${p.hex}"></div>
+                            <div class="psample-label">${p.name[lang]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="pairings-reason">${displayData.pairings.map(p => `<b>${p.name[lang]}:</b> ${p.reason[lang]}`).join('<br>')}</div>
+                ` : ''}
                 ${(displayData.physics || displayData.physiology) ? `
                 <div class="profile-science">
                     ${displayData.physics ? `
