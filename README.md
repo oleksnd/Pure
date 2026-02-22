@@ -42,28 +42,15 @@ Visualized guides for perfect balance:
 
 ### 5. Research & Data
 A dedicated section for neurophysiological facts, covering:
-- **Heart Rate Impact:** How red/blue spectrums shift BPM.
 - **Chromostereopsis:** The physics of "Push & Pull" in visual depth.
 - **Memory Recall:** The 60% boost in retention through strategic color use.
 
 ---
 
-## 🧠 Technical Manifesto
-
-As defined in the project's internal manifesto, PURE follows strict architectural rules:
-- **Vanilla Only:** No React, no jQuery, no Tailwind. Pure CSS and Javascript for maximum performance and control.
-- **Chrome Prompt API:** Built for integration with **Gemini Nano** for on-device AI capabilities.
-- **Graceful Degradation:** The UI remains fully functional even without AI availability.
-- **Bilingual:** Native support for English (EN) and Russian (RU).
-
 ## 🚀 Getting Started
 
-Since the project is a standalone web application, you can run it by simply opening `index.html` in any modern browser (Chrome is recommended for full Prompt API support).
+Since the project is a standalone web application, you can run it by simply opening `index.html` in any modern browser (Chrome is recommended for full Prompt API support) or use links.
 
-```bash
-# No installation required
-# Just open index.html
-```
 
 ---
 
