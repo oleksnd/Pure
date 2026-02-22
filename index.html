@@ -158,6 +158,150 @@
             min-height: 200px;
         }
 
+        /* CHAT WIDGET */
+        .chat-widget {
+            width: 100%;
+            max-width: 600px;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-input-box {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.2s ease;
+            position: relative;
+            /* For dropdown positioning */
+        }
+
+        .chat-input-box:focus-within {
+            background: #fafafa;
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-input {
+            border: none;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            resize: none;
+            line-height: 1.5;
+            background: transparent;
+            padding: 4px 0;
+            color: var(--black);
+            width: 100%;
+        }
+
+        .chat-input::placeholder {
+            color: #a3a3a3;
+        }
+
+        .chat-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-actions-left {
+            display: flex;
+            gap: 8px;
+            position: relative;
+        }
+
+        .chat-btn {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0;
+            height: 32px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            color: var(--black);
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .chat-btn:hover {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0;
+            width: max-content;
+            max-width: 300px;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            padding: 8px 0;
+        }
+
+        .chat-dropdown.active {
+            display: flex;
+        }
+
+        .chat-dropdown-item {
+            padding: 8px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            color: #333;
+            width: 100%;
+        }
+
+        .chat-dropdown-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--black);
+        }
+
+        .chat-dropdown-divider {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.05);
+            margin: 4px 0;
+        }
+
+        .chat-btn-submit {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .chat-btn-submit:hover {
+            background: #333;
+        }
+
         /* SECTION HEADER */
         .section-head {
             display: grid;
@@ -1179,6 +1323,58 @@
                 <span>Color</span>
                 <span>Meaning</span>
             </div>
+
+            <div class="chat-widget">
+                <div class="chat-input-box">
+                    <input type="text" class="chat-input" placeholder="Ask about any color or emotion..."
+                        data-i18n-placeholder="chat_placeholder">
+                    <div class="chat-actions">
+                        <div class="chat-actions-left">
+                            <button class="chat-btn" id="chatPrincipleBtn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                                </svg>
+                                <span id="chatPrincipleLabel" data-i18n="chat_auto">Auto</span>
+                            </button>
+                            <div class="chat-dropdown" id="chatPrincipleDropdown">
+                                <button class="chat-dropdown-item" onclick="selectPrinciple('Auto', 'chat_auto')"
+                                    data-i18n="chat_auto">Auto</button>
+                                <div class="chat-dropdown-divider"></div>
+                                <button class="chat-dropdown-item"
+                                    onclick="selectPrinciple('60 / 30 / 10 — The Classic')">60 / 30 / 10 — The
+                                    Classic</button>
+                                <button class="chat-dropdown-item"
+                                    onclick="selectPrinciple('90 / 10 — The Minimalist')">90 / 10 — The
+                                    Minimalist</button>
+                                <button class="chat-dropdown-item" onclick="selectPrinciple('50 / 50 — The Duel')">50 /
+                                    50 — The Duel</button>
+                                <button class="chat-dropdown-item"
+                                    onclick="selectPrinciple('70 / 20 / 10 — The Monolith')">70 / 20 / 10 — The
+                                    Monolith</button>
+                                <div class="chat-dropdown-divider"></div>
+                                <button class="chat-dropdown-item"
+                                    onclick="selectPrinciple('Geometric Resonance')">Geometric Resonance</button>
+                                <button class="chat-dropdown-item" onclick="selectPrinciple('Neural Opponency')">Neural
+                                    Opponency</button>
+                                <button class="chat-dropdown-item"
+                                    onclick="selectPrinciple('Circadian Validity')">Circadian Validity</button>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="chat-btn-submit" aria-label="Submit">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                                    <polyline points="5 12 12 5 19 12"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="hero-meta" data-i18n="hero_meta">Энциклопедия цветовой психологии — 2026</div>
         </div>
         <div class="hero-right">
@@ -2354,6 +2550,7 @@
             ru: {
                 nav_matrix: 'Матрица', nav_emotions: 'Состояния', nav_anatomy: 'Анатомия', nav_rules: 'Правила', nav_advanced: 'Принципы', nav_research: 'Данные',
                 hero_meta: 'Энциклопедия цветовой психологии — 2026',
+                chat_placeholder: 'Спросите о любом цвете или эмоции...', chat_auto: 'Авто',
                 matrix_label: '01 — Матрица восприятия', matrix_desc: 'Выберите цвет — получите психологический профиль.',
                 matrix_placeholder: 'Нажмите на цвет',
                 emotions_label: '02 — Палитры состояний', emotions_desc: 'Цветовые стратегии для конструирования эмоций.',
@@ -2432,6 +2629,7 @@
             en: {
                 nav_matrix: 'Matrix', nav_emotions: 'Emotions', nav_anatomy: 'Anatomy', nav_rules: 'Rules', nav_advanced: 'Principles', nav_research: 'Data',
                 hero_meta: 'Encyclopedia of Color Psychology — 2026',
+                chat_placeholder: 'Ask about any color or emotion...', chat_auto: 'Auto',
                 matrix_label: '01 — Perception Matrix', matrix_desc: 'Select a color to get its psychological profile.',
                 matrix_placeholder: 'Click a color',
                 emotions_label: '02 — Emotion Palettes', emotions_desc: 'Color strategies for constructing emotional states.',
@@ -2521,6 +2719,10 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.dataset.i18n;
                 if (I18N[l][key]) el.textContent = I18N[l][key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (I18N[l][key]) el.placeholder = I18N[l][key];
             });
             if (activeColorIndex !== null) showProfile(activeColorIndex);
             if (activeEmotionId !== null) showEmotion(activeEmotionId);
@@ -2682,32 +2884,63 @@
             emotionTabsEl.addEventListener('mousedown', (e) => {
                 isDragging = true;
                 hasDragged = false;
+                emotionTabsEl.style.cursor = 'grabbing';
                 startX = e.pageX - emotionTabsEl.offsetLeft;
                 scrollLeft = emotionTabsEl.scrollLeft;
-                emotionTabsEl.style.cursor = 'grabbing';
-                emotionTabsEl.style.userSelect = 'none';
             });
 
-            document.addEventListener('mouseup', () => {
-                if (!isDragging) return;
+            emotionTabsEl.addEventListener('mouseleave', () => {
                 isDragging = false;
                 emotionTabsEl.style.cursor = 'grab';
-                emotionTabsEl.style.userSelect = '';
             });
 
-            document.addEventListener('mousemove', (e) => {
+            emotionTabsEl.addEventListener('mouseup', () => {
+                isDragging = false;
+                emotionTabsEl.style.cursor = 'grab';
+            });
+
+            emotionTabsEl.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
+                e.preventDefault();
                 const x = e.pageX - emotionTabsEl.offsetLeft;
-                const walk = x - startX;
-                if (Math.abs(walk) > 4) hasDragged = true;
+                const walk = (x - startX) * 2;
+                if (Math.abs(walk) > 5) hasDragged = true;
                 emotionTabsEl.scrollLeft = scrollLeft - walk;
             });
-
-            // Prevent tab click after drag
-            emotionTabsEl.addEventListener('click', (e) => {
-                if (hasDragged) e.stopImmediatePropagation();
-            }, true);
         })();
+
+        // Chat Principle Dropdown
+        const chatPrincipleBtn = document.getElementById('chatPrincipleBtn');
+        const chatPrincipleDropdown = document.getElementById('chatPrincipleDropdown');
+        const chatPrincipleLabel = document.getElementById('chatPrincipleLabel');
+
+        if (chatPrincipleBtn && chatPrincipleDropdown) {
+            chatPrincipleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                chatPrincipleDropdown.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!chatPrincipleBtn.contains(e.target) && !chatPrincipleDropdown.contains(e.target)) {
+                    chatPrincipleDropdown.classList.remove('active');
+                }
+            });
+        }
+
+        window.selectPrinciple = function (value, i18nKey) {
+            if (chatPrincipleLabel) {
+                chatPrincipleLabel.textContent = value;
+                if (i18nKey) {
+                    chatPrincipleLabel.dataset.i18n = i18nKey;
+                    if (I18N[lang][i18nKey]) chatPrincipleLabel.textContent = I18N[lang][i18nKey];
+                } else {
+                    delete chatPrincipleLabel.dataset.i18n;
+                }
+            }
+            if (chatPrincipleDropdown) {
+                chatPrincipleDropdown.classList.remove('active');
+            }
+        };
     </script>
 </body>
 
