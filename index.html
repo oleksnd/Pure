@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pure — Энциклопедия цвета</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;700&display=swap"
         rel="stylesheet">
@@ -1050,6 +1051,193 @@
             color: var(--black);
         }
 
+        /* ACCORDION */
+        .formula-accordion-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            padding: 28px 48px 20px;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid var(--black);
+            transition: background 0.15s ease;
+        }
+
+        .formula-accordion-header:hover {
+            background: #f7f7f7;
+        }
+
+        .accordion-arrow {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+            color: #999;
+        }
+
+        .formula-accordion.is-open .accordion-arrow {
+            transform: rotate(180deg);
+        }
+
+        .formula-accordion-body {
+            display: none;
+            overflow: hidden;
+        }
+
+        .formula-accordion.is-open .formula-accordion-body {
+            display: block;
+        }
+
+        /* 6-strip grids for complex balance rules */
+        .rule-grid-itten {
+            display: grid;
+            grid-template-columns: 9fr 8fr 6fr 6fr 4fr 3fr;
+            height: 120px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-itten {
+            display: grid;
+            grid-template-columns: 9fr 8fr 6fr 6fr 4fr 3fr;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-itten .legend-item:last-child {
+            border-right: none;
+        }
+
+        .rule-grid-depth {
+            display: flex;
+            flex-direction: column;
+            height: 200px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-depth .rule-part {
+            border-right: none;
+            border-bottom: 1px solid var(--black);
+            font-size: 13px;
+            justify-content: flex-start;
+            padding-left: 24px;
+        }
+
+        .rule-grid-depth .rule-part:last-child {
+            border-bottom: none;
+        }
+
+        .rule-grid-luscher {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 180px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-luscher .rule-part-luscher-left {
+            grid-column: 1;
+            grid-row: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .rule-grid-luscher .rule-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--white);
+            border-right: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-luscher .rule-cell:nth-child(2),
+        .rule-grid-luscher .rule-cell:nth-child(4) {
+            border-right: none;
+        }
+
+        .rule-grid-luscher .rule-cell:nth-child(3),
+        .rule-grid-luscher .rule-cell:nth-child(4) {
+            border-bottom: none;
+        }
+
+        .rule-grid-luscher .rule-part-luscher-right {
+            grid-column: 2;
+            grid-row: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--black);
+        }
+
+        .rule-grid-luscher .rule-part-luscher-right .rule-part {
+            flex: 1;
+            font-size: 13px;
+            border-right: none;
+        }
+
+        .rule-grid-luscher .rule-part-luscher-right .rule-part:first-child {
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-seasonal {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            height: 180px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-seasonal .rule-part {
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-seasonal .rule-part:nth-child(4),
+        .rule-grid-seasonal .rule-part:nth-child(5),
+        .rule-grid-seasonal .rule-part:nth-child(6) {
+            border-bottom: none;
+        }
+
+        .rule-grid-shimmer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr 1fr;
+            height: 180px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-shimmer .rule-part {
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-grid-shimmer .rule-part:nth-child(4),
+        .rule-grid-shimmer .rule-part:nth-child(5),
+        .rule-grid-shimmer .rule-part:nth-child(6) {
+            border-bottom: none;
+        }
+
+        .rule-legend-6 {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-6 .legend-item:last-child {
+            border-right: none;
+        }
+
+        .rule-legend-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .rule-legend-3 .legend-item:last-child {
+            border-right: none;
+        }
+
         /* ADVANCED PRINCIPLES */
         .adv-rules-header {
             padding: 52px 48px 28px;
@@ -1342,24 +1530,32 @@
                                 <button class="chat-dropdown-item" onclick="selectPrinciple('Auto', 'chat_auto')"
                                     data-i18n="chat_auto">Auto</button>
                                 <div class="chat-dropdown-divider"></div>
-                                <button class="chat-dropdown-item"
-                                    onclick="selectPrinciple('60 / 30 / 10 — The Classic')">60 / 30 / 10 — The
-                                    Classic</button>
-                                <button class="chat-dropdown-item"
-                                    onclick="selectPrinciple('90 / 10 — The Minimalist')">90 / 10 — The
-                                    Minimalist</button>
-                                <button class="chat-dropdown-item" onclick="selectPrinciple('50 / 50 — The Duel')">50 /
-                                    50 — The Duel</button>
-                                <button class="chat-dropdown-item"
-                                    onclick="selectPrinciple('70 / 20 / 10 — The Monolith')">70 / 20 / 10 — The
-                                    Monolith</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_classic"
+                                    onclick="selectPrinciple('60 / 30 / 10 — The Classic', 'dp_classic')">60 / 30 / 10 — The Classic</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_minimalist"
+                                    onclick="selectPrinciple('90 / 10 — The Minimalist', 'dp_minimalist')">90 / 10 — The Minimalist</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_duel"
+                                    onclick="selectPrinciple('50 / 50 — The Duel', 'dp_duel')">50 / 50 — The Duel</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_monolith"
+                                    onclick="selectPrinciple('70 / 20 / 10 — The Monolith', 'dp_monolith')">70 / 20 / 10 — The Monolith</button>
                                 <div class="chat-dropdown-divider"></div>
-                                <button class="chat-dropdown-item"
-                                    onclick="selectPrinciple('Geometric Resonance')">Geometric Resonance</button>
-                                <button class="chat-dropdown-item" onclick="selectPrinciple('Neural Opponency')">Neural
-                                    Opponency</button>
-                                <button class="chat-dropdown-item"
-                                    onclick="selectPrinciple('Circadian Validity')">Circadian Validity</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_geometric"
+                                    onclick="selectPrinciple('Geometric Resonance', 'dp_geometric')">Geometric Resonance</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_neural"
+                                    onclick="selectPrinciple('Neural Opponency', 'dp_neural')">Neural Opponency</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_circadian"
+                                    onclick="selectPrinciple('Circadian Validity', 'dp_circadian')">Circadian Validity</button>
+                                <div class="chat-dropdown-divider"></div>
+                                <button class="chat-dropdown-item" data-i18n="dp_radiance"
+                                    onclick="selectPrinciple('Itten Radiance Force', 'dp_radiance')">Itten Radiance Force</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_strata"
+                                    onclick="selectPrinciple('Stratified Depth', 'dp_strata')">Stratified Depth</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_quartet"
+                                    onclick="selectPrinciple('Luscher Quartet', 'dp_quartet')">Luscher Quartet</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_seasons"
+                                    onclick="selectPrinciple('Seasonal Resonance', 'dp_seasons')">Seasonal Resonance</button>
+                                <button class="chat-dropdown-item" data-i18n="dp_shimmer"
+                                    onclick="selectPrinciple('Neural Shimmer', 'dp_shimmer')">Neural Shimmer</button>
                             </div>
                         </div>
                         <div style="display: flex; gap: 8px; align-items: center;">
@@ -1374,7 +1570,7 @@
                     </div>
                 </div>
                 <div id="chatResultTitle"
-                    style="font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 16px; min-height: 16px; color: var(--black);">
+                    style="font-size: 12px; font-weight: 400; letter-spacing: 0.01em; margin-top: 16px; min-height: 16px; color: #999;">
                 </div>
             </div>
 
@@ -1464,134 +1660,369 @@
             <div class="section-desc" data-i18n="rules_desc">Золотые формулы распределения цвета в композиции.</div>
         </div>
 
-        <!-- FORMULA: The Classic 60/30/10 -->
-        <div class="formula-title-bar">
-            <div class="formula-name" data-i18n="rule_classic_name">The Classic</div>
-            <div class="formula-ratio">60 / 30 / 10</div>
-            <div class="formula-tagline" data-i18n="rule_classic_tagline">«Золотое сечение гармонии»</div>
+        <!-- FORMULA 1: The Classic 60/30/10 — open by default -->
+        <div class="formula-accordion is-open">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="rule_classic_name">The Classic</div>
+                <div class="formula-ratio">60 / 30 / 10</div>
+                <div class="formula-tagline" data-i18n="rule_classic_tagline">«Золотое сечение гармонии»</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid">
+                    <div class="rule-part" style="background:#555">60%</div>
+                    <div class="rule-part" style="background:#888">30%</div>
+                    <div class="rule-part" style="background:#bbb">10%</div>
+                </div>
+                <div class="rule-legend">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="rule_60_label">Доминанта</div>
+                        <div class="legend-val">60%</div>
+                        <div class="legend-text" data-i18n="rule_60_text">Основной фон. Задает «атмосферный кокон» и объединяет все элементы. Спокойные или нейтральные тона.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="rule_30_label">Субдоминанта</div>
+                        <div class="legend-val">30%</div>
+                        <div class="legend-text" data-i18n="rule_30_text">Поддержка основы. Создает визуальный интерес и динамику. Может быть контрастным или близким по тону.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="rule_10_label">Акцент</div>
+                        <div class="legend-val">10%</div>
+                        <div class="legend-text" data-i18n="rule_10_text">Эмоциональная кульминация. Самый яркий или контрастный цвет. Привлекает взгляд к смысловому центру.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="rule_classic_effect">Универсальная формула гармонии — работает для любого жанра и стиля. Создаёт ощущение порядка и завершённости без скуки.</span>
+                </div>
+            </div>
         </div>
 
-        <div class="rule-grid">
-            <div class="rule-part" style="background:#555">60%</div>
-            <div class="rule-part" style="background:#888">30%</div>
-            <div class="rule-part" style="background:#bbb">10%</div>
-        </div>
-        <div class="rule-legend">
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="rule_60_label">Доминанта</div>
-                <div class="legend-val">60%</div>
-                <div class="legend-text" data-i18n="rule_60_text">Основной фон. Задает «атмосферный кокон» и объединяет
-                    все элементы. Спокойные или нейтральные тона.</div>
+        <!-- FORMULA 2: The Minimalist 90/10 -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula1_name">The Minimalist</div>
+                <div class="formula-ratio">90 / 10</div>
+                <div class="formula-tagline" data-i18n="formula1_tagline">«Абсолютный акцент»</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             </div>
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="rule_30_label">Субдоминанта</div>
-                <div class="legend-val">30%</div>
-                <div class="legend-text" data-i18n="rule_30_text">Поддержка основы. Создает визуальный интерес и
-                    динамику. Может быть контрастным или близким по тону.</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="rule_10_label">Акцент</div>
-                <div class="legend-val">10%</div>
-                <div class="legend-text" data-i18n="rule_10_text">Эмоциональная кульминация. Самый яркий или контрастный
-                    цвет. Привлекает взгляд к смысловому центру.</div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-9010">
+                    <div class="rule-part" style="background:#1a1a1a">90%</div>
+                    <div class="rule-part" style="background:#E8C84A; color:#1a1a1a">10%</div>
+                </div>
+                <div class="rule-legend-2">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula1_base_label">Base — Основа</div>
+                        <div class="legend-val">90%</div>
+                        <div class="legend-text" data-i18n="formula1_base_text">Огромное монохромное или нейтральное пространство. Белый, серый или глубокий темный. Создает «пустоту», в которой живет смысл.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula1_active_label">Active — Акцент</div>
+                        <div class="legend-val">10%</div>
+                        <div class="legend-text" data-i18n="formula1_active_text">Один единственный «звенящий» акцент. Взгляд зрителя мгновенно приковывается к смысловому центру.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula1_effect">Максимальный драматизм и чистота. Формула одиночества, святости или исключительной важности объекта. Идеальна для эстетики минимализма — когда один элемент несёт весь смысл.</span>
+                </div>
             </div>
         </div>
 
-        <!-- FORMULA: The Minimalist 90/10 -->
-        <div class="formula-title-bar">
-            <div class="formula-name" data-i18n="formula1_name">The Minimalist</div>
-            <div class="formula-ratio">90 / 10</div>
-            <div class="formula-tagline" data-i18n="formula1_tagline">«Абсолютный акцент»</div>
-        </div>
-        <div class="rule-grid-9010">
-            <div class="rule-part" style="background:#1a1a1a">90%</div>
-            <div class="rule-part" style="background:#E8C84A; color:#1a1a1a">10%</div>
-        </div>
-        <div class="rule-legend-2">
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula1_base_label">Base — Основа</div>
-                <div class="legend-val">90%</div>
-                <div class="legend-text" data-i18n="formula1_base_text">Огромное монохромное или нейтральное
-                    пространство. Белый, серый или глубокий темный. Создает «пустоту», в которой живет смысл.</div>
+        <!-- FORMULA 3: The Duel 50/50 -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula2_name">The Duel</div>
+                <div class="formula-ratio">50 / 50</div>
+                <div class="formula-tagline" data-i18n="formula2_tagline">«Противостояние»</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             </div>
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula1_active_label">Active — Акцент</div>
-                <div class="legend-val">10%</div>
-                <div class="legend-text" data-i18n="formula1_active_text">Один единственный «звенящий» акцент. Взгляд
-                    зрителя мгновенно приковывается к смысловому центру.</div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-5050">
+                    <div class="rule-part" style="background:#2a4f7e">50%</div>
+                    <div class="rule-part" style="background:#D4643A">50%</div>
+                </div>
+                <div class="rule-legend-2">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula2_forceA_label">Force A — Первая сила</div>
+                        <div class="legend-val">50%</div>
+                        <div class="legend-text" data-i18n="formula2_forceA_text">Первый цвет — носитель одной идеи, стихии или характера. Ни один из двух не доминирует — они равны по праву.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula2_forceB_label">Force B — Вторая сила</div>
+                        <div class="legend-val">50%</div>
+                        <div class="legend-text" data-i18n="formula2_forceB_text">Второй цвет — антагонист или партнёр. Граница между ними становится главным смысловым событием картины.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula2_effect">Дуальность, борьба или неразрывная связь противоположностей. Самая напряженная формула — отрицает иерархию ради конфликта. Картина перестаёт быть спокойной и начинает «пульсировать» на границе цветов.</span>
+                </div>
             </div>
-        </div>
-        <div class="formula-effect">
-            <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula1_effect">Максимальный драматизм и
-                чистота. Формула одиночества, святости или исключительной важности объекта. Идеальна для эстетики
-                минимализма — когда один элемент несёт весь смысл.</span>
         </div>
 
-        <!-- FORMULA: The Duel 50/50 -->
-        <div class="formula-title-bar">
-            <div class="formula-name" data-i18n="formula2_name">The Duel</div>
-            <div class="formula-ratio">50 / 50</div>
-            <div class="formula-tagline" data-i18n="formula2_tagline">«Противостояние»</div>
-        </div>
-        <div class="rule-grid-5050">
-            <div class="rule-part" style="background:#2a4f7e">50%</div>
-            <div class="rule-part" style="background:#D4643A">50%</div>
-        </div>
-        <div class="rule-legend-2">
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula2_forceA_label">Force A — Первая сила</div>
-                <div class="legend-val">50%</div>
-                <div class="legend-text" data-i18n="formula2_forceA_text">Первый цвет — носитель одной идеи, стихии или
-                    характера. Ни один из двух не доминирует — они равны по праву.</div>
+        <!-- FORMULA 4: The Monolith 70/20/10 -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula3_name">The Monolith</div>
+                <div class="formula-ratio">70 / 20 / 10</div>
+                <div class="formula-tagline" data-i18n="formula3_tagline">«Мягкая поддержка»</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             </div>
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula2_forceB_label">Force B — Вторая сила</div>
-                <div class="legend-val">50%</div>
-                <div class="legend-text" data-i18n="formula2_forceB_text">Второй цвет — антагонист или партнёр. Граница
-                    между ними становится главным смысловым событием картины.</div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-702010">
+                    <div class="rule-part" style="background:#2C3A47">70%</div>
+                    <div class="rule-part" style="background:#4B5F6A">20%</div>
+                    <div class="rule-part" style="background:#8FB8CC; color:#1a1a1a">10%</div>
+                </div>
+                <div class="rule-legend-702010">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula3_dom_label">Dominant — Доминанта</div>
+                        <div class="legend-val">70%</div>
+                        <div class="legend-text" data-i18n="formula3_dom_text">Глубокое погружение в одно состояние. Задаёт тональность и эмоцию всей работы целиком.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula3_sup_label">Support — Поддержка</div>
+                        <div class="legend-val">20%</div>
+                        <div class="legend-text" data-i18n="formula3_sup_text">Близкий по тону или температуре оттенок. Помогает глазу не устать от основы, добавляет объём и дыхание.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula3_high_label">Highlight — Блик</div>
+                        <div class="legend-val">10%</div>
+                        <div class="legend-text" data-i18n="formula3_high_text">Крошечный блик другого смысла. Не разрушает монолит, но оживляет его — добавляет точку притяжения.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula3_effect">Монументальность, надёжность и полное спокойствие. Вариация классики, где доминанта ещё сильнее подавляет остальные цвета. Идеально для пейзажей, философских полотен и тем вечности.</span>
+                </div>
             </div>
-        </div>
-        <div class="formula-effect">
-            <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula2_effect">Дуальность, борьба или
-                неразрывная связь противоположностей. Самая напряженная формула — отрицает иерархию ради конфликта.
-                Картина перестаёт быть спокойной и начинает «пульсировать» на границе цветов.</span>
         </div>
 
-        <!-- FORMULA: The Monolith 70/20/10 -->
-        <div class="formula-title-bar">
-            <div class="formula-name" data-i18n="formula3_name">The Monolith</div>
-            <div class="formula-ratio">70 / 20 / 10</div>
-            <div class="formula-tagline" data-i18n="formula3_tagline">«Мягкая поддержка»</div>
-        </div>
-        <div class="rule-grid-702010">
-            <div class="rule-part" style="background:#2C3A47">70%</div>
-            <div class="rule-part" style="background:#4B5F6A">20%</div>
-            <div class="rule-part" style="background:#8FB8CC; color:#1a1a1a">10%</div>
-        </div>
-        <div class="rule-legend-702010">
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula3_dom_label">Dominant — Доминанта</div>
-                <div class="legend-val">70%</div>
-                <div class="legend-text" data-i18n="formula3_dom_text">Глубокое погружение в одно состояние. Задаёт
-                    тональность и эмоцию всей работы целиком.</div>
+        <!-- FORMULA 5: The Radiance — Иттен «Сила излучения» -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula4_name">The Radiance</div>
+                <div class="formula-ratio">9 · 8 · 6 · 6 · 4 · 3</div>
+                <div class="formula-tagline" data-i18n="formula4_tagline">«Физический баланс яркости» · по И. Иттену</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             </div>
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula3_sup_label">Support — Поддержка</div>
-                <div class="legend-val">20%</div>
-                <div class="legend-text" data-i18n="formula3_sup_text">Близкий по тону или температуре оттенок. Помогает
-                    глазу не устать от основы, добавляет объём и дыхание.</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-label" data-i18n="formula3_high_label">Highlight — Блик</div>
-                <div class="legend-val">10%</div>
-                <div class="legend-text" data-i18n="formula3_high_text">Крошечный блик другого смысла. Не разрушает
-                    монолит, но оживляет его — добавляет точку притяжения.</div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-itten">
+                    <div class="rule-part" style="background:#5E3A8C">Фиол.</div>
+                    <div class="rule-part" style="background:#1A3A8C">Синий</div>
+                    <div class="rule-part" style="background:#CC1111">Красн.</div>
+                    <div class="rule-part" style="background:#2A8A3E">Зелён.</div>
+                    <div class="rule-part" style="background:#D05A00">Оранж.</div>
+                    <div class="rule-part" style="background:#C8A800; color:#1a1a1a">Жёлтый</div>
+                </div>
+                <div class="rule-legend-itten">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula4_v_label">Фиолетовый</div>
+                        <div class="legend-val">× 3</div>
+                        <div class="legend-text" data-i18n="formula4_v_text">Сила 3 — самый «тёмный» спектральный цвет. Занимает наибольшую площадь.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula4_b_label">Синий</div>
+                        <div class="legend-val">× 4</div>
+                        <div class="legend-text" data-i18n="formula4_b_text">Сила 4 — глубокое, холодное, отступающее.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula4_r_label">Красный</div>
+                        <div class="legend-val">× 6</div>
+                        <div class="legend-text" data-i18n="formula4_r_text">Сила 6 — средняя яркость, динамично тёплый.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula4_g_label">Зелёный</div>
+                        <div class="legend-val">× 6</div>
+                        <div class="legend-text" data-i18n="formula4_g_text">Сила 6 — средняя яркость, нейтрально уравновешивает.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula4_o_label">Оранжевый</div>
+                        <div class="legend-val">× 8</div>
+                        <div class="legend-text" data-i18n="formula4_o_text">Сила 8 — почти такой же яркий, как жёлтый.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula4_y_label">Жёлтый</div>
+                        <div class="legend-val">× 9</div>
+                        <div class="legend-text" data-i18n="formula4_y_text">Сила 9 — максимальная яркость. Занимает наименьшую площадь.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula4_effect">«Вибрирующий покой» — ни один цвет не подавляет другой. Площади обратно пропорциональны силе излучения: «громкие» цвета (жёлтый, оранжевый) занимают минимум пространства, «тихие» (синий, фиолетовый) — максимум. Идеально для сложных картин с полным хроматическим спектром.</span>
+                </div>
             </div>
         </div>
-        <div class="formula-effect">
-            <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula3_effect">Монументальность,
-                надёжность и полное спокойствие. Вариация классики, где доминанта ещё сильнее подавляет остальные цвета.
-                Идеально для пейзажей, философских полотен и тем вечности.</span>
+
+        <!-- FORMULA 6: The Strata — «Стратифицированная глубина» -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula5_name">The Strata</div>
+                <div class="formula-ratio">60 · 20 · 10 · 5 · 3 · 2</div>
+                <div class="formula-tagline" data-i18n="formula5_tagline">«Иерархия взгляда» · Scanpath</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-depth">
+                    <div class="rule-part" style="background:#7A8A7A; flex:60">60% — Атмосферный кокон</div>
+                    <div class="rule-part" style="background:#9EB0A0; flex:20">20% — Пространственный переход</div>
+                    <div class="rule-part" style="background:#2C6E49; flex:10">10% — Смысловое ядро</div>
+                    <div class="rule-part" style="background:#C05A3A; flex:5">5% — Контрапункт</div>
+                    <div class="rule-part" style="background:#D8E8D4; color:#1a1a1a; flex:3">3% — Световые акценты</div>
+                    <div class="rule-part" style="background:#1A2820; flex:2">2% — Глубинные тени</div>
+                </div>
+                <div class="rule-legend-6">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula5_l1_label">Атм. кокон</div>
+                        <div class="legend-val">60%</div>
+                        <div class="legend-text" data-i18n="formula5_l1_text">Приглушённый «тон» с примесью серого. Задаёт общее настроение и удерживает взгляд внутри пространства.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula5_l2_label">Переход</div>
+                        <div class="legend-val">20%</div>
+                        <div class="legend-text" data-i18n="formula5_l2_text">Родственный оттенок, создающий глубину и воздушную дымку между планами.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula5_l3_label">Ядро</div>
+                        <div class="legend-val">10%</div>
+                        <div class="legend-text" data-i18n="formula5_l3_text">Самый насыщенный цвет. Точка фиксации взгляда — смысловой и эмоциональный центр.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula5_l4_label">Контрапункт</div>
+                        <div class="legend-val">5%</div>
+                        <div class="legend-text" data-i18n="formula5_l4_text">Цвет, противоположный ядру. Создаёт динамическое напряжение без разрушения единства.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula5_l5_label">Световые акц.</div>
+                        <div class="legend-val">3%</div>
+                        <div class="legend-text" data-i18n="formula5_l5_text">Разбелённые штрихи — дают ощущение воздуха и светового вибрации.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula5_l6_label">Тени</div>
+                        <div class="legend-val">2%</div>
+                        <div class="legend-text" data-i18n="formula5_l6_text">Тёмные вкрапления. Придают объектам «психологический вес» и драматическую глубину.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula5_effect">Управляемая траектория взгляда (Scanpath). Зритель последовательно «погружается» от атмосферы к смыслу и обратно. Формула для сложных многоплановых работ: пейзажей, жанровых сцен, иллюстраций со своим нарративом.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULA 7: The Quartet — Метод Люшера «4 + 2» -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula6_name">The Quartet</div>
+                <div class="formula-ratio">4 базиса + 2 корректора</div>
+                <div class="formula-tagline" data-i18n="formula6_tagline">«Полная психологическая модель» · М. Люшер</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-luscher">
+                    <div class="rule-part-luscher-left">
+                        <div class="rule-cell" style="background:#1A4A8C">Синий</div>
+                        <div class="rule-cell" style="background:#2A7A3E">Зелёный</div>
+                        <div class="rule-cell" style="background:#CC1111">Красный</div>
+                        <div class="rule-cell" style="background:#C8A800; color:#1a1a1a">Жёлтый</div>
+                    </div>
+                    <div class="rule-part-luscher-right">
+                        <div class="rule-part" style="background:#888888">Серый</div>
+                        <div class="rule-part" style="background:#8B5A2B">Коричневый</div>
+                    </div>
+                </div>
+                <div class="rule-legend-2">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula6_basis_label">4 Цвета-базиса (Люшер)</div>
+                        <div class="legend-val">Синий · Зелёный · Красный · Жёлтый</div>
+                        <div class="legend-text" data-i18n="formula6_basis_text">Синий — покой и глубина. Зелёный — самоутверждение и рост. Красный — активность и воля. Жёлтый — надежда и устремлённость. Вместе они образуют полную матрицу базовых потребностей человека.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula6_corr_label">2 Ахроматических корректора</div>
+                        <div class="legend-val">Серый · Коричневый</div>
+                        <div class="legend-text" data-i18n="formula6_corr_text">Серый — дистанция, нейтральность, изолированное наблюдение. Коричневый — физический уют, телесность, укоренённость. Корректоры задают долю «молчания» между яркими базисами.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula6_effect">Полная психологическая модель мира. Если доминирует корректор (например, 60% серого), картина транслирует «изолированное наблюдение за полнотой жизни». Если в акцентах все четыре базиса — работа охватывает весь диапазон человеческого опыта.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULA 8: The Seasons — Сезонный резонанс Иттена -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula7_name">The Seasons</div>
+                <div class="formula-ratio">6 сезонных оттенков</div>
+                <div class="formula-tagline" data-i18n="formula7_tagline">«Без хаоса — без скуки» · по И. Иттену</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-seasonal">
+                    <div class="rule-part" style="background:#7B5B3A">Коричневый</div>
+                    <div class="rule-part" style="background:#C07A30">Охра</div>
+                    <div class="rule-part" style="background:#4A4A7A">Фиол.-синий</div>
+                    <div class="rule-part" style="background:#C85A1A">Оранжевый</div>
+                    <div class="rule-part" style="background:#9A7C3A; color:#1a1a1a">Жёлто-корич.</div>
+                    <div class="rule-part" style="background:#5A6A3A">Оливковый</div>
+                </div>
+                <div class="rule-legend-3">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula7_l1_label">Осень — 6 цветов</div>
+                        <div class="legend-val" data-i18n="formula7_autumn_colors">Коричневый · Охра · Фиол.-синий</div>
+                        <div class="legend-text" data-i18n="formula7_l1_text">Мудрость, увядание и уют. Все 6 цветов принадлежат одному сезонному семейству — переходы без риска цветового хаоса.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula7_l2_label">Зима — альтернатива</div>
+                        <div class="legend-val" data-i18n="formula7_winter_colors">Белый · Чёрный · Льдистый синий</div>
+                        <div class="legend-text" data-i18n="formula7_l2_text">Суровость, вечность, смерть и возрождение. Один цвет остаётся идеально чистым, остальные «загрязняются» в разной степени.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula7_l3_label">Принцип иерархии</div>
+                        <div class="legend-val" data-i18n="formula7_hier_val">Насыщение ↓</div>
+                        <div class="legend-text" data-i18n="formula7_l3_text">Один цвет — идеально чистый (звучащий). Остальные пять последовательно приглушаются или разбеливаются, создавая иерархию «звучания».</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula7_effect">Сложнейшие внутренние переходы без риска цветового хаоса. Все 6 цветов «разговаривают» на одном языке — работа воспринимается как единое органическое целое. Идеально для пейзажей, портретов в настроении и атмосферной абстракции.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULA 9: The Shimmer — Нейроэстетическое наслоение -->
+        <div class="formula-accordion">
+            <div class="formula-title-bar formula-accordion-header">
+                <div class="formula-name" data-i18n="formula8_name">The Shimmer</div>
+                <div class="formula-ratio">3 × 2 комплементарных пары</div>
+                <div class="formula-tagline" data-i18n="formula8_tagline">«Мерцающее пространство» · Зоны V1–V4</div>
+                <span class="accordion-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="formula-accordion-body">
+                <div class="rule-grid-shimmer">
+                    <div class="rule-part" style="background:#1A4A8C">Синий</div>
+                    <div class="rule-part" style="background:#CC1111">Красный</div>
+                    <div class="rule-part" style="background:#C8A800; color:#1a1a1a">Жёлтый</div>
+                    <div class="rule-part" style="background:#D05A00">Оранжевый</div>
+                    <div class="rule-part" style="background:#2A7A3E">Зелёный</div>
+                    <div class="rule-part" style="background:#5E3A8C">Фиолетовый</div>
+                </div>
+                <div class="rule-legend-3">
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula8_l1_label">Пара I · Синий / Оранжевый</div>
+                        <div class="legend-val">180°</div>
+                        <div class="legend-text" data-i18n="formula8_l1_text">Первая комплементарная пара. Мелкие пятна синего на оранжевом фоне заставляют мозг генерировать дополнительные холодные тени.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula8_l2_label">Пара II · Красный / Зелёный</div>
+                        <div class="legend-val">180°</div>
+                        <div class="legend-text" data-i18n="formula8_l2_text">Вторая пара — нейронные оппоненты. Симультанный контраст создаёт иллюзию вибрации на границе цветов.</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label" data-i18n="formula8_l3_label">Пара III · Жёлтый / Фиолетовый</div>
+                        <div class="legend-val">180°</div>
+                        <div class="legend-text" data-i18n="formula8_l3_text">Третья пара — максимальный светлотный контраст. Глаз самостоятельно «генерирует» дополнительные оттенки в тенях.</div>
+                    </div>
+                </div>
+                <div class="formula-effect">
+                    <strong data-i18n="effect_label">Эффект:</strong> <span data-i18n="formula8_effect">Иллюзия, что в картине не 6 цветов, а десятки. Мозг зрителя (зоны V1–V4) самостоятельно достраивает переходные оттенки через симультанный контраст. Мерцание, вибрация и бесконечная глубина — при минимальном наборе исходных красок.</span>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -2554,6 +2985,9 @@
                 nav_matrix: 'Матрица', nav_emotions: 'Состояния', nav_anatomy: 'Анатомия', nav_rules: 'Правила', nav_advanced: 'Принципы', nav_research: 'Данные',
                 hero_meta: 'Энциклопедия цветовой психологии — 2026',
                 chat_placeholder: 'Спросите о любом цвете или эмоции...', chat_auto: 'Авто',
+                dp_classic: '60 / 30 / 10 — Классика', dp_minimalist: '90 / 10 — Минимализм', dp_duel: '50 / 50 — Дуэль', dp_monolith: '70 / 20 / 10 — Монолит',
+                dp_geometric: 'Геометрический резонанс', dp_neural: 'Нейронная оппонентность', dp_circadian: 'Циркадная валидность',
+                dp_radiance: 'Излучение Иттена', dp_strata: 'Стратифицированные слои', dp_quartet: 'Квартет Люшера', dp_seasons: 'Сезонный резонанс', dp_shimmer: 'Нейроэстетическое мерцание',
                 matrix_label: '01 — Матрица восприятия', matrix_desc: 'Выберите цвет — получите психологический профиль.',
                 matrix_placeholder: 'Нажмите на цвет',
                 emotions_label: '02 — Палитры состояний', emotions_desc: 'Цветовые стратегии для конструирования эмоций.',
@@ -2562,20 +2996,20 @@
                 shades_label: 'Shades — Затененные', shades_title: 'Вес', shades_desc: 'Авторитет, драма, тайна. Глубокие тона — роскошь или скорбь.',
                 tones_label: 'Tones — Приглушенные', tones_title: 'Опыт', tones_desc: 'Цвета реальности. Интеллектуальность, сложность и спокойствие.',
                 rules_label: '04 — Правила баланса', rules_desc: 'Золотые формулы распределения цвета в композиции.',
-                rule_classic_name: 'The Classic', rule_classic_tagline: '«Золотое сечение гармонии»',
+                rule_classic_name: 'Классика', rule_classic_tagline: '«Золотое сечение гармонии»',
                 rule_60_label: 'Доминанта', rule_60_text: 'Основной фон. Задает «атмосферный кокон». 60% площади.',
                 rule_30_label: 'Субдоминанта', rule_30_text: 'Создает визуальный интерес и динамику. 30% площади.',
                 rule_10_label: 'Акцент', rule_10_text: 'Эмоциональная кульминация. Смысловой центр. 10% площади.',
                 effect_label: 'Эффект:',
-                formula1_name: 'The Minimalist', formula1_tagline: '«Абсолютный акцент»',
+                formula1_name: 'Минимализм', formula1_tagline: '«Абсолютный акцент»',
                 formula1_base_label: 'Base — Основа', formula1_base_text: 'Огромное монохромное или нейтральное пространство. Белый, серый или глубокий темный. Создает «пустоту», в которой живет смысл.',
                 formula1_active_label: 'Active — Акцент', formula1_active_text: 'Один единственный «звенящий» акцент. Взгляд зрителя мгновенно приковывается к смысловому центру.',
                 formula1_effect: 'Максимальный драматизм и чистота. Формула одиночества, святости или исключительной важности объекта. Идеальна для эстетики минимализма — когда один элемент несёт весь смысл.',
-                formula2_name: 'The Duel', formula2_tagline: '«Противостояние»',
+                formula2_name: 'Дуэль', formula2_tagline: '«Противостояние»',
                 formula2_forceA_label: 'Force A — Первая сила', formula2_forceA_text: 'Первый цвет — носитель одной идеи, стихии или характера. Ни один из двух не доминирует — они равны по праву.',
                 formula2_forceB_label: 'Force B — Вторая сила', formula2_forceB_text: 'Второй цвет — антагонист или партнёр. Граница между ними становится главным смысловым событием картины.',
                 formula2_effect: 'Дуальность, борьба или неразрывная связь противоположностей. Самая напряженная формула — отрицает иерархию ради конфликта. Картина перестаёт быть спокойной и начинает «пульсировать» на границе цветов.',
-                formula3_name: 'The Monolith', formula3_tagline: '«Мягкая поддержка»',
+                formula3_name: 'Монолит', formula3_tagline: '«Мягкая поддержка»',
                 formula3_dom_label: 'Dominant — Доминанта', formula3_dom_text: 'Глубокое погружение в одно состояние. Задаёт тональность и эмоцию всей работы целиком.',
                 formula3_sup_label: 'Support — Поддержка', formula3_sup_text: 'Близкий по тону или температуре оттенок. Помогает глазу не устать от основы, добавляет объём и дыхание.',
                 formula3_high_label: 'Highlight — Блик', formula3_high_text: 'Крошечный блик другого смысла. Не разрушает монолит, но оживляет его — добавляет точку притяжения.',
@@ -2613,6 +3047,40 @@
                 pr5_b1_head: 'Глобальный контекст.', pr5_b1_body: 'Западная традиция — чистота и невинность. Для восточного зрителя — траур и скорбь. Необходима балансировка яркими акцентами жизни: красным или золотым.',
                 pr5_b2_head: 'Культурный код.', pr5_b2_body: 'Китай — удача и праздник. Западная традиция — опасность и страсть. Один цвет, два принципиально разных архетипа.',
                 pr5_note: 'Применение: балансируйте символику цвета так, чтобы она не вступала в конфликт с базовыми архетипами целевой аудитории.',
+                rule_classic_effect: 'Универсальная формула гармонии — работает для любого жанра и стиля. Создаёт ощущение порядка и завершённости без скуки.',
+                formula4_name: 'Излучение', formula4_tagline: '«Физический баланс яркости» · по И. Иттену',
+                formula4_v_label: 'Фиолетовый', formula4_v_text: 'Сила 3 — самый «тёмный» спектральный цвет. Занимает наибольшую площадь.',
+                formula4_b_label: 'Синий', formula4_b_text: 'Сила 4 — глубокое, холодное, отступающее.',
+                formula4_r_label: 'Красный', formula4_r_text: 'Сила 6 — средняя яркость, динамично тёплый.',
+                formula4_g_label: 'Зелёный', formula4_g_text: 'Сила 6 — средняя яркость, нейтрально уравновешивает.',
+                formula4_o_label: 'Оранжевый', formula4_o_text: 'Сила 8 — почти такой же яркий, как жёлтый.',
+                formula4_y_label: 'Жёлтый', formula4_y_text: 'Сила 9 — максимальная яркость. Занимает наименьшую площадь.',
+                formula4_effect: '«Вибрирующий покой» — ни один цвет не подавляет другой. Площади обратно пропорциональны силе излучения: «громкие» цвета (жёлтый, оранжевый) занимают минимум пространства, «тихие» (синий, фиолетовый) — максимум. Идеально для сложных картин с полным хроматическим спектром.',
+                formula5_name: 'Слои', formula5_tagline: '«Иерархия взгляда» · Scanpath',
+                formula5_l1_label: 'Атм. кокон', formula5_l1_text: 'Приглушённый «тон» с примесью серого. Задаёт общее настроение и удерживает взгляд внутри пространства.',
+                formula5_l2_label: 'Переход', formula5_l2_text: 'Родственный оттенок, создающий глубину и воздушную дымку между планами.',
+                formula5_l3_label: 'Ядро', formula5_l3_text: 'Самый насыщенный цвет. Точка фиксации взгляда — смысловой и эмоциональный центр.',
+                formula5_l4_label: 'Контрапункт', formula5_l4_text: 'Цвет, противоположный ядру. Создаёт динамическое напряжение без разрушения единства.',
+                formula5_l5_label: 'Световые акц.', formula5_l5_text: 'Разбелённые штрихи — дают ощущение воздуха и световой вибрации.',
+                formula5_l6_label: 'Тени', formula5_l6_text: 'Тёмные вкрапления. Придают объектам «психологический вес» и драматическую глубину.',
+                formula5_effect: 'Управляемая траектория взгляда (Scanpath). Зритель последовательно «погружается» от атмосферы к смыслу и обратно. Формула для сложных многоплановых работ: пейзажей, жанровых сцен, иллюстраций со своим нарративом.',
+                formula6_name: 'Квартет', formula6_tagline: '«Полная психологическая модель» · М. Люшер',
+                formula6_basis_label: '4 Цвета-базиса (Люшер)', formula6_basis_text: 'Синий — покой и глубина. Зелёный — самоутверждение и рост. Красный — активность и воля. Жёлтый — надежда и устремлённость. Вместе они образуют полную матрицу базовых потребностей человека.',
+                formula6_corr_label: '2 Ахроматических корректора', formula6_corr_text: 'Серый — дистанция, нейтральность, изолированное наблюдение. Коричневый — физический уют, телесность, укоренённость. Корректоры задают долю «молчания» между яркими базисами.',
+                formula6_effect: 'Полная психологическая модель мира. Если доминирует корректор (например, 60% серого), картина транслирует «изолированное наблюдение за полнотой жизни». Если в акцентах все четыре базиса — работа охватывает весь диапазон человеческого опыта.',
+                formula7_name: 'Сезоны', formula7_tagline: '«Без хаоса — без скуки» · по И. Иттену',
+                formula7_l1_label: 'Осень — 6 цветов', formula7_autumn_colors: 'Коричневый · Охра · Фиол.-синий',
+                formula7_l1_text: 'Мудрость, увядание и уют. Все 6 цветов принадлежат одному сезонному семейству — переходы без риска цветового хаоса.',
+                formula7_l2_label: 'Зима — альтернатива', formula7_winter_colors: 'Белый · Чёрный · Льдистый синий',
+                formula7_l2_text: 'Суровость, вечность, смерть и возрождение. Один цвет остаётся идеально чистым, остальные «загрязняются» в разной степени.',
+                formula7_l3_label: 'Принцип иерархии', formula7_hier_val: 'Насыщение ↓',
+                formula7_l3_text: 'Один цвет — идеально чистый (звучащий). Остальные пять последовательно приглушаются или разбеливаются, создавая иерархию «звучания».',
+                formula7_effect: 'Сложнейшие внутренние переходы без риска цветового хаоса. Все 6 цветов «разговаривают» на одном языке — работа воспринимается как единое органическое целое. Идеально для пейзажей, портретов в настроении и атмосферной абстракции.',
+                formula8_name: 'Мерцание', formula8_tagline: '«Мерцающее пространство» · Зоны V1–V4',
+                formula8_l1_label: 'Пара I · Синий / Оранжевый', formula8_l1_text: 'Первая комплементарная пара. Мелкие пятна синего на оранжевом фоне заставляют мозг генерировать дополнительные холодные тени.',
+                formula8_l2_label: 'Пара II · Красный / Зелёный', formula8_l2_text: 'Вторая пара — нейронные оппоненты. Симультанный контраст создаёт иллюзию вибрации на границе цветов.',
+                formula8_l3_label: 'Пара III · Жёлтый / Фиолетовый', formula8_l3_text: 'Третья пара — максимальный светлотный контраст. Глаз самостоятельно «генерирует» дополнительные оттенки в тенях.',
+                formula8_effect: 'Иллюзия, что в картине не 6 цветов, а десятки. Мозг зрителя (зоны V1–V4) самостоятельно достраивает переходные оттенки через симультанный контраст. Мерцание, вибрация и бесконечная глубина — при минимальном наборе исходных красок.',
                 research_label: '06 — Ключевые данные', research_desc: 'Нейрофизиологические детерминанты цветового восприятия.',
                 stat1_label: 'Первое впечатление', stat1_text: 'Цвет определяет около 80% общего впечатления в первые 20 секунд.',
                 stat2_label: 'Красный спектр', stat2_text: 'Повышает ЧСС на 5–10% и усиливает кожную проводимость.',
@@ -2633,6 +3101,9 @@
                 nav_matrix: 'Matrix', nav_emotions: 'Emotions', nav_anatomy: 'Anatomy', nav_rules: 'Rules', nav_advanced: 'Principles', nav_research: 'Data',
                 hero_meta: 'Encyclopedia of Color Psychology — 2026',
                 chat_placeholder: 'Ask about any color or emotion...', chat_auto: 'Auto',
+                dp_classic: '60 / 30 / 10 — The Classic', dp_minimalist: '90 / 10 — The Minimalist', dp_duel: '50 / 50 — The Duel', dp_monolith: '70 / 20 / 10 — The Monolith',
+                dp_geometric: 'Geometric Resonance', dp_neural: 'Neural Opponency', dp_circadian: 'Circadian Validity',
+                dp_radiance: 'Itten Radiance Force', dp_strata: 'Stratified Depth', dp_quartet: 'Luscher Quartet', dp_seasons: 'Seasonal Resonance', dp_shimmer: 'Neural Shimmer',
                 matrix_label: '01 — Perception Matrix', matrix_desc: 'Select a color to get its psychological profile.',
                 matrix_placeholder: 'Click a color',
                 emotions_label: '02 — Emotion Palettes', emotions_desc: 'Color strategies for constructing emotional states.',
@@ -2692,6 +3163,40 @@
                 pr5_b1_head: 'Global Context.', pr5_b1_body: 'Western tradition — purity and innocence. For an Eastern viewer — mourning and grief. Balancing with vivid accents of life (red or gold) is required.',
                 pr5_b2_head: 'Cultural Code.', pr5_b2_body: 'In China — luck and celebration. Western tradition — danger and passion. One color, two fundamentally different archetypes.',
                 pr5_note: 'Application: balance the color symbolism so that it does not conflict with the core archetypes of your target audience.',
+                rule_classic_effect: 'A universal harmony formula — works for any genre and style. Creates a sense of order and completeness without monotony.',
+                formula4_name: 'The Radiance', formula4_tagline: '"Physical Brightness Balance" · J. Itten',
+                formula4_v_label: 'Violet', formula4_v_text: 'Force 3 — the darkest spectral color. Occupies the largest area.',
+                formula4_b_label: 'Blue', formula4_b_text: 'Force 4 — deep, cold, receding.',
+                formula4_r_label: 'Red', formula4_r_text: 'Force 6 — medium brightness, dynamically warm.',
+                formula4_g_label: 'Green', formula4_g_text: 'Force 6 — medium brightness, neutral balancer.',
+                formula4_o_label: 'Orange', formula4_o_text: 'Force 8 — almost as bright as yellow.',
+                formula4_y_label: 'Yellow', formula4_y_text: 'Force 9 — maximum brightness. Occupies the smallest area.',
+                formula4_effect: '"Vibrating stillness" — no color overpowers another. Areas are inversely proportional to radiance force: "loud" colors (yellow, orange) occupy minimal space, "quiet" ones (blue, violet) occupy maximum. Ideal for complex paintings with a full chromatic spectrum.',
+                formula5_name: 'The Strata', formula5_tagline: '"Gaze Hierarchy" · Scanpath',
+                formula5_l1_label: 'Atm. Cocoon', formula5_l1_text: 'A muted tone with a grey admixture. Sets the overall mood and keeps the gaze within the pictorial space.',
+                formula5_l2_label: 'Transition', formula5_l2_text: 'A related hue creating depth and atmospheric haze between planes.',
+                formula5_l3_label: 'Core', formula5_l3_text: 'The most saturated color. The fixation point — semantic and emotional center.',
+                formula5_l4_label: 'Counterpoint', formula5_l4_text: 'A color opposite to the core. Creates dynamic tension without breaking unity.',
+                formula5_l5_label: 'Light Accents', formula5_l5_text: 'Tinted strokes — give a sense of air and luminous vibration.',
+                formula5_l6_label: 'Shadows', formula5_l6_text: 'Dark flecks. Give objects psychological weight and dramatic depth.',
+                formula5_effect: 'A controlled gaze trajectory (Scanpath). The viewer sequentially immerses from atmosphere to meaning and back. The formula for complex multi-plane works: landscapes, genre scenes, and narrative illustrations.',
+                formula6_name: 'The Quartet', formula6_tagline: '"Complete Psychological Model" · M. Lüscher',
+                formula6_basis_label: '4 Base Colors (Lüscher)', formula6_basis_text: 'Blue — calm and depth. Green — self-assertion and growth. Red — activity and will. Yellow — hope and aspiration. Together they form the complete matrix of basic human needs.',
+                formula6_corr_label: '2 Achromatic Correctors', formula6_corr_text: 'Grey — distance, neutrality, isolated observation. Brown — physical comfort, corporeality, groundedness. Correctors define the share of "silence" between vivid bases.',
+                formula6_effect: 'A complete psychological model of the world. If a corrector dominates (e.g. 60% grey), the painting conveys "isolated observation of life\'s fullness". If all four bases appear as accents, the work spans the entire range of human experience.',
+                formula7_name: 'The Seasons', formula7_tagline: '"No Chaos — No Boredom" · J. Itten',
+                formula7_l1_label: 'Autumn — 6 colors', formula7_autumn_colors: 'Brown · Deep Ochre · Violet-Blue',
+                formula7_l1_text: 'Wisdom, decay and comfort. All 6 colors belong to one seasonal family — transitions with no risk of color chaos.',
+                formula7_l2_label: 'Winter — alternative', formula7_winter_colors: 'White · Black · Icy Blue',
+                formula7_l2_text: 'Severity, eternity, death and rebirth. One color stays perfectly pure; the rest are "contaminated" to varying degrees.',
+                formula7_l3_label: 'Hierarchy principle', formula7_hier_val: 'Saturation ↓',
+                formula7_l3_text: 'One color is perfectly pure (resonant). The remaining five are progressively muted or tinted, creating a hierarchy of "resonance".',
+                formula7_effect: 'Highly complex internal transitions without color chaos. All 6 colors speak the same language — the work is perceived as a single organic whole. Ideal for landscapes, mood portraits, and atmospheric abstraction.',
+                formula8_name: 'The Shimmer', formula8_tagline: '"Shimmering Space" · Zones V1–V4',
+                formula8_l1_label: 'Pair I · Blue / Orange', formula8_l1_text: 'First complementary pair. Small patches of blue on an orange field force the brain to generate extra cold shadows.',
+                formula8_l2_label: 'Pair II · Red / Green', formula8_l2_text: 'Second pair — neural opponents. Simultaneous contrast creates an illusion of vibration at the color boundary.',
+                formula8_l3_label: 'Pair III · Yellow / Violet', formula8_l3_text: 'Third pair — maximum value contrast. The eye autonomously generates additional hues in the shadows.',
+                formula8_effect: 'An illusion of dozens of colors from just six. The viewer\'s brain (zones V1–V4) autonomously constructs transitional hues via simultaneous contrast. Shimmer, vibration, and infinite depth — from a minimal source palette.',
                 research_label: '06 — Key Data', research_desc: 'Neurophysiological determinants of color perception.',
                 stat1_label: 'First Impression', stat1_text: 'Color determines about 80% of the overall impression in the first 20 seconds.',
                 stat2_label: 'Red Spectrum', stat2_text: 'Raises heart rate by 5–10% and increases skin conductance.',
@@ -2932,18 +3437,38 @@
 
         window.selectPrinciple = function (value, i18nKey) {
             if (chatPrincipleLabel) {
-                chatPrincipleLabel.textContent = value;
+                // Always store the English key for the palette engine
+                chatPrincipleLabel.dataset.principle = value;
+                // Display translated label if i18n key provided
                 if (i18nKey) {
                     chatPrincipleLabel.dataset.i18n = i18nKey;
                     if (I18N[lang][i18nKey]) chatPrincipleLabel.textContent = I18N[lang][i18nKey];
+                    else chatPrincipleLabel.textContent = value;
                 } else {
                     delete chatPrincipleLabel.dataset.i18n;
+                    chatPrincipleLabel.textContent = value;
                 }
             }
             if (chatPrincipleDropdown) {
                 chatPrincipleDropdown.classList.remove('active');
             }
         };
+
+        // Accordion for balance rules — single-open behaviour
+        (function initBalanceAccordions() {
+            document.querySelectorAll('.formula-accordion-header').forEach(function (header) {
+                header.addEventListener('click', function () {
+                    var accordion = header.closest('.formula-accordion');
+                    var isOpen = accordion.classList.contains('is-open');
+                    document.querySelectorAll('.formula-accordion.is-open').forEach(function (a) {
+                        a.classList.remove('is-open');
+                    });
+                    if (!isOpen) {
+                        accordion.classList.add('is-open');
+                    }
+                });
+            });
+        })();
     </script>
     <script src="paletteEngine.js"></script>
 </body>
