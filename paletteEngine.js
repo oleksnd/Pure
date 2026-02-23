@@ -2130,22 +2130,42 @@ function isTooSimilar(hexA, hexB) {
 // Generate a synthetic shade object when the pool cannot fill a role.
 // hueOffset: degrees to rotate from anchorHex's hue.
 // lightnessOverride: if set, force L% to this value (for Neutral role).
+function _hexToRgb(hex) {
+    if (!hex || hex === 'transparent') return [128, 128, 128];
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
+    return [parseInt(hex.substr(0,2),16), parseInt(hex.substr(2,2),16), parseInt(hex.substr(4,2),16)];
+}
+
+function findClosestRealShade(targetHex) {
+    if (typeof RESEARCH_DATA === 'undefined') return null;
+    const [r1, g1, b1] = _hexToRgb(targetHex);
+    let best = null, bestDist = Infinity;
+    RESEARCH_DATA.colors.forEach(color => {
+        (color.shades || []).forEach(shade => {
+            if (!shade.hex) return;
+            const [r2, g2, b2] = _hexToRgb(shade.hex);
+            const dist = (r1-r2)**2 + (g1-g2)**2 + (b1-b2)**2;
+            if (dist < bestDist) { bestDist = dist; best = shade; }
+        });
+    });
+    return best;
+}
+
 function synthesizeShade(anchorHex, hueOffset, lightnessOverride) {
     if (!anchorHex || anchorHex === 'transparent') anchorHex = '#888888';
     let [h, s, l] = hexToHsl(anchorHex);
     h = (h + hueOffset + 360) % 360;
     if (lightnessOverride !== undefined) {
         l = lightnessOverride;
-        s = Math.min(s, 20); // desaturate to keep it neutral
+        s = Math.min(s, 20);
     }
-    // Ensure minimum saturation so the color is visible
     s = Math.max(s, 8);
     const hex = hslToHex(h, s, l);
-    return {
-        hex,
-        name: { en: 'Auto', ru: 'Авто' },
-        _synthesized: true
-    };
+    // Snap to the nearest real shade so the name is meaningful and navigation works
+    const real = findClosestRealShade(hex);
+    if (real) return real;
+    return { hex, name: { en: 'Auto', ru: 'Авто' }, _synthesized: true };
 }
 
 // --- SEMANTIC SEARCH ---
@@ -2358,16 +2378,9 @@ function renderColorBlock(flexWeight, colorInfo, extraStyleStr = '') {
     const isClickable = colorInfo.hex && colorInfo.hex !== 'transparent';
     const clickStyle = isClickable ? 'cursor:pointer;' : '';
     const clickAttr = isClickable ? `onclick="navigateToShade('${colorInfo.hex}')"` : '';
-    let labelsHtml = '';
-    if (colorInfo.name || colorInfo.emotion) {
-        labelsHtml = `
-            <div style="position:absolute;bottom:20px;left:20px;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${textColor};z-index:10;">${colorInfo.name}</div>
-            <div style="position:absolute;bottom:20px;right:20px;font-size:11px;font-weight:400;text-transform:lowercase;color:${textColor};opacity:0.8;z-index:10;">${colorInfo.emotion}</div>
-        `;
-    }
-    if (isClickable) {
-        labelsHtml += `<div style="position:absolute;top:16px;right:16px;width:20px;height:20px;border-radius:50%;border:1.5px solid ${textColor};opacity:0.4;display:flex;align-items:center;justify-content:center;z-index:10;"><svg width='8' height='8' viewBox='0 0 8 8' fill='none'><path d='M1 7L7 1M7 1H2M7 1V6' stroke='${textColor}' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg></div>`;
-    }
+    const labelsHtml = colorInfo.name
+        ? `<div style="position:absolute;bottom:16px;left:16px;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${textColor};z-index:10;">${colorInfo.name}</div>`
+        : '';
     return `<div ${clickAttr} style="flex:${flexWeight};background:${colorInfo.hex};position:relative;overflow:hidden;${clickStyle}${extraStyleStr}">${labelsHtml}</div>`;
 }
 
@@ -2379,10 +2392,9 @@ function renderNeuralBlock(parentColorInfo, childColorInfo, extraStyleStr = '') 
     const pCursor = pIsClickable ? 'cursor:pointer;' : '';
     const cClick = childColorInfo.hex && childColorInfo.hex !== 'transparent'
         ? `onclick="event.stopPropagation();navigateToShade('${childColorInfo.hex}')"` : '';
-    const labelsHtml = (parentColorInfo.name || parentColorInfo.emotion) ? `
-        <div style="position:absolute;bottom:20px;left:20px;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${textColor};z-index:10;">${parentColorInfo.name}</div>
-        <div style="position:absolute;bottom:20px;right:20px;font-size:11px;font-weight:400;text-transform:lowercase;color:${textColor};opacity:0.8;z-index:10;">${parentColorInfo.emotion}</div>
-    ` : '';
+    const labelsHtml = parentColorInfo.name
+        ? `<div style="position:absolute;bottom:16px;left:16px;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${textColor};z-index:10;">${parentColorInfo.name}</div>`
+        : '';
     const childLabel = childColorInfo.name ? `
         <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${childTextColor};text-align:center;cursor:pointer;">${childColorInfo.name}</div>
     ` : '';
@@ -2702,8 +2714,16 @@ function renderGeneratedPalette(matches, principle) {
         const weights = [9, 8, 6, 6, 4, 3]; // darkest=9, lightest=3
         const blocks6 = sorted6.map((c, i) => {
             const info = extractColorInfo(c);
-            const border = i > 0 ? 'border-left:1px solid var(--black)' : '';
-            return renderColorBlock(weights[i], info, border);
+            const w = weights[i];
+            const tc = getContrastYIQ(info.hex);
+            const isClickable = info.hex && info.hex !== 'transparent';
+            const clickAttr = isClickable ? `onclick="navigateToShade('${info.hex}')"` : '';
+            const cursorStyle = isClickable ? 'cursor:pointer;' : '';
+            const border = i > 0 ? 'border-left:1px solid var(--black);' : '';
+            const nameHtml = info.name
+                ? `<div style="position:absolute;bottom:16px;left:16px;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};z-index:10;">${info.name}</div>`
+                : '';
+            return `<div ${clickAttr} style="flex:${w};background:${info.hex};position:relative;overflow:hidden;${cursorStyle}${border}">${nameHtml}</div>`;
         }).join('');
         html = `<div style="${baseStyle}flex-direction:row;">${blocks6}</div>`;
 
@@ -2726,8 +2746,17 @@ function renderGeneratedPalette(matches, principle) {
         ];
         const blocks6 = depths.map((d, i) => {
             const info = extractColorInfo(d.item);
-            const border = i > 0 ? 'border-top:1px solid var(--black)' : '';
-            return renderColorBlock(d.weight, info, border);
+            const tc = getContrastYIQ(info.hex);
+            const isClickable = info.hex && info.hex !== 'transparent';
+            const clickAttr = isClickable ? `onclick="navigateToShade('${info.hex}')"` : '';
+            const cursorStyle = isClickable ? 'cursor:pointer;' : '';
+            const border = i > 0 ? 'border-top:1px solid var(--black);' : '';
+            const fontSize = d.weight >= 20 ? '11px' : d.weight >= 10 ? '10px' : '9px';
+            const pad = d.weight >= 20 ? '16px' : d.weight >= 10 ? '12px' : '8px';
+            const nameHtml = info.name
+                ? `<span style="font-size:${fontSize};font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};white-space:nowrap;">${info.name}</span>`
+                : '';
+            return `<div ${clickAttr} style="flex:${d.weight};background:${info.hex};display:flex;align-items:center;padding:0 ${pad};overflow:hidden;${cursorStyle}${border}">${nameHtml}</div>`;
         }).join('');
         html = `<div style="${baseStyle}flex-direction:column;">${blocks6}</div>`;
 
@@ -2739,22 +2768,24 @@ function renderGeneratedPalette(matches, principle) {
         const baseHtml = bases.map((c, i) => {
             const info = extractColorInfo(c);
             const tc = getContrastYIQ(info.hex);
-            const clickAttr = info.hex && info.hex !== 'transparent' ? `onclick="navigateToShade('${info.hex}')"` : '';
+            const isClickable = info.hex && info.hex !== 'transparent';
+            const clickAttr = isClickable ? `onclick="navigateToShade('${info.hex}')"` : '';
             const bl = i % 2 === 1 ? '' : 'border-right:1px solid var(--black);';
             const bb = i < 2 ? 'border-bottom:1px solid var(--black);' : '';
-            const cursorStyle = info.hex && info.hex !== 'transparent' ? 'cursor:pointer;' : '';
+            const cursorStyle = isClickable ? 'cursor:pointer;' : '';
             return `<div ${clickAttr} style="flex:1;min-width:0;min-height:0;background:${info.hex};position:relative;overflow:hidden;${cursorStyle}${bl}${bb}">
-                <div style="position:absolute;bottom:10px;left:10px;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};">${info.name}</div>
+                <div style="position:absolute;bottom:10px;left:10px;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};z-index:10;">${info.name}</div>
             </div>`;
         }).join('');
         const corrHtml = correctors.map((c, i) => {
             const info = extractColorInfo(c);
             const tc = getContrastYIQ(info.hex);
-            const clickAttr = info.hex && info.hex !== 'transparent' ? `onclick="navigateToShade('${info.hex}')"` : '';
+            const isClickable = info.hex && info.hex !== 'transparent';
+            const clickAttr = isClickable ? `onclick="navigateToShade('${info.hex}')"` : '';
             const bb = i === 0 ? 'border-bottom:1px solid var(--black);' : '';
-            const cursorStyle = info.hex && info.hex !== 'transparent' ? 'cursor:pointer;' : '';
+            const cursorStyle = isClickable ? 'cursor:pointer;' : '';
             return `<div ${clickAttr} style="flex:1;background:${info.hex};position:relative;overflow:hidden;${cursorStyle}${bb}">
-                <div style="position:absolute;bottom:10px;left:10px;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};">${info.name}</div>
+                <div style="position:absolute;bottom:10px;left:10px;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};z-index:10;">${info.name}</div>
             </div>`;
         }).join('');
         html = `<div style="${baseStyle}flex-direction:row;">
@@ -2774,7 +2805,7 @@ function renderGeneratedPalette(matches, principle) {
             const bt = i >= 3 ? 'border-top:1px solid var(--black);' : '';
             const cursorStyle = isClickable ? 'cursor:pointer;' : '';
             return `<div ${clickAttr} style="background:${info.hex};position:relative;overflow:hidden;${cursorStyle}${bl}${bt}">
-                <div style="position:absolute;bottom:8px;left:8px;font-size:9px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};">${info.name}</div>
+                <div style="position:absolute;bottom:8px;left:8px;font-size:9px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};z-index:10;">${info.name}</div>
             </div>`;
         }).join('');
         html = `<div style="${baseStyle}flex-direction:row;">
@@ -2799,7 +2830,7 @@ function renderGeneratedPalette(matches, principle) {
                 const clickAttr = info.hex ? `onclick="navigateToShade('${info.hex}')"` : '';
                 const bt = ri > 0 ? 'border-top:1px solid var(--black);' : '';
                 return `<div ${clickAttr} style="flex:1;background:${info.hex};position:relative;overflow:hidden;cursor:pointer;${bt}">
-                    <div style="position:absolute;bottom:8px;left:8px;font-size:9px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};">${info.name}</div>
+                    <div style="position:absolute;bottom:8px;left:8px;font-size:9px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${tc};z-index:10;">${info.name}</div>
                 </div>`;
             }).join('');
             return `<div style="flex:1;display:flex;flex-direction:column;${colBorder}">${cellsHtml}</div>`;
@@ -2819,12 +2850,10 @@ function renderGeneratedPalette(matches, principle) {
             const clickable = info.hex && info.hex !== 'transparent';
             const clickAttr = clickable ? `onclick="navigateToShade('${info.hex}')"` : '';
             const cursorStyle = clickable ? 'cursor:pointer;' : '';
-            const arrowIcon = clickable ? `<div style="position:absolute;top:16px;right:16px;width:20px;height:20px;border-radius:50%;border:1.5px solid ${textColor};opacity:0.4;display:flex;align-items:center;justify-content:center;z-index:10;"><svg width='8' height='8' viewBox='0 0 8 8' fill='none'><path d='M1 7L7 1M7 1H2M7 1V6' stroke='${textColor}' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg></div>` : '';
             gridHtml += `
                 <div ${clickAttr} class="hero-block" style="${styleExtra}${cursorStyle}position:relative;overflow:hidden;">
                     <div class="color-block" style="background:${info.hex}"></div>
                     <div style="position:absolute;bottom:20px;left:20px;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:${textColor};z-index:10;">${info.name}</div>
-                    ${arrowIcon}
                 </div>`;
         });
         for (let i = toShow.length; i < 4; i++) {
