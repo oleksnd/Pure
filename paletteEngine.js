@@ -2598,6 +2598,13 @@ function renderGeneratedPalette(matches, principle) {
         });
     }
 
+    // Shuffle everything after the anchor (index 0) so that support / accent
+    // roles vary on every re-search, even when shadeMatches are deterministic.
+    if (sourceItems.length > 2) {
+        const tail = sourceItems.splice(1);
+        shuffleArray(tail).forEach(item => sourceItems.push(item));
+    }
+
     // --- Harmonize the pool into 4 colour roles ---
     const organized = organizePalette(sourceItems, 4);
 
