@@ -12,8 +12,19 @@ if (typeof lang === 'undefined') {
     console.warn('[PaletteEngine] lang is not defined. Falling back to "en".');
 }
 
+// --- SEMANTIC DNA (Emotion Clusters) ---
+const EMOTION_DNA = {
+    // ТЕПЛЫЕ (Warm/Active): Любовь, Романтика, Энергия, Уют, Праздник, Страсть, Солнце
+    warm: ["любовь", "романтика", "тепло", "уют", "страсть", "энергия", "радость", "огонь", "солнце", "дом", "забота", "love", "romance", "warmth", "cozy", "passion", "energy", "joy", "fire", "sun", "home", "care"],
+    
+    // ХОЛОДНЫЕ (Cold/Static): Зима, Лёд, Интеллект, Сталь, Технологии, Тишина, Свежесть
+    cold: ["зима", "лед", "сталь", "технологии", "холод", "тишина", "свежесть", "космос", "логика", "аналитика", "вакуум", "winter", "ice", "steel", "technology", "cold", "silence", "freshness", "space", "logic", "analytics", "vacuum"],
+    
+    // НЕЙТРАЛЬНЫЕ/СЛОЖНЫЕ: Меланхолия, Ностальгия, Скука, Тайна, Роскошь
+    neutral: ["меланхолия", "ностальгия", "скука", "тайна", "роскошь", "пыль", "время", "melancholy", "nostalgia", "boredom", "mystery", "luxury", "dust", "time"]
+};
+
 // --- SEMANTIC THESAURUS ---
-// Keys: words in Russian and English. Values: color names matching RESEARCH_DATA.colors[].name.en
 const EMOTION_THESAURUS = {
     // Fire / Heat
     'огонь': ['Red', 'Orange', 'Yellow'], 'fire': ['Red', 'Orange', 'Yellow'],
@@ -32,14 +43,24 @@ const EMOTION_THESAURUS = {
     'искрящийся': ['Orange', 'Yellow'], 'sparkling fire': ['Orange', 'Yellow'],
     // Love / Romance
     'любовь': ['Red', 'Violet'], 'love': ['Red', 'Violet'],
+    'романтика': ['Red', 'Violet', 'Blue'], 'romance': ['Red', 'Violet', 'Blue'],
+    'романтичный': ['Red', 'Violet', 'Blue'], 'romantic': ['Red', 'Violet', 'Blue'],
+    'нежность': ['Red', 'White', 'Blue', 'Violet'], 'tenderness': ['Red', 'White', 'Blue', 'Violet'],
+    'влюбленность': ['Red', 'Violet', 'Yellow'], 'infatuation': ['Red', 'Violet', 'Yellow'],
     'страсть': ['Red', 'Violet'], 'passion': ['Red', 'Violet'],
     'влечение': ['Red', 'Violet'], 'attraction': ['Red', 'Violet'],
     'обожание': ['Red', 'Violet', 'Yellow'], 'adoration': ['Red', 'Violet', 'Yellow'],
     'флирт': ['Red', 'Violet', 'Orange'], 'flirt': ['Red', 'Violet', 'Orange'],
     'поцелуй': ['Red', 'Violet'], 'kiss': ['Red', 'Violet'],
-    'объятие': ['Orange', 'Violet'], 'embrace': ['Orange', 'Violet'], 'hug': ['Orange', 'Violet'],
+    'объятие': ['Orange', 'Violet', 'Red'], 'embrace': ['Orange', 'Violet', 'Red'], 'hug': ['Orange', 'Violet', 'Red'],
     'свидание': ['Red', 'Violet', 'Orange'], 'date': ['Red', 'Violet', 'Orange'],
     'сердце': ['Red', 'Violet'], 'heart': ['Red', 'Violet'],
+    'красота': ['Red', 'Violet', 'White'], 'beauty': ['Red', 'Violet', 'White'],
+    'очарование': ['Red', 'Violet', 'Blue'], 'charm': ['Red', 'Violet', 'Blue'],
+    'грация': ['White', 'Violet', 'Red'], 'grace': ['White', 'Violet', 'Red'],
+    'эстетика': ['Violet', 'White', 'Grey'], 'aesthetics': ['Violet', 'White', 'Grey'],
+    'стиль': ['Black', 'Grey', 'White'], 'style': ['Black', 'Grey', 'White'],
+    'элегантность': ['Black', 'Grey', 'White', 'Violet'], 'elegance': ['Black', 'Grey', 'White', 'Violet'],
     'страстный': ['Red', 'Orange'], 'ardent': ['Red', 'Orange'],
     // Anger / Rage
     'ярость': ['Red', 'Orange'], 'rage': ['Red', 'Orange'],
@@ -55,8 +76,10 @@ const EMOTION_THESAURUS = {
     'конфликт': ['Red', 'Black', 'Orange'], 'conflict': ['Red', 'Black', 'Orange'],
     'напряжение': ['Red', 'Grey'], 'tension': ['Red', 'Grey'],
     // Joy / Happiness
-    'радость': ['Yellow', 'Orange'], 'joy': ['Yellow', 'Orange'],
-    'happiness': ['Yellow', 'Orange'], 'счастье': ['Yellow', 'Orange'],
+    'радость': ['Yellow', 'Orange', 'Red'], 'joy': ['Yellow', 'Orange', 'Red'],
+    'happiness': ['Yellow', 'Orange', 'Red'], 'счастье': ['Yellow', 'Orange', 'Red'],
+    'успех': ['Yellow', 'Orange', 'Red'], 'success': ['Yellow', 'Orange', 'Red'],
+    'удача': ['Yellow', 'Red', 'Orange'], 'luck': ['Yellow', 'Red', 'Orange'],
     'веселье': ['Yellow', 'Orange'], 'fun': ['Yellow', 'Orange'],
     'ликование': ['Yellow', 'Orange', 'Red'], 'jubilation': ['Yellow', 'Orange', 'Red'],
     'блаженство': ['Yellow', 'White', 'Violet'], 'bliss': ['Yellow', 'White', 'Violet'],
@@ -78,6 +101,12 @@ const EMOTION_THESAURUS = {
     'наивность': ['White', 'Yellow'], 'naivety': ['White', 'Yellow'],
     'беззащитность': ['White', 'Yellow'], 'vulnerability': ['White', 'Yellow'],
     'школа': ['Yellow', 'Orange', 'Blue'], 'school': ['Yellow', 'Orange', 'Blue'],
+    // Family / Friendship
+    'семья': ['Orange', 'Yellow', 'Red'], 'family': ['Orange', 'Yellow', 'Red'],
+    'дружба': ['Orange', 'Yellow', 'Green'], 'friendship': ['Orange', 'Yellow', 'Green'],
+    'забота': ['White', 'Orange', 'Red'], 'care': ['White', 'Orange', 'Red'],
+    'родители': ['Orange', 'Yellow', 'Grey'], 'parents': ['Orange', 'Yellow', 'Grey'],
+    'дом': ['Orange', 'Yellow', 'Green'], 'home': ['Orange', 'Yellow', 'Green'],
     // Warmth / Coziness
     'тепло': ['Orange', 'Yellow', 'Red'], 'warmth': ['Orange', 'Yellow', 'Red'],
     'warm': ['Orange', 'Yellow'], 'cozy': ['Orange', 'Yellow'], 'уют': ['Orange', 'Yellow'],
@@ -421,15 +450,13 @@ const EMOTION_THESAURUS = {
     'витамины': ['Orange', 'Yellow', 'Green'], 'vitamins': ['Orange', 'Yellow', 'Green'],
     'цитрус': ['Yellow', 'Orange'], 'citrus': ['Yellow', 'Orange'],
     'праздник': ['Orange', 'Yellow', 'Red'], 'holiday': ['Orange', 'Yellow', 'Red'], 'celebration': ['Orange', 'Yellow', 'Red'],
-    'успех': ['Yellow', 'Orange'], 'success': ['Yellow', 'Orange'],
-    'азарт': ['Red', 'Orange'], 'excitement': ['Red', 'Orange'],
     'скорость': ['Red', 'Orange'], 'speed': ['Red', 'Orange'],
     'динамика': ['Red', 'Orange', 'Yellow'], 'dynamic': ['Red', 'Orange', 'Yellow'],
     'фейерверк': ['Orange', 'Yellow', 'Red', 'Blue'], 'fireworks': ['Orange', 'Yellow', 'Red', 'Blue'],
     'конфетти': ['Yellow', 'Orange', 'Red', 'Violet'], 'confetti': ['Yellow', 'Orange', 'Red', 'Violet'],
     'сюрприз': ['Yellow', 'Orange'], 'surprise': ['Yellow', 'Orange'],
     'аплодисменты': ['Yellow', 'Orange'], 'applause': ['Yellow', 'Orange'],
-    'оватция': ['Yellow', 'Orange', 'Red'], 'ovation': ['Yellow', 'Orange', 'Red'],
+    'овация': ['Yellow', 'Orange', 'Red'], 'ovation': ['Yellow', 'Orange', 'Red'],
     'фиеста': ['Orange', 'Yellow', 'Red'], 'fiesta': ['Orange', 'Yellow', 'Red'],
     'дионис': ['Orange', 'Red', 'Violet'], 'dionysus': ['Orange', 'Red', 'Violet'],
     'щедрость': ['Orange', 'Yellow'], 'generosity': ['Orange', 'Yellow'],
@@ -454,12 +481,11 @@ const EMOTION_THESAURUS = {
     'эстетика холода': ['White', 'Blue', 'Grey'], 'cold aesthetics': ['White', 'Blue', 'Grey'],
 
     // --- CLUSTER 4: Cozy & Earth ---
-    'дом': ['Orange', 'Yellow'], 'home': ['Orange', 'Yellow'], 'house': ['Orange', 'Yellow'],
     'хлеб': ['Orange', 'Yellow'], 'bread': ['Orange', 'Yellow'],
     'кофе': ['Orange', 'Black'], 'coffee': ['Orange', 'Black'],
     'дерево': ['Orange', 'Yellow'], 'wood': ['Orange', 'Yellow'], 'tree': ['Green', 'Orange'],
     'глина': ['Orange', 'Yellow'], 'clay': ['Orange', 'Yellow'],
-    'традиции': ['Orange', 'Yellow'], 'tradition': ['Orange', 'Yellow'],
+    'традиции': ['Orange', 'Yellow', 'Red'], 'tradition': ['Orange', 'Yellow', 'Red'],
     'корица': ['Orange', 'Red'], 'cinnamon': ['Orange', 'Red'],
     'шерсть': ['Orange', 'Yellow'], 'wool': ['Orange', 'Yellow'],
     'песок': ['Yellow', 'Orange'], 'sand': ['Yellow', 'Orange'],
@@ -1259,7 +1285,6 @@ const EMOTION_THESAURUS = {
     'первый шаг': ['Green', 'Yellow'], 'first step': ['Green', 'Yellow'],
     'прощание': ['Grey', 'Blue', 'Violet'], 'farewell': ['Grey', 'Blue', 'Violet'],
     'встреча': ['Yellow', 'Orange'], 'reunion': ['Yellow', 'Orange'],
-    'влюбленность': ['Red', 'Violet', 'Yellow'], 'infatuation': ['Red', 'Violet', 'Yellow'],
 
     // --- SPORTS & NATURE COLORS ---
     'хаки': ['Green', 'Yellow'], 'khaki': ['Green', 'Yellow'],
@@ -1640,8 +1665,8 @@ const EMOTION_THESAURUS = {
     'свобода': ['Blue', 'Green', 'White'],               // Cerulean
     'freedom': ['Blue', 'Green', 'White'],
     'ментальное освобождение': ['Blue', 'White', 'Green'],
-    'безграничnost': ['Blue', 'White'],
-    'intellectualnaya chistota': ['Blue', 'White'],
+    'безграничность': ['Blue', 'White'], 'boundlessness': ['Blue', 'White'],
+    'интеллектуальная чистота': ['Blue', 'White'], 'intellectual purity': ['Blue', 'White'],
     'снижение стресса': ['Blue', 'Violet', 'Green'],     // Lavender Blue
     'stress relief': ['Blue', 'Violet', 'Green'],
     'антистресс': ['Blue', 'Violet', 'Green'],
@@ -1651,14 +1676,8 @@ const EMOTION_THESAURUS = {
     'sleep': ['Blue', 'Violet', 'Black'],
     'созерцание': ['Blue', 'Violet', 'White'],
     'contemplation': ['Blue', 'Violet', 'White'],
-    'романтика': ['Blue', 'Violet'],                     // Cornflower
-    'romance': ['Blue', 'Violet'],
-    'романтичный': ['Blue', 'Violet'],
-    'romantic2': ['Blue', 'Violet'],
-    'нежность': ['Blue', 'Violet', 'Red', 'Orange'],    // Cornflower + Wisteria/Violet + Apricot/Orange
-    'tenderness': ['Blue', 'Violet', 'Red', 'Orange'],
     'верность': ['Blue', 'Violet'],                      // Cornflower + Cobalt
-    'loyalty2': ['Blue', 'Violet'],
+    'loyalty': ['Blue', 'Violet'],
     'преданность': ['Blue', 'Violet'],
     'devotion': ['Blue', 'Violet'],
     'привязанность': ['Blue', 'Violet'],
@@ -1750,7 +1769,6 @@ const EMOTION_THESAURUS = {
     'fantasy': ['Violet', 'Blue', 'Yellow'],
     'воображение': ['Violet', 'Blue', 'Yellow'],
     'imagination': ['Violet', 'Blue', 'Yellow'],
-    'очарование': ['Violet', 'Blue', 'Red'],             // Orchid
     'charm': ['Violet', 'Blue', 'Red'],
     'обаяние': ['Violet', 'Red', 'Orange'],
     'чувственная роскошь': ['Violet', 'Red', 'Black'],
@@ -2185,114 +2203,175 @@ function synthesizeShade(anchorHex, hueOffset, lightnessOverride, avoidHexes) {
 }
 
 // --- SEMANTIC SEARCH ---
+/**
+ * REWRITTEN Search Engine with Point Ranking and Diversity Filter
+ * Weights: Tags/Thesaurus (+30), Physiology/Psychology (+15), Name (+5)
+ * Filter: Skip colors too visually similar in the Top-5
+ */
 function findPalette(query) {
     if (typeof RESEARCH_DATA === 'undefined') return null;
-    if (!query || query.trim() === '') return null;
-    query = query.toLowerCase().trim();
+    if (!query || query.trim() === '') return { bestColorsPool: [], shadeMatches: [], tokenCount: 0, thesaurusHit: false };
 
-    const tokens = query.split(/\s+/).filter(t => t.length > 1);
+    const rawQuery = query.toLowerCase().trim();
+    const initialTokens = rawQuery.split(/\s+/).filter(t => t.length > 1);
+    
+    // 0. DNA Expansion & Temperature Profile Detection
+    let isWarmQuery = false;
+    let isColdQuery = false;
+    let isRomanceQuery = false;
+    
+    let finalTokens = [...initialTokens];
+    initialTokens.forEach(token => {
+        // Track Romance/Love for special filters
+        if (["любовь", "романтика", "love", "romance"].includes(token)) isRomanceQuery = true;
 
-    function fuzzyMatch(str, q) {
-        if (!str) return 0;
-        str = str.toLowerCase();
-        if (str === q) return 100;
-        if (str.includes(q)) return 50;
-        const tkns = q.split(/\s+/);
-        let score = 0;
-        tkns.forEach(t => { if (t.length > 2 && str.includes(t)) score += 10; });
-        return score;
-    }
-
-    // Step 1: thesaurus lookup — per token, find matching color names
-    const tokenTagMap = new Map(); // token -> Set<colorNameEn>
-    tokens.forEach(token => {
-        const colorNames = thesaurusLookup(token);
-        if (colorNames && colorNames.length > 0) {
-            tokenTagMap.set(token, new Set(colorNames));
-        }
-    });
-
-    // Step 2: balanced thesaurus pool — each token contributes proportionally
-    const quota = Math.ceil(5 / Math.max(tokens.length, 1));
-    const selectedColorNames = new Set();
-    const resultPool = [];
-
-    tokenTagMap.forEach((colorNameSet) => {
-        let added = 0;
-        colorNameSet.forEach(colorName => {
-            if (added >= quota) return;
-            const col = RESEARCH_DATA.colors.find(c => c.name.en === colorName);
-            if (col && !selectedColorNames.has(colorName)) {
-                selectedColorNames.add(colorName);
-                resultPool.push({ color: col, score: 200 });
-                added++;
+        // Check if token has direct hit in thesaurus
+        const hasDirectHit = !!thesaurusLookup(token);
+        
+        // Check DNA Cluster
+        let tokenCluster = null;
+        let clusterKey = null;
+        for (const [key, words] of Object.entries(EMOTION_DNA)) {
+            if (words.includes(token)) {
+                tokenCluster = words;
+                clusterKey = key;
+                break;
             }
-        });
-    });
+        }
 
-    // Step 3: fuzzy search across base colors AND individual shades
-    const fuzzyPool = [];
-    const shadeMatches = []; // specific shades that matched the query
+        if (clusterKey === 'warm') isWarmQuery = true;
+        if (clusterKey === 'cold') isColdQuery = true;
 
-    RESEARCH_DATA.colors.forEach(col => {
-        let colorScore = 0;
-        const colorSearchSpace = [
-            col.name?.ru, col.name?.en,
-            col.physics?.ru, col.physics?.en,
-            col.physiology?.ru, col.physiology?.en,
-            col.profile?.ru, col.profile?.en,
-            col.advice?.ru, col.advice?.en,
-            col.feelings?.ru, col.feelings?.en,
-            col.tip?.ru, col.tip?.en
-        ];
-        tokens.forEach(token => {
-            colorSearchSpace.forEach(text => { colorScore += fuzzyMatch(text, token); });
-        });
-
-        // Search each shade individually — track matches separately
-        if (col.shades) {
-            col.shades.forEach(shade => {
-                let shadeScore = 0;
-                tokens.forEach(token => {
-                    shadeScore += fuzzyMatch(shade.name?.ru, token) * 2;
-                    shadeScore += fuzzyMatch(shade.name?.en, token) * 2;
-                    shadeScore += fuzzyMatch(shade.desc?.ru, token);
-                    shadeScore += fuzzyMatch(shade.desc?.en, token);
-                });
-                if (shadeScore > 0) {
-                    shadeMatches.push({ shade, parentColor: col, score: shadeScore });
-                    colorScore += shadeScore * 0.3; // shade hit also boosts base color
-                }
+        // Requirement 4: Automatic expansion if no direct hit
+        if (!hasDirectHit && tokenCluster) {
+            tokenCluster.forEach(w => {
+                if (!finalTokens.includes(w)) finalTokens.push(w);
             });
         }
+    });
 
-        if (!selectedColorNames.has(col.name.en) && colorScore > 0) {
-            fuzzyPool.push({ color: col, score: colorScore });
+    const results = [];
+    let thesaurusHitGlobal = false;
+
+    // 1. Gather all unique search candidates
+    const candidates = [];
+    RESEARCH_DATA.colors.forEach(col => {
+        candidates.push({ type: 'base', data: col, parent: col });
+        if (col.shades) {
+            col.shades.forEach(shade => {
+                candidates.push({ type: 'shade', data: shade, parent: col });
+            });
         }
     });
 
-    fuzzyPool.sort((a, b) => b.score - a.score);
-    shadeMatches.sort((a, b) => b.score - a.score);
-    fuzzyPool.forEach(item => resultPool.push(item));
+    // 2. Score each candidate
+    candidates.forEach(cand => {
+        let score = 0;
+        const item = cand.data;
+        const parent = cand.parent;
+        const itemHex = item.hex;
 
-    // Fallback: full-query fuzzy search if nothing found
-    let bestColorsPool = resultPool;
-    if (bestColorsPool.length === 0) {
-        RESEARCH_DATA.colors.forEach(col => {
-            const searchSpace = [col.name?.ru, col.name?.en, col.physics?.ru, col.physics?.en,
-                col.physiology?.ru, col.physiology?.en, col.profile?.ru, col.profile?.en];
-            let score = 0;
-            searchSpace.forEach(text => { score += fuzzyMatch(text, query); });
-            if (score > 0) bestColorsPool.push({ color: col, score });
+        finalTokens.forEach(token => {
+            // RULE 1: Association Map (Thesaurus Tags) -> +30
+            const mappedColorNames = thesaurusLookup(token);
+            if (mappedColorNames && mappedColorNames.includes(parent.name.en)) {
+                score += 30;
+                thesaurusHitGlobal = true;
+            }
+
+            // RULE 2: Physiology, Psychology, Feelings, Descriptions -> +15
+            const descriptionFields = cand.type === 'base'
+                ? [
+                    item.physiology?.ru, item.physiology?.en, 
+                    item.feelings?.ru, item.feelings?.en, 
+                    item.profile?.ru, item.profile?.en, 
+                    item.advice?.ru, item.advice?.en,
+                    item.tip?.ru, item.tip?.en,
+                    item.physics?.ru, item.physics?.en
+                  ]
+                : [item.desc?.ru, item.desc?.en];
+            
+            if (descriptionFields.some(text => text?.toLowerCase().includes(token))) {
+                score += 15;
+            }
+
+            // RULE 3: Name match -> +5
+            const nameFields = [item.name?.ru, item.name?.en];
+            if (nameFields.some(text => text?.toLowerCase().includes(token))) {
+                score += 5;
+            }
         });
-        bestColorsPool.sort((a, b) => b.score - a.score);
+
+        if (score > 0) {
+            // --- NEW: TEMPERATURE & SEMANTIC FILTERS ---
+            if (itemHex) {
+                const [h] = hexToHsl(itemHex);
+                // Warm range: 330-60
+                const isWarmColor = (h >= 330 || h <= 60);
+                // Cold range: 160-280
+                const isColdColor = (h >= 160 && h <= 280);
+
+                // Requirement 2: Temperature Priority
+                if (isWarmQuery && isColdQuery) {
+                    // Conflict (e.g. "Cold Love"): Warm Anchor prioritized (+250%), Cold also boosted (+200%)
+                    if (isWarmColor) score *= 2.5; 
+                    else if (isColdColor) score *= 2.0;
+                } else {
+                    if (isWarmQuery && isWarmColor) score *= 2.0;
+                    if (isColdQuery && isColdColor) score *= 2.0;
+                }
+
+                // Requirement 3: Intellectual Filter "Romance"
+                // Forbid Mint (#98FF98) or Lilac (#C8A2C8) as main colors (Anchor) for Romance/Love
+                if (isRomanceQuery) {
+                    const isMint = itemHex.toUpperCase() === '#98FF98';
+                    const isLilac = itemHex.toUpperCase() === '#C8A2C8';
+                    if (isMint || isLilac) {
+                        score *= 0.1; // Drop score drastically to keep it as possible accent only
+                    }
+                }
+            }
+
+            results.push({
+                color: parent,
+                shade: cand.type === 'shade' ? item : null,
+                score: score,
+                hex: itemHex
+            });
+        }
+    });
+
+    // 3. Sort by total score descending
+    results.sort((a, b) => b.score - a.score);
+
+    // 4. Diversity Filter: Select Top-5 while excluding visually similar colors
+    const finalSelection = [];
+    const matchedHexes = new Set();
+
+    for (const res of results) {
+        if (finalSelection.length >= 5) break;
+
+        const isDuplicateOrTooClose = finalSelection.some(selected => isTooSimilar(res.hex, selected.hex));
+        
+        if (!isDuplicateOrTooClose) {
+            finalSelection.push(res);
+            matchedHexes.add(res.hex.toUpperCase());
+        }
     }
+
+    // 5. Build response Object
+    const bestColorsPool = finalSelection.map(r => ({ color: r.color, score: r.score }));
+    const shadeMatches = finalSelection
+        .filter(r => r.shade)
+        .map(r => ({ shade: r.shade, parentColor: r.color, score: r.score }));
+
+    if (typeof window !== 'undefined') window.searchMatchedHexes = matchedHexes;
 
     return {
         bestColorsPool,
         shadeMatches,
-        tokenCount: tokens.length,
-        thesaurusHit: tokenTagMap.size > 0
+        tokenCount: initialTokens.length,
+        thesaurusHit: thesaurusHitGlobal
     };
 }
 
