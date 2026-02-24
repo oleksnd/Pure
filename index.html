@@ -436,6 +436,22 @@
             z-index: 1;
         }
 
+        /* Search match dot indicator */
+        .matrix-color-btn.search-match::before,
+        .matrix-shade-btn.search-match::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #F3F3F3;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
         .matrix-profile {
             display: block;
             min-height: 200px;
@@ -3302,13 +3318,26 @@
         const shadesGrid = document.getElementById('shadesGrid');
         const profileText = document.getElementById('profileText');
 
+        window.searchMatchedHexes = new Set();
+
         RESEARCH_DATA.colors.forEach((color, i) => {
             const btn = document.createElement('button');
             btn.className = 'matrix-color-btn';
             btn.style.backgroundColor = color.hex;
+            btn.dataset.hex = color.hex.toUpperCase();
             btn.onclick = () => showProfile(i);
             colorGrid.appendChild(btn);
         });
+
+        window.markMatrixSearchResults = function () {
+            const matched = window.searchMatchedHexes || new Set();
+            document.querySelectorAll('#colorGrid .matrix-color-btn[data-hex]').forEach(btn => {
+                btn.classList.toggle('search-match', matched.has(btn.dataset.hex));
+            });
+            document.querySelectorAll('#shadesGrid .matrix-shade-btn[data-hex]').forEach(btn => {
+                btn.classList.toggle('search-match', matched.has(btn.dataset.hex));
+            });
+        };
 
         // Physical params
         const physicsGrid = document.getElementById('physicsGrid');
@@ -3342,6 +3371,10 @@
                 const sbtn = document.createElement('button');
                 sbtn.className = 'matrix-shade-btn' + (shadeIndex === si ? ' active' : '');
                 sbtn.style.backgroundColor = shade.hex;
+                sbtn.dataset.hex = shade.hex.toUpperCase();
+                if (window.searchMatchedHexes && window.searchMatchedHexes.has(shade.hex.toUpperCase())) {
+                    sbtn.classList.add('search-match');
+                }
                 sbtn.onclick = () => showProfile(index, si);
                 shadesGrid.appendChild(sbtn);
             });

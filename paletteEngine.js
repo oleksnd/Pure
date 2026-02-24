@@ -2894,8 +2894,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!matches || matches.bestColorsPool.length === 0) {
             const chatResultTitle = document.getElementById('chatResultTitle');
             if (chatResultTitle) chatResultTitle.textContent = lang === 'ru' ? 'Ничего не найдено' : 'Nothing found';
+            // Clear search marks on no result
+            window.searchMatchedHexes = new Set();
+            window.markMatrixSearchResults?.();
             return;
         }
+
+        // Collect all matched hexes (base colors + specific shades + parent colors of matched shades)
+        const matchedHexes = new Set();
+        matches.bestColorsPool.forEach(m => {
+            if (m.color?.hex) matchedHexes.add(m.color.hex.toUpperCase());
+        });
+        (matches.shadeMatches || []).forEach(m => {
+            if (m.shade?.hex) matchedHexes.add(m.shade.hex.toUpperCase());
+            if (m.parentColor?.hex) matchedHexes.add(m.parentColor.hex.toUpperCase());
+        });
+        window.searchMatchedHexes = matchedHexes;
+        window.markMatrixSearchResults?.();
 
         const principleLabel = document.getElementById('chatPrincipleLabel');
         const principle = principleLabel
