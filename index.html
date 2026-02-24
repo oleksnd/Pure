@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pure — Энциклопедия цвета</title>
+    <title>Pure</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;700&display=swap"
@@ -445,12 +445,16 @@
             height: 8px;
             border-radius: 50%;
             background: #ffffff;
-            mix-blend-mode: difference;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 3;
             pointer-events: none;
+        }
+        /* Black dot on light / white backgrounds */
+        .matrix-color-btn.search-match.light-bg::before,
+        .matrix-shade-btn.search-match.light-bg::before {
+            background: #1a1a1a;
         }
 
         .matrix-profile {
@@ -3321,11 +3325,23 @@
 
         window.searchMatchedHexes = new Set();
 
+        function isLightHex(hex) {
+            if (!hex || hex === 'transparent') return false;
+            hex = hex.replace('#', '');
+            if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
+            if (hex.length !== 6) return false;
+            const r = parseInt(hex.substr(0, 2), 16);
+            const g = parseInt(hex.substr(2, 2), 16);
+            const b = parseInt(hex.substr(4, 2), 16);
+            return (r * 299 + g * 587 + b * 114) / 1000 > 180;
+        }
+
         RESEARCH_DATA.colors.forEach((color, i) => {
             const btn = document.createElement('button');
             btn.className = 'matrix-color-btn';
             btn.style.backgroundColor = color.hex;
             btn.dataset.hex = color.hex.toUpperCase();
+            if (isLightHex(color.hex)) btn.classList.add('light-bg');
             btn.onclick = () => showProfile(i);
             colorGrid.appendChild(btn);
         });
@@ -3333,7 +3349,10 @@
         window.markMatrixSearchResults = function () {
             const matched = window.searchMatchedHexes || new Set();
             document.querySelectorAll('#colorGrid .matrix-color-btn[data-hex]').forEach(btn => {
-                btn.classList.toggle('search-match', matched.has(btn.dataset.hex));
+                // Dot the base color if its own hex matched OR if any of its shades matched
+                const colorData = RESEARCH_DATA.colors.find(c => c.hex.toUpperCase() === btn.dataset.hex);
+                const anyShadeMatched = colorData?.shades?.some(s => s.hex && matched.has(s.hex.toUpperCase()));
+                btn.classList.toggle('search-match', matched.has(btn.dataset.hex) || !!anyShadeMatched);
             });
             document.querySelectorAll('#shadesGrid .matrix-shade-btn[data-hex]').forEach(btn => {
                 btn.classList.toggle('search-match', matched.has(btn.dataset.hex));
@@ -3373,6 +3392,8 @@
                 sbtn.className = 'matrix-shade-btn' + (shadeIndex === si ? ' active' : '');
                 sbtn.style.backgroundColor = shade.hex;
                 sbtn.dataset.hex = shade.hex.toUpperCase();
+                if (isLightHex(shade.hex)) sbtn.classList.add('light-bg');
+                // Show dot only if this specific shade hex was matched by the search
                 if (window.searchMatchedHexes && window.searchMatchedHexes.has(shade.hex.toUpperCase())) {
                     sbtn.classList.add('search-match');
                 }

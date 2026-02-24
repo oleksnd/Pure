@@ -2569,7 +2569,13 @@ function organizePalette6(pool) {
     }
     if (!c6) { c6 = synthesizeShade(base.anchor.hex, 0, 8, usedHex); }
 
-    return { ...base, c5, c6, all6: [base.anchor, base.support, base.accent, base.neutral, c5, c6] };
+    const all6 = [base.anchor, base.support, base.accent, base.neutral, c5, c6];
+    // Sync all 6 selected shades into matchedHexes so matrix dots match the palette
+    if (window.searchMatchedHexes) {
+        all6.forEach(item => { if (item?.hex) window.searchMatchedHexes.add(item.hex.toUpperCase()); });
+        window.markMatrixSearchResults?.();
+    }
+    return { ...base, c5, c6, all6 };
 }
 
 // --- MAIN RENDER FUNCTION ---
@@ -2661,6 +2667,16 @@ function renderGeneratedPalette(matches, principle) {
 
     // --- Harmonize the pool into 4 colour roles ---
     const organized = organizePalette(sourceItems, 4);
+
+    // Sync palette selections back into matchedHexes so matrix dots always
+    // reflect exactly the shades shown in the rendered palette (including ones
+    // picked from the full DB by organizePalette, e.g. accent/support roles).
+    if (window.searchMatchedHexes) {
+        [organized.anchor, organized.support, organized.accent, organized.neutral].forEach(item => {
+            if (item?.hex) window.searchMatchedHexes.add(item.hex.toUpperCase());
+        });
+        window.markMatrixSearchResults?.();
+    }
 
     // Update title: use the anchor shade name
     const anchorItem = organized.anchor;
@@ -2954,18 +2970,15 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Collect all matched hexes:
-        //  - base color hex for each matched color family
-        //  - ALL shades of each matched color family (so the shade strip shows dots)
+        // Collect matched hexes:
+        //  - base color hex for each matched family (dot on the large color block)
         //  - specific shade hexes that textually matched the query
         //  - parent color hexes of those specific shade matches
+        // NOTE: individual shade dots for family matches are handled inside showProfile()
+        //  by checking whether the parent color hex is in matchedHexes.
         const matchedHexes = new Set();
         matches.bestColorsPool.forEach(m => {
             if (m.color?.hex) matchedHexes.add(m.color.hex.toUpperCase());
-            // Mark every shade in this color family so the shade strip shows dots
-            (m.color?.shades || []).forEach(shade => {
-                if (shade?.hex) matchedHexes.add(shade.hex.toUpperCase());
-            });
         });
         (matches.shadeMatches || []).forEach(m => {
             if (m.shade?.hex) matchedHexes.add(m.shade.hex.toUpperCase());
