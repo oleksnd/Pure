@@ -2152,7 +2152,7 @@ function findClosestRealShade(targetHex) {
     return best;
 }
 
-function synthesizeShade(anchorHex, hueOffset, lightnessOverride) {
+function synthesizeShade(anchorHex, hueOffset, lightnessOverride, avoidHexes) {
     if (!anchorHex || anchorHex === 'transparent') anchorHex = '#888888';
     let [h, s, l] = hexToHsl(anchorHex);
     h = (h + hueOffset + 360) % 360;
@@ -2163,8 +2163,9 @@ function synthesizeShade(anchorHex, hueOffset, lightnessOverride) {
     s = Math.max(s, 8);
     const hex = hslToHex(h, s, l);
     // Snap to the nearest real shade so the name is meaningful and navigation works
+    // but never snap to a shade already used in another palette role
     const real = findClosestRealShade(hex);
-    if (real) return real;
+    if (real && !(avoidHexes && avoidHexes.has(real.hex))) return real;
     return { hex, name: { en: 'Auto', ru: 'Авто' }, _synthesized: true };
 }
 
@@ -2432,10 +2433,12 @@ function organizePalette(pool, count) {
         }
     }
     if (!support) {
-        // Try +30° first, then -30° if that's too similar
-        let candidate = synthesizeShade(anchorHex, 30);
+        // Try +30° first, then -30° if that's too similar;
+        // pass avoidHexes so the snap never returns the anchor shade itself
+        const avoidSupport = new Set([anchorHex]);
+        let candidate = synthesizeShade(anchorHex, 30, undefined, avoidSupport);
         if (isTooSimilar(anchorHex, candidate.hex)) {
-            candidate = synthesizeShade(anchorHex, -30);
+            candidate = synthesizeShade(anchorHex, -30, undefined, avoidSupport);
         }
         support = candidate;
     }
@@ -2454,10 +2457,10 @@ function organizePalette(pool, count) {
         }
     }
     if (!accent) {
-        let candidate = synthesizeShade(anchorHex, 180);
+        let candidate = synthesizeShade(anchorHex, 180, undefined, usedForAccent);
         // If anchor is very dark, ensure accent has enough lightness to contrast
         if (anchorL < 20 && getLuminance(candidate.hex) < 0.1) {
-            candidate = synthesizeShade(anchorHex, 180, 65);
+            candidate = synthesizeShade(anchorHex, 180, 65, usedForAccent);
         }
         accent = candidate;
     }
@@ -2476,10 +2479,12 @@ function organizePalette(pool, count) {
         }
     }
     if (!neutral) {
-        // Synthesize opposite-lightness neutral based on anchor brightness
+        // Synthesize opposite-lightness neutral based on anchor brightness;
+        // avoid snapping to any shade already used in a prior role
+        const avoidNeutral = new Set([anchorHex, supportHex, accentHex]);
         neutral = anchorL > 50
-            ? synthesizeShade(anchorHex, 0, 12)   // anchor is light → dark neutral
-            : synthesizeShade(anchorHex, 0, 90);   // anchor is dark  → light neutral
+            ? synthesizeShade(anchorHex, 0, 12, avoidNeutral)   // anchor is light → dark neutral
+            : synthesizeShade(anchorHex, 0, 90, avoidNeutral);  // anchor is dark  → light neutral
     }
 
     const ordered = [anchor, support, accent, neutral].slice(0, count);
@@ -2501,7 +2506,7 @@ function organizePalette6(pool) {
         const [h] = hexToHsl(item.hex);
         if (hueDiff(anchorH6, h) <= 60) { c5 = item; break; }
     }
-    if (!c5) { c5 = synthesizeShade(base.anchor.hex, -45); }
+    if (!c5) { c5 = synthesizeShade(base.anchor.hex, -45, undefined, usedHex); }
     usedHex.add(c5.hex);
 
     // c6 — darkest available (for deep shadow role)
@@ -2513,7 +2518,7 @@ function organizePalette6(pool) {
         const lum = getLuminance(item.hex);
         if (lum < minLum) { minLum = lum; c6 = item; }
     }
-    if (!c6) { c6 = synthesizeShade(base.anchor.hex, 0, 8); }
+    if (!c6) { c6 = synthesizeShade(base.anchor.hex, 0, 8, usedHex); }
 
     return { ...base, c5, c6, all6: [base.anchor, base.support, base.accent, base.neutral, c5, c6] };
 }
