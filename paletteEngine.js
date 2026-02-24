@@ -2162,11 +2162,26 @@ function synthesizeShade(anchorHex, hueOffset, lightnessOverride, avoidHexes) {
     }
     s = Math.max(s, 8);
     const hex = hslToHex(h, s, l);
-    // Snap to the nearest real shade so the name is meaningful and navigation works
-    // but never snap to a shade already used in another palette role
-    const real = findClosestRealShade(hex);
-    if (real && !(avoidHexes && avoidHexes.has(real.hex))) return real;
-    return { hex, name: { en: 'Auto', ru: 'Авто' }, _synthesized: true };
+    // Find the closest real shade not already used in another palette role.
+    // We scan the full database so avoidHexes is properly respected and
+    // the 'Авто' fallback never appears in the rendered palette.
+    const [r1, g1, b1] = _hexToRgb(hex);
+    let best = null, bestDist = Infinity;
+    if (typeof RESEARCH_DATA !== 'undefined') {
+        RESEARCH_DATA.colors.forEach(color => {
+            (color.shades || []).forEach(shade => {
+                if (!shade.hex) return;
+                if (avoidHexes && avoidHexes.has(shade.hex)) return;
+                const [r2, g2, b2] = _hexToRgb(shade.hex);
+                const dist = (r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2;
+                if (dist < bestDist) { bestDist = dist; best = shade; }
+            });
+        });
+    }
+    if (best) return best;
+    // Absolute last-resort: return the raw computed hex (should be unreachable
+    // in practice given the size of the database).
+    return { hex, name: { en: 'Color', ru: 'Цвет' }, _synthesized: true };
 }
 
 // --- SEMANTIC SEARCH ---
@@ -2432,19 +2447,34 @@ function organizePalette(pool, count) {
             break;
         }
     }
-    if (!support) {
-        // Try +30° first, then -30° if that's too similar;
-        // pass avoidHexes so the snap never returns the anchor shade itself
+    if (!support && typeof RESEARCH_DATA !== 'undefined') {
+        // Search all real shades for an analogous shade when the pool is thin.
+        // Prefer shades whose hue is 20–40° away and not perceptually identical.
         const avoidSupport = new Set([anchorHex]);
-        let candidate = synthesizeShade(anchorHex, 30, undefined, avoidSupport);
-        if (isTooSimilar(anchorHex, candidate.hex)) {
-            candidate = synthesizeShade(anchorHex, -30, undefined, avoidSupport);
-        }
-        support = candidate;
+        let bestSupport = null, bestSupportScore = Infinity;
+        RESEARCH_DATA.colors.forEach(color => {
+            (color.shades || []).forEach(shade => {
+                if (!shade.hex || avoidSupport.has(shade.hex)) return;
+                if (isTooSimilar(anchorHex, shade.hex)) return;
+                const [sh] = hexToHsl(shade.hex);
+                const diff = hueDiff(anchorH, sh);
+                if (diff <= 45) {
+                    // Score = distance from the ideal 30° analogous hue
+                    const score = Math.abs(diff - 30);
+                    if (score < bestSupportScore) { bestSupportScore = score; bestSupport = shade; }
+                }
+            });
+        });
+        if (bestSupport) support = bestSupport;
+    }
+    if (!support) {
+        const avoidSupport = new Set([anchorHex]);
+        support = synthesizeShade(anchorHex, 30, undefined, avoidSupport);
     }
     const supportHex = support.hex || '#888888';
 
     // ---- ACCENT: contrasting — hueDiff ≥ 120° from anchor ----
+    // First pass: check what's already in the pool.
     const usedForAccent = new Set([anchorHex, supportHex]);
     let accent = null;
     for (let i = 1; i < pool.length; i++) {
@@ -2455,6 +2485,25 @@ function organizePalette(pool, count) {
             accent = item;
             break;
         }
+    }
+    // Second pass: search all real shades in the database for the best complement.
+    // This guarantees a real named shade with genuine hue contrast, eliminating
+    // the case where the accent looks identical to the anchor.
+    if (!accent && typeof RESEARCH_DATA !== 'undefined') {
+        const targetH = (anchorH + 180 + 360) % 360;
+        let bestAccent = null, bestAccentDist = Infinity;
+        RESEARCH_DATA.colors.forEach(color => {
+            (color.shades || []).forEach(shade => {
+                if (!shade.hex || usedForAccent.has(shade.hex)) return;
+                const [sh] = hexToHsl(shade.hex);
+                const diff = hueDiff(anchorH, sh);
+                if (diff >= 120) {
+                    const distToTarget = hueDiff(sh, targetH);
+                    if (distToTarget < bestAccentDist) { bestAccentDist = distToTarget; bestAccent = shade; }
+                }
+            });
+        });
+        if (bestAccent) accent = bestAccent;
     }
     if (!accent) {
         let candidate = synthesizeShade(anchorHex, 180, undefined, usedForAccent);
@@ -2905,10 +2954,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Collect all matched hexes (base colors + specific shades + parent colors of matched shades)
+        // Collect all matched hexes:
+        //  - base color hex for each matched color family
+        //  - ALL shades of each matched color family (so the shade strip shows dots)
+        //  - specific shade hexes that textually matched the query
+        //  - parent color hexes of those specific shade matches
         const matchedHexes = new Set();
         matches.bestColorsPool.forEach(m => {
             if (m.color?.hex) matchedHexes.add(m.color.hex.toUpperCase());
+            // Mark every shade in this color family so the shade strip shows dots
+            (m.color?.shades || []).forEach(shade => {
+                if (shade?.hex) matchedHexes.add(shade.hex.toUpperCase());
+            });
         });
         (matches.shadeMatches || []).forEach(m => {
             if (m.shade?.hex) matchedHexes.add(m.shade.hex.toUpperCase());
